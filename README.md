@@ -7,6 +7,7 @@ Install
 - Install Python on your machine (at least 3.7).
 - Install Pipenv - https://pipenv.readthedocs.io/en/latest/install/
 - Install Git and clone this project locally.
+- Run `pipenv sync`
 - Run `./manage.py runserver`
 - Open the browser at `http://localhost:8000/`
 

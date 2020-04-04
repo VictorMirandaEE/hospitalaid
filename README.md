@@ -8,6 +8,7 @@ Install
 - Install Pipenv - https://pipenv.readthedocs.io/en/latest/install/
 - Install Git and clone this project locally.
 - Run `pipenv sync`
+- Run `pipenv shell`
 - Run `./manage.py runserver`
 - Open the browser at `http://localhost:8000/`
 

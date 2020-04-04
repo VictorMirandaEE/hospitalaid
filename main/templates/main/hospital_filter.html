@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <h2>Hospital list</h2>
+  <p>
+    <a class="btn btn-primary btn-sm" href="{% url "hospital_create" %}">Add a hospital that you manage</a>
+  </p>
+  {% if filter %}
+  <div class="bg-light p-3 mb-5 mt-2">
+    <h2>Filters</h2>
+    <form method="get">
+        {% bootstrap_form filter.form %}
+        <button class="btn btn-primary" type="submit">Apply filters</button>
+    </form>
+  </div>
+  {% endif %}
+  <h2>Hospitals</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          City
+        </th>
+        <th>
+          Country
+        </th>
+        <th>
+          Managed by you?
+        </th>
+        <th>
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object.name }}</td>
+          <td>{{ object.city }}</td>
+          <td>{{ object.country }}</td>
+          <td>
+            {% if object.user == request.user %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+          </td>
+          <td>
+            {% if object.user == request.user %}
+            <a class="btn btn-secondary btn-sm" href="{% url 'hospital_update' object.id %}">Edit</a>
+            <a class="btn btn-secondary btn-sm" href="{% url 'hospital_delete' object.id %}">Delete</a>
+            <a class="btn btn-primary btn-sm" href="{% url "aidrequest_create" %}?hospital={{object.id}}">Create Aid request</a>
+            {% endif %}
+            <a class="btn btn-primary btn-sm" href="{% url 'aidrequest_list' %}?hospital={{ object.id }}">View Aid requests</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>No Aid requests</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="row">
+  </div>
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <h2>Aid requests</h2>
+  <p>
+    {% for object in hospitals_managed %}
+    <a class="btn btn-primary btn-sm" href="{% url "aidrequest_create" %}?hospital={{object.id}}">Create AidRequest for {{ object.name }}</a>
+    {% endfor %}
+  </p>
+  {% if filter %}
+  <div class="bg-light p-3 mb-5 mt-2">
+    <h2>Filters</h2>
+    <form method="get">
+        {% bootstrap_form filter.form %}
+        <button class="btn btn-primary" type="submit">Apply filters</button>
+    </form>
+  </div>
+  {% endif %}
+  <h2 class="mb-4">
+    Aid requests
+    {% if filter.form.cleaned_data.hospital %}
+      in {{ filter.form.cleaned_data.hospital }}
+    {% else %}
+      in all hospitals
+    {% endif %}
+    {% if filter.form.cleaned_data.status %}
+      with status {{ filter.form.cleaned_data.status }}
+    {% endif %}
+  </h2>
+  <div class="card-deck">
+    {% for object in object_list %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">{{ object.hospital.name }}</h5>
+          <p class="card-text">{{ object.details|truncatechars:80 }}</p>
+          <p class="card-text">Status: {{ object.friendly_status }}</p>
+          <p class="card-text">Responses: {{ object.aidresponse_set.all.count }}</p>
+          {% if object.hospital.user == request.user %}
+          <a href="{% url 'aidrequest_update' object.id %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'aidrequest_delete' object.id %}" class="btn btn-primary">Delete</a>
+          {% else %}
+          <a href="{% url 'aidresponse_create' %}?aidrequest={{ object.id }}" class="btn btn-primary">Respond</a>
+          {% endif %}
+        </div>
+      </div>
+      {% if forloop.counter|divisibleby:2 %}
+        <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 2 on sm--></div>
+      {% endif %}
+      {% if forloop.counter|divisibleby:3 %}
+        <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 3 on md--></div>
+      {% endif %}
+      {% if forloop.counter|divisibleby:4 %}
+        <div class="w-100 d-none d-lg-block d-xl-none"><!-- wrap every 4 on lg--></div>
+      {% endif %}
+      {% if forloop.counter|divisibleby:5 %}
+        <div class="w-100 d-none d-xl-block"><!-- wrap every 5 on xl--></div>
+      {% endif %}
+    {% empty %}
+      <p>No aidrequests</p>
+    {% endfor %}
+  </div>
+{% endblock content %}

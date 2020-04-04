@@ -1,0 +1,1 @@
+web: env ENVIRONMENT=PRODUCTION gunicorn PROJECT.wsgi

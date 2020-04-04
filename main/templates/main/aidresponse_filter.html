@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <h2>Responses for aidrequests you posted</h2>
+  {% if filter %}
+  <div class="bg-light p-3 mb-5 mt-2">
+    <h2>Filters</h2>
+    <form method="get">
+        {% bootstrap_form filter.form %}
+        <button class="btn btn-primary" type="submit">Apply filters</button>
+    </form>
+  </div>
+  {% endif %}
+  <h2 class="mb-4">
+    Responses
+    {% if filter.form.cleaned_data.aidrequest %}
+      for {{ filter.form.cleaned_data.aidrequest }}
+    {% else %}
+      for all aidrequests
+    {% endif %}
+  </h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          Response
+        </th>
+        <th>
+          By
+        </th>
+        <th>
+          Aid request
+        </th>
+        <th>
+          Hospital
+        </th>
+        <th>
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object.comment }}</td>
+          <td>{{ object.user }}</td>
+          <td>{{ object.aid_request.details|truncatechars:30 }}</td>
+          <td>{{ object.aid_request.hospital }}</td>
+          <td>
+            <a class="btn btn-primary btn-sm" href="">act</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td>
+          No responses
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

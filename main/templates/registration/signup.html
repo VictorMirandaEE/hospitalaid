@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap4 %}
 
 {% block content %}
 <h1>Please sign up</h1>
@@ -8,11 +7,9 @@ or <a href="{% url 'login' %}">login</a>
 </p>
 <form method="POST">
     {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-    <button type="submit" class="btn btn-primary">
+    {{ form }}
+    <button type="submit" class="btn">
       Sign up
     </button>
-    {% endbuttons %}
 </form>
 {% endblock content  %}

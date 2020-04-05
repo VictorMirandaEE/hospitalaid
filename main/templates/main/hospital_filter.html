@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap4 %}
+{% load material_form %}
 
 {% block content %}
   <h2>Hospital list</h2>
@@ -10,13 +10,13 @@
   <div class="bg-light p-3 mb-5 mt-2">
     <h2>Filters</h2>
     <form method="get">
-        {% bootstrap_form filter.form %}
-        <button class="btn btn-primary" type="submit">Apply filters</button>
+        {% form form=filter.form %}{% endform %}
+        <button class="btn" type="submit">Apply filters</button>
     </form>
   </div>
   {% endif %}
   <h2>Hospitals</h2>
-  <table class="table">
+  <table>
     <thead>
       <tr>
         <th>
@@ -51,11 +51,11 @@
           </td>
           <td>
             {% if object.user == request.user %}
-            <a class="btn btn-secondary btn-sm" href="{% url 'hospital_update' object.id %}">Edit</a>
-            <a class="btn btn-secondary btn-sm" href="{% url 'hospital_delete' object.id %}">Delete</a>
-            <a class="btn btn-primary btn-sm" href="{% url "aidrequest_create" %}?hospital={{object.id}}">Create Aid request</a>
+            <a class="btn" href="{% url 'hospital_update' object.id %}">Edit</a>
+            <a class="btn" href="{% url 'hospital_delete' object.id %}">Delete</a>
+            <a class="btn" href="{% url "aidrequest_create" %}?hospital={{object.id}}">Create Aid request</a>
             {% endif %}
-            <a class="btn btn-primary btn-sm" href="{% url 'aidrequest_list' %}?hospital={{ object.id }}">View Aid requests</a>
+            <a class="btn" href="{% url 'aidrequest_list' %}?hospital={{ object.id }}">View Aid requests</a>
           </td>
         </tr>
       {% empty %}

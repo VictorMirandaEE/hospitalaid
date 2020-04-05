@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load render_table from django_tables2 %}
-{% load bootstrap4 %}
+{% load material_form %}
 
 {% block content %}
   <h2>Aid requests</h2>
@@ -13,8 +12,8 @@
   <div class="bg-light p-3 mb-5 mt-2">
     <h2>Filters</h2>
     <form method="get">
-        {% bootstrap_form filter.form %}
-        <button class="btn btn-primary" type="submit">Apply filters</button>
+        {% form form=filter.form %}{% endform %}
+        <button class="btn" type="submit">Apply filters</button>
     </form>
   </div>
   {% endif %}
@@ -38,10 +37,10 @@
           <p class="card-text">Status: {{ object.friendly_status }}</p>
           <p class="card-text">Responses: {{ object.aidresponse_set.all.count }}</p>
           {% if object.hospital.user == request.user %}
-          <a href="{% url 'aidrequest_update' object.id %}" class="btn btn-primary">Edit</a>
-          <a href="{% url 'aidrequest_delete' object.id %}" class="btn btn-primary">Delete</a>
+          <a href="{% url 'aidrequest_update' object.id %}" class="btn">Edit</a>
+          <a href="{% url 'aidrequest_delete' object.id %}" class="btn">Delete</a>
           {% else %}
-          <a href="{% url 'aidresponse_create' %}?aidrequest={{ object.id }}" class="btn btn-primary">Respond</a>
+          <a href="{% url 'aidresponse_create' %}?aidrequest={{ object.id }}" class="btn">Respond</a>
           {% endif %}
         </div>
       </div>

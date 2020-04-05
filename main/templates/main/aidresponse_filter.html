@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load render_table from django_tables2 %}
-{% load bootstrap4 %}
+{% load material_form %}
 
 {% block content %}
   <h2>Responses for aidrequests you posted</h2>
@@ -8,8 +7,9 @@
   <div class="bg-light p-3 mb-5 mt-2">
     <h2>Filters</h2>
     <form method="get">
-        {% bootstrap_form filter.form %}
-        <button class="btn btn-primary" type="submit">Apply filters</button>
+      {% csrf_token %}
+        {% form form=filter.form %}{% endform %}
+        <button class="btn" type="submit">Apply filters</button>
     </form>
   </div>
   {% endif %}
@@ -21,7 +21,7 @@
       for all aidrequests
     {% endif %}
   </h2>
-  <table class="table">
+  <table>
     <thead>
       <tr>
         <th>
@@ -49,7 +49,7 @@
           <td>{{ object.aid_request.details|truncatechars:30 }}</td>
           <td>{{ object.aid_request.hospital }}</td>
           <td>
-            <a class="btn btn-primary btn-sm" href="">act</a>
+            <a class="btn" href="">act</a>
           </td>
         </tr>
       {% empty %}

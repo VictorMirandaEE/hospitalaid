@@ -99,6 +99,7 @@ class SignupStep2(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         self.request.user.first_name = form.cleaned_data['name']
         self.request.user.phone = form.cleaned_data['phone']
+        self.request.user.save()
         h, _ = models.main.Hospital.objects.get_or_create(name=form.cleaned_data['hospital_name'])
         h.address = form.cleaned_data['hospital_address']
         h.user = self.request.user

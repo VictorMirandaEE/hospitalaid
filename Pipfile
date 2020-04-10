@@ -16,6 +16,8 @@ whitenoise = "*"
 gunicorn = "*"
 django-filter = "*"
 django-material = "*"
+django-sesame = "*"
+ua-parser = "*"
 
 [requires]
 python_version = "3.7"

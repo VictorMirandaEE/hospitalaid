@@ -7,6 +7,9 @@
 
   <p>comments: {{ object.details }}</p>
   <a class="btn" href="{% url 'aidrequest_update' object.id %}">Modify</a>
-  <a class="btn" href="#">Close</a>
+  <form action="{% url 'aidrequest_close' object.id %}" method="post">
+    {% csrf_token %}
+    <button class="btn" type="submit">Close</button>
+  </form>
   <a class="btn" href="{% url 'aidrequest_delete' object.id %}">Delete</a>
 {% endblock content %}

@@ -14,20 +14,9 @@
           <p class="card-text">{{ object.hospital.name }}</p>
           <p class="card-text">{{ object.hospital.address }}, {{ object.hospital.city}}</p>
           <p class="card-text">{{ object.updated_at|naturaltime }}</p>
+          <a class="btn" href="{% url 'aidrequestfordonor_detail' object.id %}">Open</a>
         </div>
       </div>
-      {% if forloop.counter|divisibleby:2 %}
-        <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 2 on sm--></div>
-      {% endif %}
-      {% if forloop.counter|divisibleby:3 %}
-        <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 3 on md--></div>
-      {% endif %}
-      {% if forloop.counter|divisibleby:4 %}
-        <div class="w-100 d-none d-lg-block d-xl-none"><!-- wrap every 4 on lg--></div>
-      {% endif %}
-      {% if forloop.counter|divisibleby:5 %}
-        <div class="w-100 d-none d-xl-block"><!-- wrap every 5 on xl--></div>
-      {% endif %}
     {% empty %}
       <p>No aidrequests</p>
     {% endfor %}

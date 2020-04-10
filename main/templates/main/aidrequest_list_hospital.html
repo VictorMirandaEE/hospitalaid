@@ -12,7 +12,11 @@
           <h5 class="card-title">{{ object.get_type_display }}</h5>
           <p class="card-text">{{ object.details|truncatechars:80 }}</p>
           <p class="card-text">{{ object.updated_at|naturaltime }}</p>
+          {% if object.closed %}
+          CLOSED
+          {% else %}
           <a href="{% url 'aidrequestforhospital_detail' object.id %}">See</a>
+          {% endif %}
         </div>
       </div>
     {% empty %}

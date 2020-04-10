@@ -1,7 +1,8 @@
 import logging
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
@@ -27,11 +28,12 @@ class AidRequestCreateView(LoginRequiredMixin, CreateView):
         "equipment_model",
         "equipment_serialno",
     ]
-    success_url = reverse_lazy("aidrequest_list")
+    success_url = reverse_lazy("aidrequestforhospital_list")
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.hospital_id = self.request.GET.get("hospital")
+        hospital = self.request.user.hospital_set.all().first()
+        obj.hospital = hospital
         obj.save()
         return super().form_valid(form)
 
@@ -41,10 +43,11 @@ class AidRequestUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
         "type",
         "details",
-        "assigned_to",
-        "status",
+        "equipment_brand",
+        "equipment_model",
+        "equipment_serialno",
     ]
-    success_url = reverse_lazy("aidrequest_list")
+    success_url = reverse_lazy("aidrequestforhospital_list")
 
     def get_queryset(self):
         hospitals = models.main.Hospital.objects.filter(user=self.request.user)
@@ -53,11 +56,19 @@ class AidRequestUpdateView(LoginRequiredMixin, UpdateView):
 
 class AidRequestDeleteView(LoginRequiredMixin, DeleteView):
     model = models.main.AidRequest
-    success_url = reverse_lazy("aidrequest_list")
+    success_url = reverse_lazy("aidrequestforhospital_list")
 
     def get_queryset(self):
         hospitals = models.main.Hospital.objects.filter(user=self.request.user)
         return self.model.objects.filter(hospital__in=hospitals)
+
+@login_required
+def aidrequest_close(request, pk):
+    hospitals = models.main.Hospital.objects.filter(user=request.user)
+    aid = models.main.AidRequest.objects.filter(hospital__in=hospitals).get(pk=pk)
+    aid.closed = True
+    aid.save()
+    return redirect("aidrequestforhospital_list")
 
 class AidRequestDetailForHospital(DetailView):
     model = models.main.AidRequest
@@ -88,8 +99,9 @@ class SignupStep2(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         self.request.user.first_name = form.cleaned_data['name']
         self.request.user.phone = form.cleaned_data['phone']
-        h, _ = models.main.Hospital.get_or_create(name=form.cleaned_data['hospital_name'])
+        h, _ = models.main.Hospital.objects.get_or_create(name=form.cleaned_data['hospital_name'])
         h.address = form.cleaned_data['hospital_address']
+        h.user = self.request.user
         h.save()
         return super().form_valid(form)
 
@@ -117,3 +129,10 @@ class AidRequestListForDonor(FilterView):
     def get_queryset(self):
         return self.model.objects.all().order_by("-updated_at")
 
+def home(request):
+    if request.user.is_authenticated:
+        if request.user.first_name == "":
+            return redirect(reverse("signup_step2"))
+        else:
+            return redirect(reverse("aidrequestforhospital_list"))
+    return render(request, "home.html")

@@ -10,6 +10,11 @@ urlpatterns = [
         name="aidrequest_delete",
     ),
     path(
+        "help-wanted/<int:pk>/close/",
+        views.main.aidrequest_close,
+        name="aidrequest_close",
+    ),
+    path(
         "help-wanted/<int:pk>/edit/",
         views.main.AidRequestUpdateView.as_view(),
         name="aidrequest_update",
@@ -42,6 +47,6 @@ urlpatterns = [
     path(
         "help-needed/list/", views.main.AidRequestListForDonor.as_view(), name="aidrequestfordonor_list"
     ),
-    path("signup/", views.user.SignupView.as_view(), name="signup"),
-    path("", TemplateView.as_view(template_name="home.html")),
+    path("signup/", views.user.signup_magiclink, name="signup"),
+    path("", views.main.home),
 ]

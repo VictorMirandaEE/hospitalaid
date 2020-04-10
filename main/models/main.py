@@ -30,10 +30,6 @@ class AidRequest(models.Model):
         ("supply_request", "New supply request"),
         ("other_request", "Other request"),
     ]
-    STATUS_TYPE = [
-        ("inprogress", "In progress"),
-        ("completed", "Completed"),
-    ]
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     type = models.CharField(max_length=32, choices=REQUEST_TYPE)
     details = models.TextField(max_length=2000)
@@ -61,11 +57,8 @@ class AidRequest(models.Model):
     equipment_serialno = models.CharField(
         max_length=16, help_text="only for equipment repair", blank=True
     )
-
-    assigned_to = models.ForeignKey(
-        get_user_model(), on_delete=models.SET_NULL, blank=True, null=True
-    )
-    status = models.CharField(max_length=16, choices=STATUS_TYPE, blank=True, null=True)
+    closed = models.BooleanField(default=False)
+    
 
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)

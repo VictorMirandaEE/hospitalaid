@@ -2,40 +2,39 @@ import logging
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import FormView
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render
 
-from main.forms.user import UserCreationForm
+from main.models.user import User
 
 logger = logging.getLogger(__name__)
 
+from sesame import utils
+from django.core.mail import send_mail
 
-class SignupView(FormView):
-    template_name = "registration/signup.html"
-    form_class = UserCreationForm
 
-    def get_success_url(self):
-        redirect_to = self.request.GET.get("next", "/")
-        return redirect_to
+def signup_magiclink(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        user, created = User.objects.get_or_create(email=email)
+        login_token = utils.get_query_string(user)
+        login_link = "http://127.0.0.1:8000/{}".format(login_token)
 
-    def get_success_url_hospital(self):
-        redirect_to = reverse("hospital_create")
-        return redirect_to
+        html_message = """
+        <p>Hi there,</p>
+        <p>Here is your <a href="{}">magic link</a> </p>
+        <p>Thanks,</p>
+        <p>Django Admin</p>
+        """.format(login_link)
 
-    def form_valid(self, form):
-        form.save()
+        send_mail(
+            'Django Magic Link',
+            html_message,
+            'admin@domain.com',
+            [email],
+            fail_silently=False,
+            html_message=html_message
+        )
+        return render(request, "magiclink_sent.html", context={"email": email})
 
-        email = form.cleaned_data.get("email")
-        raw_password = form.cleaned_data.get("password1")
-        logger.info("New signup for email=%s through SignupView", email)
-
-        user = authenticate(email=email, password=raw_password)
-        login(self.request, user)
-
-        messages.info(self.request, "You signed up successfully.")
-
-        if form.cleaned_data["role"] == UserCreationForm.ROLE_AID_MANAGER:
-            return HttpResponseRedirect(self.get_success_url_hospital())
-
-        return super().form_valid(form)
+    return HttpResponseBadRequest()

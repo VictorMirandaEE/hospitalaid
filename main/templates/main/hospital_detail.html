@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load material_form %}
+
+{% block content %}
+  <h3>{{ object.name }}</h3>
+    {% for aid in object.aidrequest_set.all %}
+    <p>
+    {{ aid }} - <a href="{% url 'aidrequestfordonor_detail' aid.id  %}">details</a>
+    </p>
+    {% empty %}
+      <p>No Aid requests</p>
+    {% endfor %}
+{% endblock content %}

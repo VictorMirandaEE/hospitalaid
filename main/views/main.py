@@ -6,65 +6,13 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
-from django_tables2.views import SingleTableView
+from django import forms
 
 from main import models
 
 logger = logging.getLogger(__name__)
-
-
-class HospitalCreateView(LoginRequiredMixin, CreateView):
-    model = models.main.Hospital
-    fields = [
-        "name",
-        "phone",
-        "address",
-        "city",
-        "postal_code",
-        "state",
-        "country",
-    ]
-    success_url = reverse_lazy("hospital_list")
-
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.user = self.request.user
-        obj.save()
-        return super().form_valid(form)
-
-
-class HospitalUpdateView(LoginRequiredMixin, UpdateView):
-    model = models.main.Hospital
-    fields = [
-        "name",
-        "phone",
-        "address",
-        "city",
-        "postal_code",
-        "state",
-        "country",
-    ]
-    success_url = reverse_lazy("hospital_list")
-
-    def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
-
-
-class HospitalDeleteView(LoginRequiredMixin, DeleteView):
-    model = models.main.Hospital
-    success_url = reverse_lazy("hospital_list")
-
-    def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
-
-
-class HospitalListView(LoginRequiredMixin, FilterView):
-    model = models.main.Hospital
-    filterset_fields = ["city", "country"]
-
-    def get_queryset(self):
-        return self.model.objects.all()
 
 
 ####
@@ -111,43 +59,61 @@ class AidRequestDeleteView(LoginRequiredMixin, DeleteView):
         hospitals = models.main.Hospital.objects.filter(user=self.request.user)
         return self.model.objects.filter(hospital__in=hospitals)
 
-
-class AidRequestListView(FilterView):
+class AidRequestDetailForHospital(DetailView):
     model = models.main.AidRequest
-    filterset_fields = ["hospital", "status"]
+    template_name = "main/aidrequest_detail_hospital.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            hospitals = models.main.Hospital.objects.filter(user=self.request.user)
-            context["hospitals_managed"] = hospitals
-        return context
+
+class AidRequestListForHospital(ListView):
+    model = models.main.AidRequest
+    template_name = "main/aidrequest_list_hospital.html"
+
+    def get_queryset(self):
+        hospitals = models.main.Hospital.objects.filter(user=self.request.user)
+        return self.model.objects.filter(hospital__in=hospitals)
+
+
+class SignupStep2Form(forms.Form):
+    name = forms.CharField(max_length=32)
+    phone = forms.CharField(max_length=32)
+    hospital_name = forms.CharField(max_length=32)
+    hospital_address = forms.CharField(max_length=32)
+    
+
+class SignupStep2(LoginRequiredMixin, FormView):
+    success_url = reverse_lazy("aidrequestforhospital_list")
+    form_class = SignupStep2Form
+    template_name = "main/step2_form.html"
+
+    def form_valid(self, form):
+        self.request.user.first_name = form.cleaned_data['name']
+        self.request.user.phone = form.cleaned_data['phone']
+        h, _ = models.main.Hospital.get_or_create(name=form.cleaned_data['hospital_name'])
+        h.address = form.cleaned_data['hospital_address']
+        h.save()
+        return super().form_valid(form)
+
+###
+class AidRequestDetailForDonor(DetailView):
+    model = models.main.AidRequest
+
+
+class HospitalDetailForDonor(DetailView):
+    model = models.main.Hospital
+
+
+class HospitalListForDonor(FilterView):
+    model = models.main.Hospital
+    filterset_fields = ["city"]
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+
+class AidRequestListForDonor(FilterView):
+    model = models.main.AidRequest
+    filterset_fields = ["hospital__city"]
 
     def get_queryset(self):
         return self.model.objects.all().order_by("-updated_at")
 
-
-###
-
-
-class AidResponseForMeListView(LoginRequiredMixin, FilterView):
-    model = models.main.AidResponse
-    filterset_fields = ["aid_request"]
-
-    def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user).order_by("-created_at")
-
-
-class AidResponseCreateView(LoginRequiredMixin, CreateView):
-    model = models.main.AidResponse
-    fields = [
-        "comment",
-    ]
-    success_url = reverse_lazy("aidrequest_list")
-
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.aid_request_id = self.request.GET.get("aidrequest")
-        obj.user = self.request.user
-        obj.save()
-        return super().form_valid(form)

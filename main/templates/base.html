@@ -12,28 +12,15 @@
   </head>
 
   <body>
-    <ul id="dropdown1" class="dropdown-content">
-      <li>
-        <a href="{% url "hospital_list" %}">Hospitals</a>
-      </li>
-    </ul>
+    {% block nav %}
     <nav>
       <div class="container">
       <div class="nav-wrapper">
         <a href="/" class="brand-logo">HospitalAid</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li>
-            <a href="{% url "aidrequest_list" %}">Aid requests</a>
+            <a href="{% url "aidrequestfordonor_list" %}">Aid requests</a>
           </li>
-          {% if request.user.is_authenticated %}
-          <li>
-              <a href="{% url "aidresponse_forme_list" %}">Responses for me</a>
-          </li>
-          <li>
-            <a class="dropdown-trigger" href="#!" data-target="dropdown1">
-              Other<i class="material-icons right">arrow_drop_down</i></a>
-          </li>
-          {% endif %}
           {% if request.user.is_authenticated %}
           <li>
               <a href="#">Logged in as {{ request.user.email }}</a>
@@ -53,6 +40,7 @@
       </div>
       </div>
     </nav>
+    {% endblock %}
 
     <div class="container">
         {% block content %}
@@ -71,8 +59,7 @@
     var elems = document.querySelectorAll('.dropdown-trigger');
     var instances = M.Dropdown.init(elems);
   });
-
-        
   </script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   </body>
 </html>

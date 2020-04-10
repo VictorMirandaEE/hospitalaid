@@ -4,5 +4,4 @@ from main import models
 
 admin.site.register(models.main.Hospital)
 admin.site.register(models.main.AidRequest)
-admin.site.register(models.main.AidResponse)
 admin.site.register(models.user.User)

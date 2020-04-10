@@ -81,19 +81,3 @@ class AidRequest(models.Model):
 
     def __str__(self):
         return "{}".format(self.details,)
-
-
-class AidResponse(models.Model):
-    aid_request = models.ForeignKey(AidRequest, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
-    comment = models.TextField(max_length=2000)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-updated_at"]
-
-    def __str__(self):
-        return "<AidResponse aid_request={} response_by={}>".format(
-            self.aid_request, self.user
-        )

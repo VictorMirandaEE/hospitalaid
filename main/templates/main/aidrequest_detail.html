@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load material_form %}
+
+{% block content %}
+  <h3>{{ object.hospital.name }}</h3>
+  <p>{{ object.hospital.address }}</p>
+  <p>
+  Please use this contact information if you can help
+  </p>
+  <p>
+  Contact name: {{ object.hospital.user.full_name }} <br>
+  Phone number: {{ object.hospital.user.phone }}
+  </p>
+
+  <p>{{ object.get_type_display }}</p>
+  <p>time added: {{ object.created_at }}</p>
+  <p>comments: {{ object.details }}</p>
+
+{% endblock content %}

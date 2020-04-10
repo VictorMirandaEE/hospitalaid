@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load material_form %}
+
+{% block content %}
+  <h2>Requests you created</h2>
+  <a class="btn" href="{% url 'aidrequest_create' %}">New request</a>
+  <div class="card-deck">
+    {% for object in object_list %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">{{ object.get_type_display }}</h5>
+          <p class="card-text">{{ object.details|truncatechars:80 }}</p>
+          <p class="card-text">{{ object.updated_at|naturaltime }}</p>
+          <a href="{% url 'aidrequestforhospital_detail' object.id %}">See</a>
+        </div>
+      </div>
+    {% empty %}
+      <p>No aidrequests</p>
+    {% endfor %}
+  </div>
+{% endblock content %}

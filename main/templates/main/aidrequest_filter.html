@@ -1,47 +1,19 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% load material_form %}
 
 {% block content %}
-  <h2>Aid requests</h2>
-  <p>
-    {% for object in hospitals_managed %}
-    <a class="btn btn-primary btn-sm" href="{% url "aidrequest_create" %}?hospital={{object.id}}">Create AidRequest for {{ object.name }}</a>
-    {% endfor %}
-  </p>
-  {% if filter %}
-  <div class="bg-light p-3 mb-5 mt-2">
-    <h2>Filters</h2>
-    <form method="get">
-        {% form form=filter.form %}{% endform %}
-        <button class="btn" type="submit">Apply filters</button>
-    </form>
-  </div>
-  {% endif %}
-  <h2 class="mb-4">
-    Aid requests
-    {% if filter.form.cleaned_data.hospital %}
-      in {{ filter.form.cleaned_data.hospital }}
-    {% else %}
-      in all hospitals
-    {% endif %}
-    {% if filter.form.cleaned_data.status %}
-      with status {{ filter.form.cleaned_data.status }}
-    {% endif %}
-  </h2>
+  <h2>Active aid requests</h2>
+  <a class="btn" href="{% url 'hospitalfordonor_list' %}">Map View</a>
   <div class="card-deck">
     {% for object in object_list %}
       <div class="card mb-4">
         <div class="card-body">
-          <h5 class="card-title">{{ object.hospital.name }}</h5>
+          <h5 class="card-title">{{ object.get_type_display }}</h5>
           <p class="card-text">{{ object.details|truncatechars:80 }}</p>
-          <p class="card-text">Status: {{ object.friendly_status }}</p>
-          <p class="card-text">Responses: {{ object.aidresponse_set.all.count }}</p>
-          {% if object.hospital.user == request.user %}
-          <a href="{% url 'aidrequest_update' object.id %}" class="btn">Edit</a>
-          <a href="{% url 'aidrequest_delete' object.id %}" class="btn">Delete</a>
-          {% else %}
-          <a href="{% url 'aidresponse_create' %}?aidrequest={{ object.id }}" class="btn">Respond</a>
-          {% endif %}
+          <p class="card-text">{{ object.hospital.name }}</p>
+          <p class="card-text">{{ object.hospital.address }}, {{ object.hospital.city}}</p>
+          <p class="card-text">{{ object.updated_at|naturaltime }}</p>
         </div>
       </div>
       {% if forloop.counter|divisibleby:2 %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load material_form %}
+
+{% block content %}
+  <h3>{{ object.get_type_display }} request</h3>
+  <p>created at {{ object.created_at }}</p>
+
+  <p>comments: {{ object.details }}</p>
+  <a class="btn" href="{% url 'aidrequest_update' object.id %}">Modify</a>
+  <a class="btn" href="#">Close</a>
+  <a class="btn" href="{% url 'aidrequest_delete' object.id %}">Delete</a>
+{% endblock content %}

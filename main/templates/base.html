@@ -18,22 +18,12 @@
       <div class="nav-wrapper">
         <a href="/" class="brand-logo">HospitalAid</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li>
-            <a href="{% url "aidrequestfordonor_list" %}">Aid requests</a>
-          </li>
           {% if request.user.is_authenticated %}
           <li>
               <a href="#">Logged in as {{ request.user.email }}</a>
           </li>
           <li>
               <a href="{% url "logout" %}?next=/">Logout</a>
-          </li>
-          {% else %}
-          <li>
-              <a href="{% url "login" %}">Login</a>
-          </li>
-          <li>
-              <a href="{% url "signup" %}">Signup</a>
           </li>
           {% endif %}
         </ul>

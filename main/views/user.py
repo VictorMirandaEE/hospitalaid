@@ -18,11 +18,11 @@ def signup_magiclink(request):
         email = request.POST.get("email")
         user, created = User.objects.get_or_create(email=email)
         login_token = utils.get_query_string(user)
-        login_link = "http://127.0.0.1:8000/{}".format(login_token)
+        login_link = "http://{}/{}".format(request.get_host(), login_token)
 
         html_message = """
         <p>Hi there,</p>
-        <p>Here is your <a href="{}">magic link</a> </p>
+        <p>Here is your <a href="{}">login link</a> </p>
         <p>Thanks,</p>
         <p>HospitalAid Admin</p>
         """.format(login_link)

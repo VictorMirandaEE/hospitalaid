@@ -18,6 +18,8 @@ django-filter = "*"
 django-material = "*"
 django-sesame = "*"
 ua-parser = "*"
+dj-database-url = "*"
+dj-email-url = "*"
 
 [requires]
 python_version = "3.7"

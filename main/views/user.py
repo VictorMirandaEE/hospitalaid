@@ -24,11 +24,11 @@ def signup_magiclink(request):
         <p>Hi there,</p>
         <p>Here is your <a href="{}">magic link</a> </p>
         <p>Thanks,</p>
-        <p>Django Admin</p>
+        <p>HospitalAid Admin</p>
         """.format(login_link)
 
         send_mail(
-            'Django Magic Link',
+            'Hospital Aid Login Link',
             html_message,
             'admin@domain.com',
             [email],

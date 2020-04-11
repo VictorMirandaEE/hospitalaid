@@ -1,4 +1,7 @@
 import os
+import dj_database_url
+import dj_email_url
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#(@r9^xj-8cdt&7h-vozzzh-mm18s2k5g500x3q^zy#_@z=a#e'
@@ -60,11 +63,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PROJECT.wsgi.application'
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -94,15 +95,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
-if not DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST_USER = ""
-    EMAIL_HOST= 'smtp.sendgrid.net'
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_PASSWORD = ""
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+email_config = dj_email_url.config()
+vars().update(email_config)
 
 LOGGING = {
     "version": 1,

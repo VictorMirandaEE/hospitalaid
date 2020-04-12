@@ -1,26 +1,7 @@
-(function(L, axios) {
+(function(L, map_data) {
   function getPoints() {
-    // Mock real api with fake data for now
-    // fixme Use `axios` for fetching data from real API
     return new Promise(function (resolve) {
-      resolve([
-        {
-          name: 'hospital name',
-          town: 'Rio de janeiro',
-          country: 'Brasil',
-          latitude: -22.901,
-          longitude: -43.206,
-          n_aidrequests: 23,
-        },
-        {
-          name: 'another hospital',
-          town: 'Rio de janeiro',
-          country: 'Brasil',
-          latitude: -22.903,
-          longitude: -43.208,
-          n_aidrequests: 24,
-        },
-      ])
+      resolve(map_data)
     });
   }
 
@@ -72,8 +53,8 @@
       hospitals.map(function (hospital) {
         L
           .marker({ lat: hospital.latitude, lng: hospital.longitude })
-          .bindPopup(hospital.name)
+          .bindPopup(hospital.name + "<br>" + hospital.text + "<a href='" + hospital.link + "'>See</a>")
           .addTo(map);
       })
     });
-})(L, axios);
+})(L, map_data);

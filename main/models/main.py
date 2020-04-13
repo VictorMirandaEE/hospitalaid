@@ -23,6 +23,21 @@ class Hospital(models.Model):
         return "{} ({}, {})".format(self.name, self.city, self.country)
 
 
+class ImportedHospital(models.Model):
+    name = models.CharField(max_length=512)
+    addr_postcode = models.CharField(max_length=32)
+    addr_housenumber = models.CharField(max_length=32)
+    addr_street = models.CharField(max_length=64)
+    addr_city = models.CharField(max_length=64)
+    # based on https://stackoverflow.com/a/30711177/375670
+    location_latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    location_longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    # TODO: Figure out how to determine country (might have to be derived from coords)
+
+    def __str__(self):
+        return "{} ({})".format(self.name, self.addr_city)
+
+
 class AidRequest(models.Model):
     REQUEST_TYPE = [
         ("equipment_repair", "Existing equipment repair"),

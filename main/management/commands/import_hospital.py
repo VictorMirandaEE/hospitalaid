@@ -6,21 +6,12 @@ from main.utils.dataimport.healthsites import HealthSites
 import logging
 import sys
 
-class Command(BaseCommand):
-    logger = None
-    help = "Imports a hospital from HealthSites"
 
-    def __init__(self):
-        super().__init__()
-        # TODO: figure out if this configuration can come from the wider application
-        # somehow, the stuff in LOGGING under PROJECT/settings.py isn't taking effect
-        self.logger = logging.getLogger(self.__class__.__name__)
-        self.logger.setLevel(logging.DEBUG)
-        handler = logging.StreamHandler(sys.stdout)
-        handler.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        handler.setFormatter(formatter)
-        self.logger.addHandler(handler)
+logger = logging.getLogger(__name__)
+
+
+class Command(BaseCommand):
+    help = "Imports a hospital from HealthSites"
 
     def add_arguments(self, parser):
         # Named (optional) arguments
@@ -40,16 +31,16 @@ class Command(BaseCommand):
         response_json = healthsites.get_facility_data(facility_id)
 
         if (facility_id):
-            self.logger.info('Starting import of facility ID %s from HealthSites', facility_id)
+            logger.info('Starting import of facility ID %s from HealthSites', facility_id)
             self.insert_facility_id(healthsites, facility_id)
         elif (search_term):
-            self.logger.info('Searching HealthSites for facilities matching: %s', search_term)
+            logger.info('Searching HealthSites for facilities matching: %s', search_term)
             results = self.get_facilies_ids_from_search_response(healthsites.run_facility_search(search_term))
-            self.logger.debug('Search results: %s', results)
+            logger.debug('Search results: %s', results)
             if options['insert_search_results']:
-                self.logger.info('Search results from HealthSites will be inserted as models')
+                logger.info('Search results from HealthSites will be inserted as models')
                 for facility_id, label in results.items():
-                    self.logger.debug("Attempting to query HealthSites for details on %s (%s)", label, facility_id)
+                    logger.debug("Attempting to query HealthSites for details on %s (%s)", label, facility_id)
                     self.insert_facility_id(healthsites, facility_id)
 
 
@@ -73,6 +64,13 @@ class Command(BaseCommand):
 
     def insert_facility_id(self, healthsites, facility_id):
         details = healthsites.get_facility_data(facility_id)
-        self.logger.debug('Detail results: %s', details)
-        model = self.build_model_from_facility_response(details)
-        model.save()
+        logger.debug('Detail results: %s', details)
+        if details['attributes']['amenity'] == "hospital":
+            try:
+                model = self.build_model_from_facility_response(details)
+            except KeyError:
+                logger.warning("Not enough data to build model")
+            else:
+                model.save()
+        else:
+            logger.debug("skipping because not an hospital")

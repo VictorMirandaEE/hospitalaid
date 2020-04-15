@@ -53,11 +53,11 @@ class Command(BaseCommand):
                     self.insert_facility_id(healthsites, facility_id)
 
 
-    """
-        Unwraps a facility search response from the requests library
-        :returns a dict from facility ID to label
-    """
     def get_facilies_ids_from_search_response(self, search_response):
+        """
+            Unwraps a facility search response from the requests library
+            :returns a dict from facility ID to label
+        """
         return {item['id']: item['label'] for item in search_response}
 
     def build_model_from_facility_response(self, facility_response):

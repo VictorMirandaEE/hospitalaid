@@ -15,11 +15,11 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         # Named (optional) arguments
-        parser.add_argument('--facility_id', type=str, help="The facility ID from HealthSites to import")
-        parser.add_argument('--search_term', type=str, help="The search term to query for in the HealthSites "
+        parser.add_argument('--facility-id', type=str, help="The facility ID from HealthSites to import")
+        parser.add_argument('--search-term', type=str, help="The search term to query for in the HealthSites "
                                                             "facilities API")
 
-        parser.add_argument('--insert_search_results', action='store_true', help="Indicates that search results should "
+        parser.add_argument('--insert-search-results', action='store_true', help="Indicates that search results should "
                                                                                  "be inserted as the models")
 
     def handle(self, *args, **options):

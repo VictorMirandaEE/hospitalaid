@@ -20,6 +20,7 @@ django-sesame = "*"
 ua-parser = "*"
 dj-database-url = "*"
 dj-email-url = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

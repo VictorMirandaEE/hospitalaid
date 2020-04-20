@@ -78,12 +78,6 @@ class AidRequest(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def friendly_status(self):
-        if self.assigned_to:
-            return self.get_status_display()
-        else:
-            return "Unassigned"
-
     class Meta:
         ordering = ["-updated_at"]
 

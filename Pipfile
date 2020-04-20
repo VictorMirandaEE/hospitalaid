@@ -21,6 +21,7 @@ ua-parser = "*"
 dj-database-url = "*"
 dj-email-url = "*"
 requests = "*"
+livereload = "*"
 
 [requires]
 python_version = "3.7"

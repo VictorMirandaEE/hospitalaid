@@ -54,6 +54,10 @@
   });
   </script>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  {% if DEBUG %}
+  <script src="http://localhost:35729/livereload.js"></script>
+  {% endif %}
+
   {% block js %}
   {% endblock js %}
   </body>

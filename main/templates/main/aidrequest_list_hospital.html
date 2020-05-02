@@ -3,24 +3,25 @@
 {% load material_form %}
 
 {% block content %}
-  <h2>Requests you created</h2>
-  <a class="btn" href="{% url 'aidrequest_create' %}">New request</a>
-  <div class="card-deck">
+  <h1 class="text-3xl pb-4">Hello {{ request.user.first_name }}</h1>
+  <div class="pb-4">
+    <span class="text-2xl">Requests you created</span>
+    <a class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" href="{% url 'aidrequest_create' %}">+ New request</a>
+  </div>
+  <div class="pt-4">
     {% for object in object_list %}
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">{{ object.get_type_display }}</h5>
-          <p class="card-text">{{ object.details|truncatechars:80 }}</p>
-          <p class="card-text">{{ object.updated_at|naturaltime }}</p>
+      <div class="mb-2 border-l-8 border border-blue-300 p-4">
+        <p class="pb-2 font-bold">{{ object.get_type_display }}</p>
+        <p class="pb-2">{{ object.details|truncatechars:80 }}</p>
           {% if object.closed %}
           CLOSED
           {% else %}
-          <a href="{% url 'aidrequestforhospital_detail' object.id %}">See</a>
+          <a class="bg-red-500 hover:bg-red-700 py-2 px-4 text-white" href="{% url 'aidrequestforhospital_detail' object.id %}">See</a>
           {% endif %}
-        </div>
+        <p class="pt-2 text-right">{{ object.updated_at|naturaltime }}</p>
       </div>
     {% empty %}
-      <p>No aidrequests</p>
+      <p>You have not added any requests yet</p>
     {% endfor %}
   </div>
 {% endblock content %}

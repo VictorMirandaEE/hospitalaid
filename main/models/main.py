@@ -78,6 +78,18 @@ class AidRequest(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_display_fields(self):
+        if self.type.startswith("equipment"):
+            return {
+                "equipment type": self.equipment_type,
+                "manufacturer": self.equipment_brand,
+                "model": self.equipment_model,
+                "serial no": self.equipment_serialno,
+                "details": self.details
+            }
+        else:
+            return {}
+
     class Meta:
         ordering = ["-updated_at"]
 

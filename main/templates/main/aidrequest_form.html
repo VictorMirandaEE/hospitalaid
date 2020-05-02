@@ -1,12 +1,24 @@
 {% extends "base.html" %}
-{% load material_form %}
 
 {% block content %}
-<h1>Create a new request</h1>
+<h1 class="text-3xl">
+  {% if object %}
+    Modify this request
+  {% else %}
+    Create a new request
+  {% endif %}
+</h1>
 <form method="POST">
-      {% csrf_token %}
-        {% form form=form %}{% endform %}
-    <button type="submit" class="btn">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          {{ field.label }}
+        </label>
+        {{ field }}
+      </div>
+    {% endfor %}
+    <button type="submit" class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white">
         Submit
     </button>
 </form>

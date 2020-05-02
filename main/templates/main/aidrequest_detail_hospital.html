@@ -1,15 +1,24 @@
 {% extends "base.html" %}
 {% load material_form %}
+{% load humanize %}
 
 {% block content %}
-  <h3>{{ object.get_type_display }} request</h3>
-  <p>created at {{ object.created_at }}</p>
+  <h1 class="text-3xl">{{ object.get_type_display }} request</h1>
+  <p>Created {{ object.created_at|naturaltime }}</p>
 
-  <p>comments: {{ object.details }}</p>
-  <a class="btn" href="{% url 'aidrequest_update' object.id %}">Modify</a>
-  <form action="{% url 'aidrequest_close' object.id %}" method="post">
-    {% csrf_token %}
-    <button class="btn" type="submit">Close</button>
-  </form>
-  <a class="btn" href="{% url 'aidrequest_delete' object.id %}">Delete</a>
+  <dl class="mt-6">
+    {% for name, field in object.get_display_fields.items %}
+      <dt class="p-1 italic">{{ name }}</dt>
+      <dd class="p-1 pb-3">{{ field }}</dd>
+    {% endfor %}
+  </dl>
+
+  <div class="p-2 mt-6 flex border">
+    <a class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" href="{% url 'aidrequest_update' object.id %}">Modify</a>
+    <form action="{% url 'aidrequest_close' object.id %}" method="post">
+      {% csrf_token %}
+      <button class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" type="submit">Close</button>
+    </form>
+    <a class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" href="{% url 'aidrequest_delete' object.id %}">Delete</a>
+  </div>
 {% endblock content %}

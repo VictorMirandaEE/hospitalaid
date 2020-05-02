@@ -2,10 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="{% static "css/materialdesign.css" %}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="https://cdn.tailwindcdn.com/1.1.4/tailwind.min.css"  media="screen,projection"/>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,46 +10,31 @@
     {% endblock styles %}
   </head>
 
-  <body>
+  <body class="{% block css_body %} {% endblock %}">
     {% block nav %}
-    <nav>
-      <div class="container">
-      <div class="nav-wrapper">
-        <a href="/" class="brand-logo">HospitalAid</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          {% if request.user.is_authenticated %}
-          <li>
-              <a href="#">Logged in as {{ request.user.email }}</a>
-          </li>
-          <li>
-              <a href="{% url "logout" %}?next=/">Logout</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-      </div>
+    <nav class="flex bg-blue-900 p-6 text-white">
+        <div class="flex-grow">
+          <a href="/" class="">
+            <img src="{% static "images/logo.png" %}" alt="logo">
+          </a>
+        </div>
+        {% if request.user.is_authenticated %}
+        <div class="p-3">
+          <a href="#">Logged in as {{ request.user.email }}</a>
+        </div>
+        <div class="p-3">
+          <a href="{% url "logout" %}?next=/">Logout</a>
+        </div>
+        {% endif %}
     </nav>
     {% endblock %}
 
-    <main>
-      <div class="container">
-        {% block content %}
-        {% endblock content %}
-      </div>
+    <main class="p-8">
+      {% block content %}
+      {% endblock %}
     </main>
 
     <!--JavaScript at end of body for optimized loading-->
-  <script type="text/javascript" src="{% static "js/bin/materialize.min.js" %}"></script>
-  <script charset="utf-8">
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems);
-  });
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.dropdown-trigger');
-    var instances = M.Dropdown.init(elems);
-  });
-  </script>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   {% if DEBUG %}
   <script src="http://localhost:35729/livereload.js"></script>

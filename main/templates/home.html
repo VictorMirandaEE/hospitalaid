@@ -3,25 +3,28 @@
 
 
 {% block css_body %}
-bg-indigo-900
+bg-blue-200
 {% endblock %}
 
 {% block nav %}
 {% endblock %}
 
 {% block content %}
-<div class="container flex justify-center p-16 text-white font-sans">
+<div class="container flex justify-center mx-auto text-blue font-sans">
   <div class="w-1/2">
-    <div class="mx-auto text-center">
+    <div class="mb-8">
       <img src="{% static "images/logo-vertical.png" %}" alt="logo" />
     </div>
-    <div class="text-2xl">
-      Helping the world to address the COVID-19 pandemic
+    <div class="text-2xl text-center">
+      HELPING THE WORLD
     </div>
-    <div class="text-lg my-4" x-data="{ tab: 'home' }">
+    <div class="text-xl text-center">
+      address the COVID-19 pandemic
+    </div>
+    <div class="text-lg my-8" x-data="{ tab: 'home' }">
         <div x-show="tab === 'home'">
-          <a class="block bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4" href="#" @click="tab = 'hospital'" role="button">I work at the hospital</a>
-          <a class="block bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4" href="#" @click="tab = 'search'" role="button">I want to help</a>
+          {% include "includes/button-link.html" with color="indigo" clickjs="tab = 'hospital'" label="I work at the hospital" %}
+          {% include "includes/button-link.html" with color="red" clickjs="tab = 'search'" label="I want to help" %}
         </div>
         <div x-show="tab === 'search'">
           <p>
@@ -32,18 +35,18 @@ bg-indigo-900
           </p>
           <form action="{% url "aidrequestfordonor_list" %}" method="get">
             <input type="text" name="hospital__city" value="">
-            <button class="btn" type="submit">Search</button>
+            {% include "includes/button.html" with color="red" label="Search" %}
           </form>
         </div>
         <div x-show="tab === 'hospital'">
           <p class="text-center">
-          To be able to login please enter the hospital email address you are working at. <br>
+          To be able to login please enter the hospital email address you are working at.
           Click on the link sent to the email you enter to be able to log in
           </p>
           <form action="{% url "signup" %}" method="post">
             {% csrf_token %}
             <input class="mx-4 my-4 w-full" type="text" name="email" value="">
-            <button class="w-full bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4" type="submit">Send me log-in link</button>
+            {% include "includes/button.html" with color="red" label="Send me the login link" %}
           </form>
         </div>
     </div>

@@ -1,19 +1,41 @@
 {% extends "base.html" %}
 {% load material_form %}
 
+{% block nav2 %}
+<nav class="flex bg-blue-900 p-3 text-white">
+    <div class="p-3">
+      Back
+    </div>
+    <div class="flex-grow">
+      <h1 class="text-3xl font-bold">{{ object.details }}</h1>
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
-  <h3>{{ object.hospital.name }}</h3>
-  <p>{{ object.hospital.address }}</p>
-  <p>
-  Please use this contact information if you can help
-  </p>
-  <p>
-  Contact name: {{ object.hospital.user.full_name }} <br>
-  Phone number: {{ object.hospital.user.phone }}
-  </p>
+<div class="p-8">
+  {% include "includes/aidrequest_detail_fields.html" %}
+</div>
 
-  <p>{{ object.get_type_display }}</p>
-  <p>time added: {{ object.created_at }}</p>
-  <p>comments: {{ object.details }}</p>
-
+  <div class="bg-blue-900 p-6 text-white">
+    <div class="flex">
+      <div class="flex-grow">
+        <div>
+          MANAGER
+        </div>
+        <div>
+          {{ object.hospital.user.full_name}}
+        </div>
+      </div>
+      <div class="flex-grow text-right">
+        <div>
+          PHONE
+        </div>
+        <div>
+          {{ object.hospital.user.phone }}
+        </div>
+      </div>
+    </div>
+    {% include "includes/button-link.html" with color="red" href="#" label="Call XXX to help" %}
+  </div>
 {% endblock content %}

@@ -1,27 +1,46 @@
 {% extends "base.html" %}
 {% load humanize %}
-{% load material_form %}
+
+{% block nav2 %}
+<nav class="flex bg-blue-900 p-3 text-white">
+    <div class="flex-grow">
+      <h1 class="text-3xl font-bold">Your requests</h1>
+    </div>
+</nav>
+{% endblock %}
 
 {% block content %}
-  <h1 class="text-3xl pb-4">Hello {{ request.user.first_name }}</h1>
-  <div class="pb-4">
-    <span class="text-2xl">Requests you created</span>
-    <a class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" href="{% url 'aidrequest_create' %}">+ New request</a>
+<div class="p-8">
+  <div class="pb-5">
+    <span class="bg-blue-900 font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
+    <span class="bg-red-500 font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
   </div>
-  <div class="pt-4">
+  <div class="card-deck">
     {% for object in object_list %}
-      <div class="mb-2 border-l-8 border border-blue-300 p-4">
-        <p class="pb-2 font-bold">{{ object.get_type_display }}</p>
-        <p class="pb-2">{{ object.details|truncatechars:80 }}</p>
-          {% if object.closed %}
-          CLOSED
-          {% else %}
-          <a class="bg-red-500 hover:bg-red-700 py-2 px-4 text-white" href="{% url 'aidrequestforhospital_detail' object.id %}">See</a>
-          {% endif %}
-        <p class="pt-2 text-right">{{ object.updated_at|naturaltime }}</p>
+    <div class="flex mb-3 bg-white rounded-lg shadow-lg border-l-8 border-blue-300 p-4">
+      <div class="flex-grow">
+        <p class="pb-2 font-bold">{{ object.details|truncatechars:80 }}</p>
+        <p class="text-gray-500">{{ object.updated_at|naturaltime }}</p>
       </div>
+      <div class="p-6">
+        <span class="text-white bg-gray-600 font-bold rounded p-1">
+          {{ object.equipment_quantity|default:1 }}
+        </span>
+      </div>
+      <div class="p-6">
+        {% if object.closed %}
+        CLOSED
+        {% else %}
+        <a href="{% url 'aidrequestforhospital_detail' object.id %}">Open</a>
+        {% endif %}
+      </div>
+    </div>
     {% empty %}
-      <p>You have not added any requests yet</p>
+    <p>No requests yet</p>
     {% endfor %}
   </div>
+
+  {% url 'aidrequest_create' as create %}
+  {% include "includes/button-link.html" with color="red" href=create label="Add" %}
+</div>
 {% endblock content %}

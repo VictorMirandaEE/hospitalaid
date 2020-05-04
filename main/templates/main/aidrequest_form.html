@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 
+{% block nav2 %}
+<nav class="flex bg-blue-900 p-3 text-white">
+    <div class="p-3">
+      Back
+    </div>
+    <div class="flex-grow">
+      <h1 class="text-3xl font-bold">
+        {% if object %}
+        Modify request
+        {% else %}
+        Add a new request
+        {% endif %}
+      </h1>
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
-<h1 class="text-3xl">
-  {% if object %}
-    Modify this request
-  {% else %}
-    Create a new request
-  {% endif %}
-</h1>
-<form method="POST">
-    {% csrf_token %}
-    {% for field in form %}
-      <div>
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-          {{ field.label }}
-        </label>
-        {{ field }}
-      </div>
-    {% endfor %}
-    <button type="submit" class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white">
-        Submit
-    </button>
-</form>
+<div class="p-8">
+  <form method="POST">
+      {% csrf_token %}
+      {% include "includes/form.html" %}
+      {% include "includes/button.html" with color="red" label="Add request" %}
+  </form>
+</div>
 {% endblock content  %}

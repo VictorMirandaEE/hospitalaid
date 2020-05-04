@@ -1,0 +1,10 @@
+<a class="block bg-{{color}}-500 text-white text-center rounded-full hover:bg-{{color}}-700 py-2 px-4 mx-4 my-4" role="button"
+{% if href %}
+  href="{{ href }}"
+{% endif %}
+{% if clickjs %}
+  @click="{{ clickjs }}"
+{% endif %}
+>
+  {{ label }}
+</a>

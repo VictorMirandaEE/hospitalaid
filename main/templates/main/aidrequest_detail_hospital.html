@@ -1,24 +1,29 @@
 {% extends "base.html" %}
-{% load material_form %}
 {% load humanize %}
 
+{% block nav2 %}
+<nav class="flex bg-blue-900 p-3 text-white">
+    <div class="p-3">
+      Back
+    </div>
+    <div class="flex-grow">
+      <h1 class="text-3xl font-bold">{{ object.details }}</h1>
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
-  <h1 class="text-3xl">{{ object.get_type_display }} request</h1>
-  <p>Created {{ object.created_at|naturaltime }}</p>
+<div class="p-8">
+  {% include "includes/aidrequest_detail_fields.html" %}
 
-  <dl class="mt-6">
-    {% for name, field in object.get_display_fields.items %}
-      <dt class="p-1 italic">{{ name }}</dt>
-      <dd class="p-1 pb-3">{{ field }}</dd>
-    {% endfor %}
-  </dl>
-
-  <div class="p-2 mt-6 flex border">
-    <a class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" href="{% url 'aidrequest_update' object.id %}">Modify</a>
+  <div class="p-3 mt-6">
+  {% url 'aidrequest_update' as update %}
+  {% include "includes/button-link.html" with color="red" href=update label="Edit request" %}
     <form action="{% url 'aidrequest_close' object.id %}" method="post">
       {% csrf_token %}
-      <button class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" type="submit">Close</button>
+      <button class="w-full text-center py-2 px-4 mx-4 my-4 text-blue-700" type="submit">Close request</button>
     </form>
-    <a class="bg-red-500 hover:bg-red-700 py-2 px-4 mx-4 my-4 text-white" href="{% url 'aidrequest_delete' object.id %}">Delete</a>
+    <a class="block text-center py-2 px-4 mx-4 my-4 text-red-700" href="{% url 'aidrequest_delete' object.id %}">Delete</a>
   </div>
+</div>
 {% endblock content %}

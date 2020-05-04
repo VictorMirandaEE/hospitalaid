@@ -1,0 +1,8 @@
+{% for field in form %}
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm uppercase font-bold mb-2">
+      {{ field.label }}
+    </label>
+    {{ field }}
+  </div>
+{% endfor %}

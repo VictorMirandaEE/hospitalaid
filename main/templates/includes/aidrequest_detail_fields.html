@@ -1,13 +1,23 @@
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
+      Type
+    </div>
+    <div class="flex-grow text-right font-bold">
+      {% if object.type == "supply" %}
+      <span class="bg-blue-900 font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
+      {% endif %}
+      {% if object.type == "repair" %}
+      <span class="bg-red-500 font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
+      {% endif %}
+    </div>
+  </div>
+  <hr class="mb-3">
+  <div class="flex mb-3">
+    <div class="flex-grow text-gray-600 font-bold uppercase">
       Status
     </div>
     <div class="flex-grow text-right font-bold">
-      {% if object.closed %}
-      Closed
-      {% else %}
-      Open
-      {% endif %}
+      {{ object.get_status_display }}
     </div>
   </div>
   <hr class="mb-3">
@@ -16,7 +26,7 @@
       Quantity
     </div>
     <div class="flex-grow text-right font-bold">
-      {{ object.equipment_quantity|default:1 }}
+      {{ object.quantity|default:1 }}
     </div>
   </div>
   <div class="flex mb-3">
@@ -24,7 +34,7 @@
       Equipment type
     </div>
     <div class="flex-grow text-right font-bold">
-      {{ object.equipment_type|default:"n/a" }}
+      {{ object.equipment_type|default:"-" }}
     </div>
   </div>
   <div class="flex mb-3">
@@ -41,7 +51,7 @@
       Manufacturer
     </div>
     <div class="flex-grow text-right font-bold">
-      {{ object.equipment_brand|default:"-" }}
+      {{ object.manufacturer|default:"-" }}
     </div>
   </div>
   <div class="flex mb-3">
@@ -49,7 +59,7 @@
       Model
     </div>
     <div class="flex-grow text-right font-bold">
-      {{ object.equipment_model|default:"-" }}
+      {{ object.model|default:"-" }}
     </div>
   </div>
   <div class="flex mb-3">
@@ -57,7 +67,7 @@
       Serial Number
     </div>
     <div class="flex-grow text-right font-bold">
-      {{ object.equipment_serialno|default:"-" }}
+      {{ object.serial_number|default:"-" }}
     </div>
   </div>
   <hr class="mb-3">
@@ -65,5 +75,5 @@
       Comments
   </div>
   <div class="mb-3">
-    {{ object.details }}
+    {{ object.comments }}
   </div>

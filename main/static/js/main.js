@@ -5,30 +5,18 @@
     });
   }
 
-  L.Control.SearchBar = L.Control.extend({
-    onAdd: function() {
-      var input = L.DomUtil.create('input');
-      input.className = 'search-bar__input';
-      input.placeholder = 'Search hospital';
-
-      var icon = L.DomUtil.create('i');
-      icon.className = 'material-icons search-bar__icon';
-      icon.innerHTML = 'search';
-
-      var div = L.DomUtil.create('div');
-      div.className = 'search-bar';
-      div.append(input);
-      div.append(icon);
-
-      return div;
-    },
-
-    onRemove: function() {}
-  });
-
-  L.control.searchBar = function(opts) {
-    return new L.Control.SearchBar(opts);
-  };
+  function createPopup(hospital) {
+    var temp = document.getElementById("map-popup").content.cloneNode(true);
+    hosp = temp.getElementById("hospitalname");
+    hosp.textContent = hospital.name;
+    link = temp.getElementById("hospitallink");
+    link.href = hospital.link;
+    r = temp.getElementById("repair");
+    r.textContent = 2;
+    s = temp.getElementById("supply");
+    s.textContent = 1;
+    return temp;
+  }
 
   const map = L
     .map('map', {
@@ -36,7 +24,7 @@
       maxZoom: 16,
     })
     // Pan to Rio de Janeiro
-    .setView({ lat: -22.90278, lng: -43.2075 }, 14);
+    .setView({ lat: -3.22278, lng: -0.2075 }, 6);
 
   L
     .tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -44,16 +32,12 @@
     })
     .addTo(map);
 
-  L.control
-    .searchBar({ position: 'topleft' })
-    .addTo(map);
-
   getPoints()
     .then(function (hospitals) {
       hospitals.map(function (hospital) {
         L
           .marker({ lat: hospital.latitude, lng: hospital.longitude })
-          .bindPopup(hospital.name + "<br>" + hospital.text + "<a href='" + hospital.link + "'>See</a>")
+          .bindPopup(createPopup(hospital), {closeButton: false})
           .addTo(map);
       })
     });

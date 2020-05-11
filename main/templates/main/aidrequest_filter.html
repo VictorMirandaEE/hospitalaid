@@ -3,43 +3,49 @@
 {% load static %}
 
 {% block nav2 %}
-<nav class="flex bg-blue-900 p-3 text-white">
+<nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
     <div class="flex-grow">
       <h1 class="text-3xl font-bold">Aid requests</h1>
       <h2 class="">London, United Kingdom</h2>
     </div>
-    <div class="p-5">
-      List
+    <div class="p-5 my-2 rounded-full bg-white">
+      <img src="{% static "images/list.svg" %}" alt="list">
     </div>
-    <div class="p-5">
-      <a class="btn" href="{% url 'hospitalfordonor_list' %}">Map</a>
+    <div class="p-5 my-2 rounded-full">
+      <a href="{% url 'hospitalfordonor_list' %}">
+        <img src="{% static "images/map.svg"  %}" alt="map">
+      </a>
     </div>
 </nav>
 {% endblock %}
 
+{% include "includes/modal.html" with image="http://placehold.it/60x60.png" title="Location" text="Allowing location access will help us personalize your experience better. Do you want us to detect your location?" yes="Yes, please" no="No, thanks" %}
 {% block content %}
 <div class="p-8">
-  <div class="pb-5">
-    <span class="bg-blue-900 font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
-    <span class="bg-red-500 font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
-  </div>
+  {% include "includes/aidrequest_filtertypes.html" %}
   <div class="card-deck">
-    {% for object in object_list %}
-    <div class="flex mb-3 bg-white rounded-lg shadow-lg border-l-8 border-blue-300 p-4">
-      <div class="flex-grow">
-        <p class="pb-2">{{ object.hospital.name }}</p>
-        <p class="pb-2 font-bold">{{ object.details|truncatechars:80 }}</p>
-        <p class="text-gray-500">{{ object.updated_at|naturaltime }}</p>
+    {% for object in filter.qs %}
+    <a href="{% url 'aidrequestfordonor_detail' object.id %}">
+      <div class="flex mb-3 bg-white rounded-lg shadow-lg border-l-8 hover:bg-gray-200
+        {% if object.type == "supply" %}
+        border-blue-900
+        {% endif %}
+        {% if object.type == "repair" %}
+        border-red-500
+        {% endif %}
+        p-4">
+        <div class="flex-grow">
+          <p class="pb-2 text-gray-700">{{ object.hospital.name }}</p>
+          <p class="pb-2 font-bold">{{ object.comments|truncatechars:80 }}</p>
+          <p class="text-gray-500 fnt-rh-reg">{{ object.updated_at|naturaltime }}</p>
+        </div>
+        <div class="p-6">
+          <span class="text-white bg-gray-600 font-bold rounded p-1">
+            {{ object.equipment_quantity|default:1 }}
+          </span>
+        </div>
       </div>
-      <div class="p-6">
-        <span class="text-white bg-gray-600 font-bold rounded p-1">
-          {{ object.equipment_quantity|default:1 }}
-        </span>
-      </div>
-      <div class="p-6">
-        <a href="{% url 'aidrequestfordonor_detail' object.id %}">Open</a>
-      </div>
-    </div>
+    </a>
     {% empty %}
     <p>No requests yet</p>
     {% endfor %}

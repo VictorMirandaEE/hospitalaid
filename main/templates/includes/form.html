@@ -1,7 +1,13 @@
-{% for field in form %}
+{% for field in form.hidden_fields %}
+{{ field }}
+{% endfor %}
+{% for field in form.visible_fields %}
   <div class="mb-4">
     <label class="block text-gray-700 text-sm uppercase font-bold mb-2">
       {{ field.label }}
+      {% if field.field.required %}
+      <span class="text-red-800"> * </span>
+      {% endif %}
     </label>
     {{ field }}
   </div>

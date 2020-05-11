@@ -1,10 +1,23 @@
 {% extends "base.html" %}
 
 {% block nav2 %}
-<nav class="flex bg-blue-900 p-3 text-white">
+<nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
+  {% if request.user.first_name %}
+    <div class="p-3">
+      <a onclick="window.history.go(-1)">
+        Back
+      </a>
+    </div>
+    <div class="flex-grow">
+      <h1 class="text-3xl font-bold">
+        Edit account
+      </h1>
+    </div>
+  {% else %}
     <div class="flex-grow">
       <h1 class="text-3xl font-bold">Welcome</h1>
     </div>
+  {% endif %}
 </nav>
 {% endblock %}
 

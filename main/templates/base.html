@@ -8,27 +8,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% block styles %}
     {% endblock styles %}
+    <style type="text/css" media="all">
+.bg-hospitalaid-blue-light {
+  background-color: #0f3476;
+}
+.bg-hospitalaid-blue-dark {
+  background-color: #0c2c64;
+}
+.bg-hospitalaid-red {
+  background-color: #ff5959;
+}
+.fg-hospitalaid-blue-light {
+  color: #0f3476;
+}
+.fg-hospitalaid-blue-dark {
+  color: #0c2c64;
+}
+.bg-hospitalaid-grayblue {
+  background-color: #f0fbff;
+}
+@font-face {
+font-family: "RedHatText-Medium";
+src: url("{% static "/fonts/RedHatText-Medium.ttf" %}");
+}
+@font-face {
+font-family: "RedHatText-Regular";
+src: url("{% static "/fonts/RedHatText-Regular.ttf" %}");
+}
+.fnt-rh-med { font-family: "RedHatText-Medium"; font-weight: 500; }
+.fnt-rh-reg { font-family: "RedHatText-Regular"; font-weight: 400; }
+    </style>
   </head>
 
-  <body class="{% block css_body %}bg-blue-100{% endblock %}">
+  <body class="bg-hospitalaid-grayblue fnt-rh-med">
     {% block nav %}
-    <nav class="flex bg-blue-900 p-3 text-white">
+    <nav class="flex bg-hospitalaid-blue-light p-3 text-white">
         <div class="flex-grow">
           <a href="/" class="">
-            <img src="{% static "images/logo.png" %}" alt="logo">
+            <img src="{% static "images/logo.svg" %}" alt="logo">
           </a>
         </div>
         {% if request.user.is_authenticated %}
         <div class="p-3">
-          <a href="#">{{ request.user.email }}</a>
+          <a href="{% url "signup_step2" %}">
+            <img src="{% static "images/user.svg" %}" alt="user" />
+          </a>
         </div>
         {% endif %}
+        <div class="p-3">
+          <a href="#">
+            <img src="{% static "images/hamburger.svg" %}" alt="menu" />
+          </a>
+        </div>
     </nav>
     {% endblock %}
     {% block nav2 %}
     {% endblock %}
 
     <main>
+      {% block modal %}
+      {% endblock %}
       {% block content %}
       {% endblock %}
     </main>

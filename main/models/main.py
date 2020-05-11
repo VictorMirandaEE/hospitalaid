@@ -40,58 +40,31 @@ class ImportedHospital(models.Model):
 
 class AidRequest(models.Model):
     REQUEST_TYPE = [
-        ("equipment_repair", "Existing equipment repair"),
-        ("equipment_request", "New equipment request"),
-        ("supply_request", "New supply request"),
-        ("other_request", "Other request"),
+        ("supply", "New equipment/supply request"),
+        ("repair", "Existing equipment repair"),
+    ]
+    STATUS = [
+        ("unassigned", "Unassigned"),
+        ("in_progress", "In progress"),
+        ("closed", "Closed"),
     ]
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     type = models.CharField(max_length=32, choices=REQUEST_TYPE)
-    details = models.TextField(max_length=2000)
+    status = models.CharField(max_length=16, choices=STATUS)
+    comments = models.CharField(max_length=200)
 
-    equipment_type = models.CharField(
-        max_length=50, help_text="only for new equipment request", blank=True
-    )
-    equipment_quantity = models.CharField(
-        max_length=16, help_text="only for new equipment request", blank=True
-    )
+    equipment_type = models.CharField(max_length=50)
+    quantity = models.PositiveIntegerField()
 
-    supply_type = models.CharField(
-        max_length=50, help_text="only for new supply request", blank=True
-    )
-    supply_quantity = models.CharField(
-        max_length=16, help_text="only for new supply quantity", blank=True
-    )
-
-    equipment_brand = models.CharField(
-        max_length=16, help_text="only for equipment repair", blank=True
-    )
-    equipment_model = models.CharField(
-        max_length=16, help_text="only for equipment repair", blank=True
-    )
-    equipment_serialno = models.CharField(
-        max_length=16, help_text="only for equipment repair", blank=True
-    )
-    closed = models.BooleanField(default=False)
-    
+    manufacturer = models.CharField(max_length=16, blank=True)
+    model = models.CharField(max_length=16, blank=True)
+    serial_number = models.CharField(max_length=16, blank=True)
 
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    def get_display_fields(self):
-        if self.type.startswith("equipment"):
-            return {
-                "equipment type": self.equipment_type,
-                "manufacturer": self.equipment_brand,
-                "model": self.equipment_model,
-                "serial no": self.equipment_serialno,
-                "details": self.details
-            }
-        else:
-            return {}
 
     class Meta:
         ordering = ["-updated_at"]
 
     def __str__(self):
-        return "{}".format(self.details,)
+        return "{}".format(self.comments,)

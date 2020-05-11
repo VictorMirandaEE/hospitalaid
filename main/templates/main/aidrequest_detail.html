@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-{% load material_form %}
 
 {% block nav2 %}
-<nav class="flex bg-blue-900 p-3 text-white">
+<nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
     <div class="p-3">
-      Back
+      <a href="{% url "aidrequestfordonor_list" %}">
+        Back
+      </a>
     </div>
     <div class="flex-grow">
-      <h1 class="text-3xl font-bold">{{ object.details }}</h1>
+      <h1 class="text-3xl font-bold">{{ object.comments }}</h1>
     </div>
 </nav>
 {% endblock %}
@@ -17,8 +18,8 @@
   {% include "includes/aidrequest_detail_fields.html" %}
 </div>
 
-  <div class="bg-blue-900 p-6 text-white">
-    <div class="flex">
+  <div class="bg-hospitalaid-blue-light p-6 px-12 text-white">
+    <div class="flex font-bold">
       <div class="flex-grow">
         <div>
           MANAGER

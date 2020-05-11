@@ -42,11 +42,11 @@ urlpatterns = [
         "help-needed/hospitals/<int:pk>/", views.main.HospitalDetailForDonor.as_view(), name="hospitalfordonor_detail"
     ),
     path(
-        "help-needed/hospitalmap/", views.main.HospitalListForDonor.as_view(), name="hospitalfordonor_list"
+        "help-needed/map/", views.main.HospitalListForDonor.as_view(), name="hospitalfordonor_list"
     ),
     path(
         "help-needed/list/", views.main.AidRequestListForDonor.as_view(), name="aidrequestfordonor_list"
     ),
-    path("signup/", views.user.signup_magiclink, name="signup"),
+    path("signup/", views.user.Signup.as_view(), name="signup"),
     path("", views.main.home),
 ]

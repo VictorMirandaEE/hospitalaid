@@ -18,16 +18,22 @@ logger = logging.getLogger(__name__)
 
 ####
 
+class AidRequestForm(forms.ModelForm):
+    class Meta:
+        model = models.main.AidRequest
+        fields = [
+            "type",
+            "status",
+            "comments",
+            "manufacturer",
+            "model",
+            "serial_number",
+        ]
+        #widgets = {'type': forms.HiddenInput}
 
 class AidRequestCreateView(LoginRequiredMixin, CreateView):
     model = models.main.AidRequest
-    fields = [
-        "type",
-        "details",
-        "equipment_brand",
-        "equipment_model",
-        "equipment_serialno",
-    ]
+    form_class = AidRequestForm
     success_url = reverse_lazy("aidrequestforhospital_list")
 
     def form_valid(self, form):
@@ -40,13 +46,7 @@ class AidRequestCreateView(LoginRequiredMixin, CreateView):
 
 class AidRequestUpdateView(LoginRequiredMixin, UpdateView):
     model = models.main.AidRequest
-    fields = [
-        "type",
-        "details",
-        "equipment_brand",
-        "equipment_model",
-        "equipment_serialno",
-    ]
+    form_class = AidRequestForm
     success_url = reverse_lazy("aidrequestforhospital_list")
 
     def get_queryset(self):
@@ -62,6 +62,7 @@ class AidRequestDeleteView(LoginRequiredMixin, DeleteView):
         hospitals = models.main.Hospital.objects.filter(user=self.request.user)
         return self.model.objects.filter(hospital__in=hospitals)
 
+
 @login_required
 def aidrequest_close(request, pk):
     hospitals = models.main.Hospital.objects.filter(user=request.user)
@@ -75,9 +76,10 @@ class AidRequestDetailForHospital(DetailView):
     template_name = "main/aidrequest_detail_hospital.html"
 
 
-class AidRequestListForHospital(ListView):
+class AidRequestListForHospital(FilterView):
     model = models.main.AidRequest
     template_name = "main/aidrequest_list_hospital.html"
+    filterset_fields = ["type"]
 
     def get_queryset(self):
         hospitals = models.main.Hospital.objects.filter(user=self.request.user)
@@ -89,6 +91,9 @@ class SignupStep2Form(forms.Form):
     phone = forms.CharField(max_length=32)
     hospital_name = forms.CharField(max_length=32)
     hospital_address = forms.CharField(max_length=32)
+    hospital_city = forms.CharField(max_length=32)
+    hospital_postcode = forms.CharField(max_length=32)
+    hospital_country = forms.CharField(max_length=32)
     
 
 class SignupStep2(LoginRequiredMixin, FormView):
@@ -96,12 +101,27 @@ class SignupStep2(LoginRequiredMixin, FormView):
     form_class = SignupStep2Form
     template_name = "main/step2_form.html"
 
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['name'] = self.request.user.first_name
+        initial['phone'] = self.request.user.phone
+        h = models.main.Hospital.objects.filter(user=self.request.user).first()
+        initial['hospital_name'] = h.name
+        initial['hospital_address'] = h.address
+        initial['hospital_city'] = h.city
+        initial['hospital_postcode'] = h.postal_code
+        initial['hospital_country'] = h.country
+        return initial
+
     def form_valid(self, form):
         self.request.user.first_name = form.cleaned_data['name']
         self.request.user.phone = form.cleaned_data['phone']
         self.request.user.save()
         h, _ = models.main.Hospital.objects.get_or_create(name=form.cleaned_data['hospital_name'])
         h.address = form.cleaned_data['hospital_address']
+        h.city = form.cleaned_data['hospital_city']
+        h.postal_code = form.cleaned_data['hospital_postcode']
+        h.country = form.cleaned_data['hospital_country']
         h.user = self.request.user
         h.save()
         return super().form_valid(form)
@@ -125,7 +145,7 @@ class HospitalListForDonor(FilterView):
 
 class AidRequestListForDonor(FilterView):
     model = models.main.AidRequest
-    filterset_fields = ["hospital__city"]
+    filterset_fields = ["hospital__city", "type"]
 
     def get_queryset(self):
         return self.model.objects.all().order_by("-updated_at")

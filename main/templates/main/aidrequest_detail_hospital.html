@@ -2,12 +2,12 @@
 {% load humanize %}
 
 {% block nav2 %}
-<nav class="flex bg-blue-900 p-3 text-white">
+<nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
     <div class="p-3">
       Back
     </div>
     <div class="flex-grow">
-      <h1 class="text-3xl font-bold">{{ object.details }}</h1>
+      <h1 class="text-3xl font-bold">{{ object.comments }}</h1>
     </div>
 </nav>
 {% endblock %}
@@ -17,13 +17,10 @@
   {% include "includes/aidrequest_detail_fields.html" %}
 
   <div class="p-3 mt-6">
-  {% url 'aidrequest_update' as update %}
-  {% include "includes/button-link.html" with color="red" href=update label="Edit request" %}
-    <form action="{% url 'aidrequest_close' object.id %}" method="post">
-      {% csrf_token %}
-      <button class="w-full text-center py-2 px-4 mx-4 my-4 text-blue-700" type="submit">Close request</button>
-    </form>
-    <a class="block text-center py-2 px-4 mx-4 my-4 text-red-700" href="{% url 'aidrequest_delete' object.id %}">Delete</a>
+  {% url 'aidrequest_update' object.id as update %}
+  {% include "includes/button-link.html" with color="blue" href=update label="Edit" %}
+  {% url 'aidrequest_delete' object.id as delete %}
+  {% include "includes/button-link.html" with color="red" href=delete label="Delete" %}
   </div>
 </div>
 {% endblock content %}

@@ -1,4 +1,11 @@
-<a class="block bg-{{color}}-500 text-white text-center rounded-full hover:bg-{{color}}-700 py-2 px-4 mx-4 my-4" role="button"
+<a class="block 
+{% if color == "blue" %}
+    bg-hospitalaid-blue-light
+{% endif %}
+{% if color == "red" %}
+    bg-hospitalaid-red
+{% endif %}
+   text-white text-center rounded-full py-2 px-4 mx-4 my-4" role="button"
 {% if href %}
   href="{{ href }}"
 {% endif %}

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load material_form %}
 {% load static %}
 
 {% block styles %}
@@ -7,14 +6,54 @@
     <link rel="stylesheet" href="{% static "/css/main.css" %}">
 {% endblock styles %}
 
+{% block nav2 %}
+<nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
+    <div class="flex-grow">
+      <h1 class="text-3xl font-bold">Aid requests</h1>
+      <h2 class="">London, United Kingdom</h2>
+    </div>
+    <div class="p-5 my-2 rounded-full">
+      <a href="{% url 'aidrequestfordonor_list' %}">
+        <img src="{% static "images/list.svg" %}" alt="list">
+      </a>
+    </div>
+    <div class="p-5 my-2 rounded-full bg-white">
+      <img src="{% static "images/map.svg"  %}" alt="map">
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
-  <h2>Hospital list</h2>
-  <a class="btn" href="{% url 'aidrequestfordonor_list' %}">List View</a>
-  <div class="row">
-    <div class="s12">
-      <div id="map"></div>
+<template id="map-popup">
+  <div class="rounded-lg">
+    <div class="flex bg-blue-900 p-2 px-4 font-bold text-white">
+      <div class="flex-grow" id="hospitalname">
+      </div>
+      <div>
+        <a id="hospitallink" style="color: white" href="#">
+          &gt;
+        </a>
+      </div>
+    </div>
+    <div class="flex text-center font-bold py-2 bg-white">
+      <div class="w-1/2 border-l-8 border-red-300 p-2 px-4">
+        <div class="text-3xl" id="repair">
+        </div>
+        <div class="text-lg text-gray-500">
+          REPAIR
+        </div>
+      </div>
+      <div class="w-1/2 border-r-8 border-blue-300 p-2 px-4">
+        <div class="text-3xl" id="supply">
+        </div>
+        <div class="text-lg text-gray-500">
+          SUPPLY
+        </div>
+      </div>
     </div>
   </div>
+</template>
+<div id="map"></div>
 {% endblock content %}
 
 {% block js %}

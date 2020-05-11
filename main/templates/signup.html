@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block nav %}
+{% endblock %}
+
+{% block content %}
+{% if request.GET.sent %}
+  {% include "includes/modal.html" with image="http://placehold.it/60x60.png" title="Login link email sent" text="An email containing the login link was sent to you. Click the link to log in." no="Dismiss" %}
+{% endif %}
+<div class="container flex justify-center mx-auto text-blue">
+  <div class="w-1/2">
+    <div class="my-8 flex justify-center mx-auto">
+      <img src="{% static "images/logo-vertical.svg" %}" alt="logo" />
+    </div>
+    <div class="text-4xl text-center fg-hospitalaid-blue-light font-bold">
+      HELPING THE WORLD
+    </div>
+    <div class="text-2xl text-center fg-hospitalaid-blue-light">
+      address the COVID-19 pandemic
+    </div>
+    <div class="text-lg my-8">
+        <p class="text-center fnt-rh-reg">
+        To be able to login please enter the hospital email address you are working at.
+        Click on the link sent to the email you enter to be able to log in
+        </p>
+    </div>
+    <div class="text-lg my-8">
+        <form action="{% url "signup" %}" method="post">
+          {% csrf_token %}
+          {% include "includes/form.html" %}
+          {% include "includes/button.html" with color="red" label="Send me the login link" %}
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock content  %}

@@ -1,0 +1,2 @@
+web: ./manage.py runserver
+livereload: livereload

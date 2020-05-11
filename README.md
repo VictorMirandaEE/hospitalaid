@@ -9,7 +9,7 @@ Install
 - Install Git and clone this project locally.
 - Run `cp .env.template .env`
 - Run `pipenv shell`
-- Run `./manage.py runserver`
+- Run `honcho -f Procfile.dev start`
 - Open the browser at `http://localhost:8000/`
 
 

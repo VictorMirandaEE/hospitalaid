@@ -7,7 +7,8 @@
 
 {% block content %}
 {% if request.GET.sent %}
-  {% include "includes/modal.html" with image="http://placehold.it/60x60.png" title="Login link email sent" text="An email containing the login link was sent to you. Click the link to log in." no="Dismiss" %}
+  {% url 'signup' as signup %}
+  {% include "includes/modal.html" with image="http://placehold.it/60x60.png" title="Login link email sent" text="An email containing the login link was sent to you. Click the link to log in." no="Dismiss" no_href=signup %}
 {% endif %}
 <div class="container flex justify-center mx-auto text-blue">
   <div class="w-1/2">

@@ -18,13 +18,27 @@ logger = logging.getLogger(__name__)
 
 ####
 
-class AidRequestForm(forms.ModelForm):
+class AidRequestCreateForm(forms.ModelForm):
+    class Meta:
+        model = models.main.AidRequest
+        fields = [
+            "type",
+            "comments",
+            "quantity",
+            "manufacturer",
+            "model",
+            "serial_number",
+        ]
+        #widgets = {'type': forms.HiddenInput}
+
+class AidRequestUpdateForm(forms.ModelForm):
     class Meta:
         model = models.main.AidRequest
         fields = [
             "type",
             "status",
             "comments",
+            "quantity",
             "manufacturer",
             "model",
             "serial_number",
@@ -33,7 +47,7 @@ class AidRequestForm(forms.ModelForm):
 
 class AidRequestCreateView(LoginRequiredMixin, CreateView):
     model = models.main.AidRequest
-    form_class = AidRequestForm
+    form_class = AidRequestCreateForm
     success_url = reverse_lazy("aidrequestforhospital_list")
 
     def form_valid(self, form):
@@ -46,7 +60,7 @@ class AidRequestCreateView(LoginRequiredMixin, CreateView):
 
 class AidRequestUpdateView(LoginRequiredMixin, UpdateView):
     model = models.main.AidRequest
-    form_class = AidRequestForm
+    form_class = AidRequestUpdateForm
     success_url = reverse_lazy("aidrequestforhospital_list")
 
     def get_queryset(self):
@@ -106,11 +120,12 @@ class SignupStep2(LoginRequiredMixin, FormView):
         initial['name'] = self.request.user.first_name
         initial['phone'] = self.request.user.phone
         h = models.main.Hospital.objects.filter(user=self.request.user).first()
-        initial['hospital_name'] = h.name
-        initial['hospital_address'] = h.address
-        initial['hospital_city'] = h.city
-        initial['hospital_postcode'] = h.postal_code
-        initial['hospital_country'] = h.country
+        if h:
+            initial['hospital_name'] = h.name
+            initial['hospital_address'] = h.address
+            initial['hospital_city'] = h.city
+            initial['hospital_postcode'] = h.postal_code
+            initial['hospital_country'] = h.country
         return initial
 
     def form_valid(self, form):

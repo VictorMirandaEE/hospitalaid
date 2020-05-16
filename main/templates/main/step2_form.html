@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
   {% if request.user.first_name %}
     <div class="p-3">
       <a onclick="window.history.go(-1)">
-        Back
+        <img src="{% static "images/back-arrow.svg" %}" alt="Back" />
       </a>
     </div>
     <div class="flex-grow">

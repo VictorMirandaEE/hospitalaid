@@ -11,7 +11,7 @@
     <div class="my-8 flex justify-center mx-auto">
       <img src="{% static "images/logo-vertical.svg" %}" alt="logo" />
     </div>
-    <div class="text-4xl text-center fg-hospitalaid-blue-light font-bold">
+    <div class="text-4xl text-center fg-hospitalaid-blue-light font-bold" style="line-height:1; letter-spacing: 1px">
       HELPING THE WORLD
     </div>
     <div class="text-2xl text-center fg-hospitalaid-blue-light">
@@ -19,9 +19,11 @@
     </div>
     <div class="text-lg my-8">
         {% url "signup" as signup %}
-        {% include "includes/button-link.html" with color="blue" href=signup label="I work at the hospital" %}
+        {% static "images/plus.svg" as plus_icon %}
+        {% include "includes/button-link.html" with image=plus_icon color="blue" href=signup label="I work at the hospital" %}
         {% url "aidrequestfordonor_list" as link %}
-        {% include "includes/button-link.html" with color="red" href=link label="I want to help" %}
+        {% static "images/heart.svg" as heart_icon %}
+        {% include "includes/button-link.html" with image=heart_icon color="red" href=link label="I want to help" %}
     </div>
   </div>
 </div>

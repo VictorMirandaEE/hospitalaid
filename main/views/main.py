@@ -23,11 +23,12 @@ class AidRequestCreateForm(forms.ModelForm):
         model = models.main.AidRequest
         fields = [
             "type",
-            "comments",
+            "equipment_type",
             "quantity",
             "manufacturer",
             "model",
             "serial_number",
+            "comments",
         ]
         #widgets = {'type': forms.HiddenInput}
 
@@ -37,14 +38,17 @@ class AidRequestUpdateForm(forms.ModelForm):
         fields = [
             "type",
             "status",
-            "comments",
+            "equipment_type",
             "quantity",
             "manufacturer",
             "model",
             "serial_number",
+            "comments",
         ]
         #widgets = {'type': forms.HiddenInput}
+        widgets = {'comments': forms.Textarea(attrs={'rows': 4})}
 
+		
 class AidRequestCreateView(LoginRequiredMixin, CreateView):
     model = models.main.AidRequest
     form_class = AidRequestCreateForm

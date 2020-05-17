@@ -50,8 +50,8 @@ class AidRequest(models.Model):
     ]
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     type = models.CharField(max_length=32, choices=REQUEST_TYPE)
-    status = models.CharField(max_length=16, choices=STATUS)
-    comments = models.CharField(max_length=200)
+    status = models.CharField(max_length=16, choices=STATUS, default='unassigned')
+    comments = models.CharField(max_length=200, blank=True)
 
     equipment_type = models.CharField(max_length=50)
     quantity = models.PositiveIntegerField()

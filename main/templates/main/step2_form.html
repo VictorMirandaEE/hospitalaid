@@ -26,7 +26,11 @@
   <form method="POST">
       {% csrf_token %}
       {% include "includes/form.html" %}
-      {% include "includes/button.html" with color="red" label="Save details" %}
+        {% if request.user.first_name %}
+          {% include "includes/button.html" with color="red" label="Save changes" %}
+        {% else %}
+          {% include "includes/button.html" with color="red" label="Save details" %}
+        {% endif %}
   </form>
 </div>
 {% endblock content  %}

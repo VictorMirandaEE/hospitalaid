@@ -8,7 +8,7 @@
     <div class="flex-grow">
       <h1 class="text-3xl font-bold">
         {% if object %}
-        Modify request
+        Edit request
         {% else %}
         Add a new request
         {% endif %}
@@ -23,10 +23,10 @@
       {% csrf_token %}
       {% include "includes/form.html" %}
       {% if object %}
-        {% include "includes/button.html" with color="red" label="Save request" %}
+        {% include "includes/button.html" with color="red" label="Save changes" %}
       {% else %}
         {% include "includes/button.html" with color="red" label="Add request" %}
       {% endif %}
   </form>
 </div>
-{% endblock content  %}
+{% endblock content %}

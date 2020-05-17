@@ -8,14 +8,15 @@
 {% block content %}
 {% if request.GET.sent %}
   {% url 'signup' as signup %}
-  {% include "includes/modal.html" with image="http://placehold.it/60x60.png" title="Login link email sent" text="An email containing the login link was sent to you. Click the link to log in." no="Dismiss" no_href=signup %}
+  {% static "/images/mail.svg" as icon %}
+  {% include "includes/modal.html" with image=icon title="Login link email sent" text="An email containing the<br>login link was sent to you.<br>Click the link to log in." no="Dismiss" no_href=signup %}
 {% endif %}
 <div class="container flex justify-center mx-auto text-blue">
   <div class="w-1/2">
     <div class="my-8 flex justify-center mx-auto">
       <img src="{% static "images/logo-vertical.svg" %}" alt="logo" />
     </div>
-    <div class="text-4xl text-center fg-hospitalaid-blue-light font-bold">
+    <div class="text-5xl text-center fg-hospitalaid-blue-light font-bold" style="line-height:1; letter-spacing: 1px">
       HELPING THE WORLD
     </div>
     <div class="text-2xl text-center fg-hospitalaid-blue-light">
@@ -23,8 +24,7 @@
     </div>
     <div class="text-lg my-8">
         <p class="text-center fnt-rh-reg">
-        To be able to login please enter the hospital email address you are working at.
-        Click on the link sent to the email you enter to be able to log in
+        To be able to login, please enter your hospital email address.
         </p>
     </div>
     <div class="text-lg my-8">

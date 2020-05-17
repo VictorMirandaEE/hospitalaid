@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load static %}
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
     <div class="p-3">
       <a href="{% url "aidrequestforhospital_list" %}">
-        Back
+        <img src="{% static "images/back-arrow.svg" %}" alt="Back" />
       </a>
     </div>
     <div class="flex-grow">
-      <h1 class="text-3xl font-bold">{{ object.comments }}</h1>
+      <h1 class="text-3xl text-center font-bold">{{ object.comments }}</h1>
     </div>
 </nav>
 {% endblock %}

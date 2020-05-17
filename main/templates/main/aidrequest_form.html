@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
     <div class="p-3">
-      Back
+      <a href="{% url "aidrequestforhospital_list" %}">
+        <img src="{% static "images/back-arrow.svg" %}" alt="Back" />
+      </a>
     </div>
     <div class="flex-grow">
       <h1 class="text-3xl font-bold">

@@ -13,6 +13,8 @@
   @click="{{ clickjs }}"
 {% endif %}
 >
-<img class="display: inline" src="{{ image }}" alt="">
-<span>{{ label }}</span>
+{% if image %}
+<img class="inline px-1" src="{{ image }}" alt="">
+{% endif %}
+<span class="align-middle">{{ label }}</span>
 </a>

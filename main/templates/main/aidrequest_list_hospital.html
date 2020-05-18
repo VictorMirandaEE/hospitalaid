@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load static %}
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
@@ -12,7 +13,9 @@
 {% block content %}
 <div class="p-8">
   <div class="card-deck">
-    {% include "includes/aidrequest_filtertypes.html" %}
+    {% if filter.qs %}
+      {% include "includes/aidrequest_filtertypes.html" %}
+    {% endif %}
     {% for object in filter.qs %}
     <a href="{% url 'aidrequestforhospital_detail' object.id %}">
       <div class="flex mb-3 bg-white rounded-lg shadow-lg border-l-8 hover:bg-gray-200
@@ -35,11 +38,24 @@
       </div>
     </a>
     {% empty %}
-    <p>No requests yet</p>
+    <div class="text-lg text-center font-bold">
+      You currently have no
+    </div>
+    <div class="text-lg text-center font-bold">
+      created requests
+    </div>
+    <div class="flex-grow text-base my-8">
+        <p class="text-center fnt-rh-reg">
+        Click the button below to add a new request.
+        </p>
+    </div>
+    <div class="my-8 flex justify-center mx-auto">
+      <img src="{% static "images/ill-placeholder.svg" %}" alt="logo" />
+    </div>
     {% endfor %}
   </div>
 
   {% url 'aidrequest_create' as create %}
-  {% include "includes/button-link.html" with color="red" href=create label="Add" %}
+  {% include "includes/button-link.html" with color="red" href=create label="Add a new request" %}
 </div>
 {% endblock content %}

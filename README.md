@@ -1,9 +1,7 @@
-HOSPITALAID
+HOSPITALAID [![HospitalAid](https://circleci.com/gh/HospitalAid/hospitalaid.svg?style=svg)](https://circleci.com/gh/HospitalAid/hospitalaid)
 ===
 
 HospitalAid is an online forum for hospitals for requesting aids, and for people/organizations to offer help.
-
-[![HospitalAid](https://circleci.com/gh/HospitalAid/hospitalaid.svg?style=svg)](https://circleci.com/gh/HospitalAid/hospitalaid)
 
 
 Install

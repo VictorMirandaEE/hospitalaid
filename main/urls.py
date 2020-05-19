@@ -48,5 +48,5 @@ urlpatterns = [
         "help-needed/list/", views.main.AidRequestListForDonor.as_view(), name="aidrequestfordonor_list"
     ),
     path("signup/", views.user.Signup.as_view(), name="signup"),
-    path("", views.main.home),
+    path("", views.main.home, name="home"),
 ]

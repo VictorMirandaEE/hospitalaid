@@ -1,4 +1,4 @@
-HOSPITALAID
+HOSPITALAID [![HospitalAid](https://circleci.com/gh/HospitalAid/hospitalaid.svg?style=svg)](https://circleci.com/gh/HospitalAid/hospitalaid)
 ===
 
 HospitalAid is an online forum for hospitals for requesting aids, and for people/organizations to offer help.
@@ -12,6 +12,7 @@ Install
 - Install Git and clone this project locally.
 - Run `cp .env.template .env`
 - Run `pipenv shell`
+- Run `pipenv sync` to update dependencies
 - Run `honcho -f Procfile.dev start`
 - Open the browser at `http://localhost:8000/`
 

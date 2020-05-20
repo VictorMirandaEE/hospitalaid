@@ -1,0 +1,31 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+jobs:
+  build-and-test:
+    executor: python/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps-{{ checksum "Pipfile.lock" }}
+      - run:
+          command: |  # use pipenv to install dependencies
+            sudo pip install pipenv
+            pipenv install
+      - save_cache:
+          key: deps-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+      - run:
+          command: pipenv run ./manage.py test
+          name: Test
+          environment:
+            DATABASE_URL: "sqlite:///db.sqlite3"
+            EMAIL_URL: "console:"
+
+workflows:
+  main:
+    jobs:
+      - build-and-test

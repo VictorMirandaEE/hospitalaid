@@ -4,6 +4,7 @@ from django import forms
 from django.core.mail import send_mail
 from django.views.generic.edit import FormView
 from django.urls import reverse, reverse_lazy
+from django.template.loader import render_to_string
 from sesame import utils
 
 from main.models.user import User
@@ -26,14 +27,13 @@ class Signup(FormView):
         email = form.cleaned_data['email']
         user, created = User.objects.get_or_create(email=email)
         login_token = utils.get_query_string(user)
+
+        logo_url = "/static/images/logo/logo-vertical.png"  # FIXME
+        logo_src = "http://{}{}".format(self.request.get_host(), logo_url)
         login_link = "http://{}/{}".format(self.request.get_host(), login_token)
 
-        html_message = """
-        <p>Hi there,</p>
-        <p>Here is your <a href="{}">login link</a> </p>
-        <p>Thanks,</p>
-        <p>HospitalAid Admin</p>
-        """.format(login_link)
+        html_message = render_to_string('email/magiclink_login_message.html',
+                {'login_link': login_link, 'logo_src': logo_src})
 
         send_mail(
             'Hospital Aid Login Link',

@@ -27,10 +27,13 @@ class Signup(FormView):
         email = form.cleaned_data['email']
         user, created = User.objects.get_or_create(email=email)
         login_token = utils.get_query_string(user)
+
+        logo_url = "/static/images/logo/logo-vertical.png"  # FIXME
+        logo_src = "http://{}{}".format(self.request.get_host(), logo_url)
         login_link = "http://{}/{}".format(self.request.get_host(), login_token)
 
         html_message = render_to_string('email/magiclink_login_message.html',
-                                        {'login_link': login_link})
+                {'login_link': login_link, 'logo_src': logo_src})
 
         send_mail(
             'Hospital Aid Login Link',

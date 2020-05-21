@@ -53,7 +53,7 @@ class AidRequest(models.Model):
     status = models.CharField(max_length=16, choices=STATUS, default='unassigned')
     comments = models.CharField(max_length=200, blank=True)
 
-    equipment_type = models.CharField(max_length=50)
+    title = models.CharField(max_length=50)
     quantity = models.PositiveIntegerField()
 
     manufacturer = models.CharField(max_length=16, blank=True)

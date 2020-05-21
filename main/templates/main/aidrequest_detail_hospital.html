@@ -27,3 +27,58 @@
   </div>
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+  {% if object.status == "unassigned" %}
+    setStatusOnClick1();
+  {% endif %}
+
+  {% if object.status == "in_progress" %}
+    setStatusOnClick2();
+  {% endif %}
+
+  {% if object.status == "closed" %}
+    setStatusOnClick3();
+  {% endif %}
+
+  function setStatusOnClick1() {
+    /* document.getElementById('id_status').value = "unassigned"; */
+    document.getElementById('id_unassigned').style.color = "#ffffff";
+    document.getElementById('id_unassigned').style.backgroundColor = "#ff5959";
+    document.getElementById('id_unassigned').style.borderColor = "#ff5959";
+    document.getElementById('id_in_progress').style.color = "#0f3476";
+    document.getElementById('id_in_progress').style.backgroundColor = "#f0fbff";
+    document.getElementById('id_in_progress').style.borderColor = "#bfc5cf";
+    document.getElementById('id_closed').style.color = "#808da0";
+    document.getElementById('id_closed').style.backgroundColor = "#f0fbff";
+    document.getElementById('id_closed').style.borderColor = "#bfc5cf";
+  }
+
+  function setStatusOnClick2() {
+    /* document.getElementById('id_status').value = "in_progress"; */
+    document.getElementById('id_unassigned').style.color = "#ff5959";
+    document.getElementById('id_unassigned').style.backgroundColor = "#f0fbff";
+    document.getElementById('id_unassigned').style.borderColor = "#bfc5cf";
+    document.getElementById('id_in_progress').style.color = "#fffeff";
+    document.getElementById('id_in_progress').style.backgroundColor = "#0f3476";
+    document.getElementById('id_in_progress').style.borderColor = "#0f3476";
+    document.getElementById('id_closed').style.color = "#808da0";
+    document.getElementById('id_closed').style.backgroundColor = "#f0fbff";
+    document.getElementById('id_closed').style.borderColor = "#bfc5cf";
+  }
+
+  function setStatusOnClick3() {
+    /* document.getElementById('id_status').value = "closed"; */
+    document.getElementById('id_unassigned').style.color = "#ff5959";
+    document.getElementById('id_unassigned').style.backgroundColor = "#f0fbff";
+    document.getElementById('id_unassigned').style.borderColor = "#bfc5cf";
+    document.getElementById('id_in_progress').style.color = "#0f3476";
+    document.getElementById('id_in_progress').style.backgroundColor = "#f0fbff";
+    document.getElementById('id_in_progress').style.borderColor = "#bfc5cf";
+    document.getElementById('id_closed').style.color = "#fffeff";
+    document.getElementById('id_closed').style.backgroundColor = "#808da0";
+    document.getElementById('id_closed').style.borderColor = "#808da0";
+  }
+</script>
+{% endblock js %}

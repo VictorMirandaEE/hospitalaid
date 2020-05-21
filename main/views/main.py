@@ -30,7 +30,8 @@ class AidRequestCreateForm(forms.ModelForm):
             "serial_number",
             "comments",
         ]
-        widgets = {'type': forms.HiddenInput}
+        widgets = {'type': forms.HiddenInput,
+                   'comments': forms.Textarea(attrs={'rows': 4}),}
         labels = {
             'equipment_type': 'Description',
         }

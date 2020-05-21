@@ -24,33 +24,33 @@
 
 <div class="p-8">
   <form method="POST">
-      {% csrf_token %}
+    {% csrf_token %}
 
-    <div class="w-2/3 mx-auto py-8 flex justify-between">
-      <div id="id_supply_box" class="w-48 h-24 border-0 border-blue-400 rounded-lg shadow-lg hover:cursor-pointer hover:bg-gray-200 focus:outline-none focus:border-blue-400" tabindex="0" onclick="setBorderOnClick1()">
-        <div class="flex justify-center items-center bg-hospitalaid-blue-light rounded-t-lg h-10">
-          <h1 class="uppercase text-base tracking-wide text-white fnt-rh-med font-bold">SUPPLY</h1>
+    <div class="mx-auto pb-8 flex justify-between">
+      <div id="id_supply_box" class="mr-2 w-64 h-auto rounded-lg shadow-lg focus:outline-none focus:shadow-lg" tabindex="0" onclick="setSupplyOnClick()">
+        <div id="id_supply_box1" class="flex justify-center items-center bg-hospitalaid-blue-light rounded-t-lg h-8">
+          <h1 class="uppercase text-base tracking-wide font-bold text-white">SUPPLY</h1>
         </div>
-        <div class="flex justify-center bg-hospitalaid-blue rounded-b-lg h-16">
+        <div id="id_supply_box2" class="flex justify-center bg-white-light cursor-pointer hover:bg-gray-200 rounded-b-lg h-16">
           <img src="{% static "images/supply.svg" %}" alt="" />
         </div>
       </div>
-      <div id="id_repair_box" class="w-48 h-24 border-0 border-red-400 rounded-lg shadow-lg hover:cursor-pointer hover:bg-gray-200 focus:outline-none focus:border-red-400" tabindex="1" onclick="setBorderOnClick2()">
-        <div class="flex justify-center items-center bg-hospitalaid-red rounded-t-lg h-10">
-          <h1 class="uppercase text-base tracking-wide text-white fnt-rh-med font-bold">REPAIR</h1>
+      <div id="id_repair_box" class="ml-2 w-64 h-auto rounded-lg shadow-lg focus:outline-none focus:border-red-400" tabindex="1" onclick="setRepairOnClick()">
+        <div id="id_repair_box1" class="flex justify-center items-center bg-hospitalaid-red rounded-t-lg h-8">
+          <h1 class="uppercase text-base tracking-wide font-bold text-white">REPAIR</h1>
         </div>
-        <div class="flex justify-center bg-hospitalaid-blue rounded-b-lg h-16">
+        <div id="id_repair_box2" class="flex justify-center bg-white-light cursor-pointer hover:bg-gray-200 rounded-b-lg h-16">
           <img src="{% static "images/repair.svg" %}" alt="" />
         </div>
       </div>
     </div>
-
-      {% include "includes/form.html" %}
-      {% if object %}
-        {% include "includes/button.html" with color="red" label="Save changes" %}
-      {% else %}
-        {% include "includes/button.html" with color="red" label="Add request" %}
-      {% endif %}
+      
+    {% include "includes/form.html" %}
+    {% if object %}
+      {% include "includes/button.html" with color="red" label="Save changes" %}
+    {% else %}
+      {% include "includes/button.html" with color="red" label="Add request" %}
+    {% endif %}
   </form>
 </div>
 {% endblock content %}
@@ -58,23 +58,39 @@
 {% block js %}
 <script>
   {% if form.type.value == "supply" %}
-    setBorderOnClick1();
+    setSupplyOnClick();
   {% endif %}
 
   {% if form.type.value == "repair" %}
-    setBorderOnClick2();
+    setRepairOnClick();
   {% endif %}
 
-  function setBorderOnClick1() {
+  {% if not object %}
+    setSupplyOnClick();
+  {% endif %}
+  
+  function setSupplyOnClick() {
     document.getElementById('id_type').value = "supply";
-    document.getElementById('id_supply_box').style.borderWidth="1px";
-    document.getElementById('id_repair_box').style.borderWidth="0px";
+    document.getElementById('id_supply_box').style.borderWidth  = "2px";
+    document.getElementById('id_supply_box1').style.height      = "29px";
+    document.getElementById('id_supply_box2').style.height      = "62px";
+    document.getElementById('id_supply_box').style.borderColor  = "#0f3476";
+    document.getElementById('id_supply_box').style.borderRadius = "12px";
+    document.getElementById('id_repair_box').style.borderWidth  = "0px";
+    document.getElementById('id_repair_box1').style.height      = "32px";
+    document.getElementById('id_repair_box2').style.height      = "64px";
   }
 
-  function setBorderOnClick2() {
+  function setRepairOnClick() {
     document.getElementById('id_type').value = "repair";
-    document.getElementById('id_repair_box').style.borderWidth="1px";
-    document.getElementById('id_supply_box').style.borderWidth="0px";
+    document.getElementById('id_repair_box').style.borderWidth  = "2px";
+    document.getElementById('id_repair_box1').style.height      = "29px";
+    document.getElementById('id_repair_box2').style.height      = "62px";
+    document.getElementById('id_repair_box').style.borderColor  = "#ff5959";
+    document.getElementById('id_repair_box').style.borderRadius = "12px";
+    document.getElementById('id_supply_box').style.borderWidth  = "0px";
+    document.getElementById('id_supply_box1').style.height      = "32px";
+    document.getElementById('id_supply_box2').style.height      = "64px";
   }
 </script>
 {% endblock js %}

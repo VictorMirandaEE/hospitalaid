@@ -23,7 +23,7 @@ class AidRequestCreateForm(forms.ModelForm):
         model = models.main.AidRequest
         fields = [
             "type",
-            "equipment_type",
+            "title",
             "quantity",
             "manufacturer",
             "model",
@@ -38,7 +38,7 @@ class AidRequestUpdateForm(forms.ModelForm):
         fields = [
             "type",
             "status",
-            "equipment_type",
+            "title",
             "quantity",
             "manufacturer",
             "model",

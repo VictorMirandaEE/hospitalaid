@@ -1,2 +1,8 @@
 __pycache__/
 .env
+
+# IntelliJ IDEA output dir
+.idea/
+
+# pyenv file
+.python-version

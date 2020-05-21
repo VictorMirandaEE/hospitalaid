@@ -33,6 +33,7 @@ class AidRequestCreateForm(forms.ModelForm):
         widgets = {'type': forms.HiddenInput,
                    'comments': forms.Textarea(attrs={'rows': 4}),}
 
+
 class AidRequestUpdateForm(forms.ModelForm):
     class Meta:
         model = models.main.AidRequest
@@ -48,7 +49,8 @@ class AidRequestUpdateForm(forms.ModelForm):
         ]
         widgets = {'type': forms.HiddenInput,
                    'comments': forms.Textarea(attrs={'rows': 4}),}
-		
+
+
 class AidRequestCreateView(LoginRequiredMixin, CreateView):
     model = models.main.AidRequest
     form_class = AidRequestCreateForm

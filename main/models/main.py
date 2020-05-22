@@ -54,7 +54,7 @@ class AidRequest(models.Model):
     comments = models.CharField(max_length=200, blank=True)
 
     title = models.CharField(max_length=50)
-    quantity = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(default=1)
 
     manufacturer = models.CharField(max_length=16, blank=True)
     model = models.CharField(max_length=16, blank=True)

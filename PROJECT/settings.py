@@ -11,7 +11,7 @@ ALLOWED_HOSTS = []
 
 if os.environ.get("ENVIRONMENT") == "PRODUCTION":
     DEBUG = False
-    ALLOWED_HOSTS = ['hospitalaid.apps.flagzeta.org', 'localhost']
+    ALLOWED_HOSTS = ['hospitalaid.org', 'hospitalaid.apps.flagzeta.org', 'localhost']
 
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",

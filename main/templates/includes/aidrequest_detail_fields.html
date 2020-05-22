@@ -1,5 +1,22 @@
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
+      Choose status
+    </div>
+  </div>
+  <div class="mb-3 flex whitespace-no-wrap mx-auto cursor-pointer">
+    <div id="id_unassigned" onclick="setStatusOnClick('submit', 'unassigned')" type="submit" class="flex-grow text-center border-2 border-r-0 border-gray-600 font-bold rounded-tl-full rounded-bl-full px-2 focus:outline-none" tabindex="0">
+      <h1>UNASSIGNED</h1>
+    </div>
+    <div id="id_in_progress" onclick="setStatusOnClick('submit', 'in_progress')" class="flex-grow text-center border-2 border-l-0 border-r-0 border-gray-600 font-bold px-2 focus:outline-none" tabindex="1">
+      <h1>IN PROGRESS</h1>
+    </div>
+    <div id="id_closed" onclick="setStatusOnClick('submit', 'closed')" class="flex-grow text-center border-2 border-l-0 border-gray-600 font-bold rounded-tr-full rounded-br-full px-2 focus:outline-none" tabindex="2">
+      <h1>CLOSED</h1>
+    </div>
+  </div>
+  <hr class="mb-3">
+  <div class="flex mb-3">
+    <div class="flex-grow text-gray-600 font-bold uppercase">
       Type
     </div>
     <div class="flex-grow text-right font-bold">

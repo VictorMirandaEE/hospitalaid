@@ -91,6 +91,16 @@ def aidrequest_close(request, pk):
     aid.save()
     return redirect("aidrequestforhospital_list")
 
+
+@login_required
+def aidrequest_status(request, pk, value):
+    hospitals = models.main.Hospital.objects.filter(user=request.user)
+    aid = models.main.AidRequest.objects.filter(hospital__in=hospitals).get(pk=pk)
+    aid.status = value
+    aid.save()
+    return redirect("aidrequestforhospital_list")
+
+
 class AidRequestDetailForHospital(DetailView):
     model = models.main.AidRequest
     template_name = "main/aidrequest_detail_hospital.html"

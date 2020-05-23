@@ -17,75 +17,16 @@
 
 {% block content %}
 <div class="p-8">
-  <iframe name="hiddenFrame" class="hide"></iframe>
-  <form method="POST" target="hiddenFrame" id="id_myform">
-    {% csrf_token %}
+  {% include "includes/aidrequest_detail_fields.html" %}
 
-    {% include "includes/aidrequest_detail_fields.html" %}
-
-    <div class="p-3 mt-6">
-      {% url 'aidrequest_update' object.id as update %}
-      {% include "includes/button-link.html" with color="blue" href=update label="Edit" %}
-      {% url 'aidrequest_delete' object.id as delete %}
-      {% include "includes/button-link.html" with color="red" href=delete label="Delete" %}
-    </div>
-  </form>
+  <div class="p-3 mt-6">
+    {% url 'aidrequest_update' object.id as update %}
+    {% include "includes/button-link.html" with color="blue" href=update label="Edit" %}
+    {% url 'aidrequest_delete' object.id as delete %}
+    {% include "includes/button-link.html" with color="red" href=delete label="Delete" %}
+  </div>
 </div>
+<form method="POST" id="id_myform">
+  {% csrf_token %}
+</form>
 {% endblock content %}
-
-{% block js %}
-<script>
-  setStatusOnClick('onload', '{{ object.status }}');
-
-  function setStatusOnClick(action, status) {
-    switch(status) {
-      case "unassigned":
-        document.getElementById('id_unassigned').style.color            = "#ffffff";
-        document.getElementById('id_unassigned').style.backgroundColor  = "#ff5959";
-        document.getElementById('id_unassigned').style.borderColor      = "#ff5959";
-        document.getElementById('id_in_progress').style.color           = "#0f3476";
-        document.getElementById('id_in_progress').style.backgroundColor = "#f0fbff";
-        document.getElementById('id_in_progress').style.borderColor     = "#bfc5cf";
-        document.getElementById('id_closed').style.color                = "#808da0";
-        document.getElementById('id_closed').style.backgroundColor      = "#f0fbff";
-        document.getElementById('id_closed').style.borderColor          = "#bfc5cf";
-        if(action == "submit") {
-          document.getElementById('id_myform').action = "status/unassigned";
-          document.getElementById('id_myform').submit();
-        }
-        break;
-      case "in_progress":
-        document.getElementById('id_unassigned').style.color            = "#ff5959";
-        document.getElementById('id_unassigned').style.backgroundColor  = "#f0fbff";
-        document.getElementById('id_unassigned').style.borderColor      = "#bfc5cf";
-        document.getElementById('id_in_progress').style.color           = "#fffeff";
-        document.getElementById('id_in_progress').style.backgroundColor = "#0f3476";
-        document.getElementById('id_in_progress').style.borderColor     = "#0f3476";
-        document.getElementById('id_closed').style.color                = "#808da0";
-        document.getElementById('id_closed').style.backgroundColor      = "#f0fbff";
-        document.getElementById('id_closed').style.borderColor          = "#bfc5cf";
-        if(action == "submit") {
-          document.getElementById('id_myform').action = "status/in_progress";
-          document.getElementById('id_myform').submit();
-        }
-        break;
-      case "closed":
-        document.getElementById('id_unassigned').style.color            = "#ff5959";
-        document.getElementById('id_unassigned').style.backgroundColor  = "#f0fbff";
-        document.getElementById('id_unassigned').style.borderColor      = "#bfc5cf";
-        document.getElementById('id_in_progress').style.color           = "#0f3476";
-        document.getElementById('id_in_progress').style.backgroundColor = "#f0fbff";
-        document.getElementById('id_in_progress').style.borderColor     = "#bfc5cf";
-        document.getElementById('id_closed').style.color                = "#fffeff";
-        document.getElementById('id_closed').style.backgroundColor      = "#808da0";
-        document.getElementById('id_closed').style.borderColor          = "#808da0";
-        if(action == "submit") {
-          document.getElementById('id_myform').action = "status/closed";
-          document.getElementById('id_myform').submit();
-        }
-        break;
-      default:
-    }
-  }
-</script>
-{% endblock js %}

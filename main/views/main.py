@@ -39,7 +39,6 @@ class AidRequestUpdateForm(forms.ModelForm):
         model = models.main.AidRequest
         fields = [
             "type",
-            "status",
             "title",
             "quantity",
             "manufacturer",
@@ -98,7 +97,7 @@ def aidrequest_status(request, pk, value):
     aid = models.main.AidRequest.objects.filter(hospital__in=hospitals).get(pk=pk)
     aid.status = value
     aid.save()
-    return redirect("aidrequestforhospital_list")
+    return redirect('aidrequestforhospital_detail', pk=pk)
 
 
 class AidRequestDetailForHospital(DetailView):

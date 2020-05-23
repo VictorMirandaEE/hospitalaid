@@ -1,23 +1,23 @@
-  <div class="pb-5">
+  <div class="flex pb-5">
     {% if not filter.data.type %}
-    <span class="bg-white text-gray-600 border-gray-600 border-2 font-bold text-white rounded-full p-1 px-2 mx-1">ALL</span>
+      <span class="flex bg-gray-600 font-bold text-white border-gray-600 border-2 rounded-full p-1 px-2 mx-1">ALL</span>
     {% else %}
     <a href="?type=">
-      <span class="bg-gray-600 font-bold text-white rounded-full p-1 px-2 mx-1">ALL</span>
+      <span class="flex bg-hospitalaid-grayblue text-gray-600 border-gray-600 border-2 font-bold text-white rounded-full p-1 px-2 mx-1">ALL</span>
     </a>
     {% endif %}
     {% if filter.data.type == "supply" %}
-    <span class="bg-white text-blue-900 border-blue-900 border-2 font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
+      <span class="flex bg-blue-900 font-bold text-white border-blue-900 border-2 rounded-full p-1 px-2 mx-1">SUPPLY</span>
     {% else %}
     <a href="?type=supply">
-      <span class="bg-blue-900 font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
+      <span class="flex bg-hospitalaid-grayblue text-blue-800 border-blue-800 border-2 font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
     </a>
     {% endif %}
     {% if filter.data.type == "repair" %}
-    <span class="bg-white text-red-500 border-red-500 border-2 font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
+      <span class="flex bg-red-500 font-bold text-white border-red-500 border-2 rounded-full p-1 px-2 mx-1">REPAIR</span>
     {% else %}
     <a href="?type=repair">
-      <span class="bg-red-500 font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
+      <span class="flex bg-hospitalaid-grayblue text-red-500 border-red-500 border-2 font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
     </a>
     {% endif %}
   </div>

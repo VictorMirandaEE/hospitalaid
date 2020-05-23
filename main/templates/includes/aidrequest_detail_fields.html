@@ -1,49 +1,85 @@
+{% load humanize %}
+{% if user.is_authenticated %}
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
       Choose status
     </div>
   </div>
   <div class="mb-3 flex whitespace-no-wrap mx-auto cursor-pointer">
-    <div id="id_unassigned" onclick="setStatusOnClick('submit', 'unassigned')" type="submit" class="flex-grow text-center border-2 border-r-0 border-gray-600 font-bold rounded-tl-full rounded-bl-full px-2 focus:outline-none" tabindex="0">
-      <h1>UNASSIGNED</h1>
-    </div>
-    <div id="id_in_progress" onclick="setStatusOnClick('submit', 'in_progress')" class="flex-grow text-center border-2 border-l-0 border-r-0 border-gray-600 font-bold px-2 focus:outline-none" tabindex="1">
-      <h1>IN PROGRESS</h1>
-    </div>
-    <div id="id_closed" onclick="setStatusOnClick('submit', 'closed')" class="flex-grow text-center border-2 border-l-0 border-gray-600 font-bold rounded-tr-full rounded-br-full px-2 focus:outline-none" tabindex="2">
-      <h1>CLOSED</h1>
-    </div>
+    {% if object.status == "unassigned" %}
+      <span class="flex-grow bg-hospitalaid-red text-center font-bold text-white border-2 border-r-0 border-hospitalaid-red rounded-tl-full rounded-bl-full px-2">UNASSIGNED</span>
+    {% else %}
+      <div class="self-center flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-red border-2 border-r-0 border-hospitalaid-gray-dark rounded-tl-full rounded-bl-full px-2">
+        <a href="status/unassigned" class="bg-hospitalaid-grayblue" type="submit">UNASSIGNED</a>
+      </div>
+    {% endif %}
+    {% if object.status == "in_progress" %}
+      <div class="self-center flex-grow bg-hospitalaid-blue-light text-center font-bold text-white border-2 border-hospitalaid-blue-light px-2">IN PROGRESS</div>
+    {% else %}
+      <div class="flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-blue-light border-2 border-l-0 border-r-0 border-hospitalaid-gray-dark px-2">
+        <a href="status/in_progress" type="submit">IN PROGRESS</a>
+      </div>
+    {% endif %}
+    {% if object.status == "closed" %}
+      <span class="flex-grow bg-hospitalaid-gray-dark text-center font-bold text-white border-2 border-l-0 border-hospitalaid-gray-dark rounded-tr-full rounded-br-full px-2">CLOSED</span>
+    {% else %}
+      <div class="flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-gray-dark border-2 border-l-0 border-hospitalaid-gray-dark rounded-tr-full rounded-br-full px-2">
+        <a href="status/closed" type="submit">CLOSED</a>
+      </div>
+    {% endif %}
   </div>
   <hr class="mb-3">
+{% endif %}
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
       Type
     </div>
     <div class="flex-grow text-right font-bold">
       {% if object.type == "supply" %}
-      <span class="bg-blue-900 font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
+      <span class="bg-hospitalaid-blue-light font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
       {% endif %}
       {% if object.type == "repair" %}
-      <span class="bg-red-500 font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
+      <span class="bg-hospitalaid-red font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
       {% endif %}
     </div>
   </div>
   <hr class="mb-3">
+{% if not user.is_authenticated %}
   <div class="flex mb-3">
-    <div class="flex-grow text-gray-600 font-bold uppercase">
-      Status
+    <div class="flex items-center whitespace-no-wrap text-gray-600 font-bold uppercase">
+      <span>Status</span>
+      {% if object.status == "unassigned" %}
+        <span class="bg-hospitalaid-red rounded-full ml-3 h-3 w-3 flex"></span>
+      {% endif %}
+      {% if object.status == "in_progress" %}
+        <span class="bg-hospitalaid-blue-light rounded-full ml-3 h-3 w-3 flex"></span>
+      {% endif %}
+      {% if object.status == "closed" %}
+        <span class="bg-hospitalaid-gray-dark rounded-full ml-3 h-3 w-3 flex"></span>
+      {% endif %}
     </div>
     <div class="flex-grow text-right font-bold">
-      {{ object.get_status_display }}
+      {% if object.status == "unassigned" %}
+      <span class="flex-grow text-right font-bold">UNASSIGNED</span>
+      {% endif %}
+      {% if object.status == "in_progress" %}
+      <span class="flex-grow text-right font-bold">IN PROGRESS</span>
+      {% endif %}
+      {% if object.status == "closed" %}
+      <span class="flex-grow text-right font-bold">CLOSED</span>
+      {% endif %}
     </div>
   </div>
   <hr class="mb-3">
+{% endif %}
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
       Quantity
     </div>
-    <div class="flex-grow text-right font-bold">
-      {{ object.quantity|default:1 }}
+    <div class="p-2">
+      <span class="flex-grow text-right font-bold text-white rounded p-1 bg-hospitalaid-gray-dark">
+        {{ object.quantity|intcomma }}
+      </span>
     </div>
   </div>
   <div class="flex mb-3">

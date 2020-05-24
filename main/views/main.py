@@ -2,57 +2,25 @@ import logging
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
-from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
-from django import forms
 
-from main import models
+from main import models, forms
+
 
 logger = logging.getLogger(__name__)
 
 
-####
-
-class AidRequestCreateForm(forms.ModelForm):
-    class Meta:
-        model = models.main.AidRequest
-        fields = [
-            "type",
-            "title",
-            "quantity",
-            "manufacturer",
-            "model",
-            "serial_number",
-            "comments",
-        ]
-        widgets = {'type': forms.HiddenInput,
-                   'comments': forms.Textarea(attrs={'rows': 4}),}
-
-
-class AidRequestUpdateForm(forms.ModelForm):
-    class Meta:
-        model = models.main.AidRequest
-        fields = [
-            "type",
-            "title",
-            "quantity",
-            "manufacturer",
-            "model",
-            "serial_number",
-            "comments",
-        ]
-        widgets = {'type': forms.HiddenInput,
-                   'comments': forms.Textarea(attrs={'rows': 4}),}
+### Hospital views
 
 
 class AidRequestCreateView(LoginRequiredMixin, CreateView):
     model = models.main.AidRequest
-    form_class = AidRequestCreateForm
+    form_class = forms.AidRequestCreateForm
     success_url = reverse_lazy("aidrequestforhospital_list")
 
     def form_valid(self, form):
@@ -65,7 +33,7 @@ class AidRequestCreateView(LoginRequiredMixin, CreateView):
 
 class AidRequestUpdateView(LoginRequiredMixin, UpdateView):
     model = models.main.AidRequest
-    form_class = AidRequestUpdateForm
+    form_class = forms.AidRequestUpdateForm
     success_url = reverse_lazy("aidrequestforhospital_list")
 
     def get_queryset(self):
@@ -106,19 +74,9 @@ class AidRequestListForHospital(FilterView):
         return self.model.objects.filter(hospital__in=hospitals)
 
 
-class SignupStep2Form(forms.Form):
-    name = forms.CharField(max_length=32)
-    phone = forms.CharField(max_length=32)
-    hospital_name = forms.CharField(max_length=32)
-    hospital_address = forms.CharField(max_length=32)
-    hospital_city = forms.CharField(max_length=32)
-    hospital_postcode = forms.CharField(max_length=32)
-    hospital_country = forms.CharField(max_length=32)
-    
-
 class SignupStep2(LoginRequiredMixin, FormView):
     success_url = reverse_lazy("aidrequestforhospital_list")
-    form_class = SignupStep2Form
+    form_class = forms.SignupStep2Form
     template_name = "main/step2_form.html"
 
     def get_initial(self):
@@ -147,21 +105,12 @@ class SignupStep2(LoginRequiredMixin, FormView):
         h.save()
         return super().form_valid(form)
 
-###
+
+### Donor views
+
+
 class AidRequestDetailForDonor(DetailView):
     model = models.main.AidRequest
-
-
-class HospitalDetailForDonor(DetailView):
-    model = models.main.Hospital
-
-
-class HospitalListForDonor(FilterView):
-    model = models.main.Hospital
-    filterset_fields = ["city"]
-
-    def get_queryset(self):
-        return self.model.objects.all()
 
 
 class AidRequestListForDonor(FilterView):
@@ -170,6 +119,21 @@ class AidRequestListForDonor(FilterView):
 
     def get_queryset(self):
         return self.model.objects.all().order_by("-updated_at")
+
+
+class HospitalDetailForDonor(DetailView):
+    model = models.main.Hospital
+
+
+class HospitalMap(FilterView):
+    model = models.main.Hospital
+    filterset_fields = ["city"]
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+
+#### Unspecific views
 
 
 def home(request):

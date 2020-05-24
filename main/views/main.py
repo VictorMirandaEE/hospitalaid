@@ -83,15 +83,6 @@ class AidRequestDeleteView(LoginRequiredMixin, DeleteView):
 
 
 @login_required
-def aidrequest_close(request, pk):
-    hospitals = models.main.Hospital.objects.filter(user=request.user)
-    aid = models.main.AidRequest.objects.filter(hospital__in=hospitals).get(pk=pk)
-    aid.closed = True
-    aid.save()
-    return redirect("aidrequestforhospital_list")
-
-
-@login_required
 def aidrequest_status(request, pk, value):
     hospitals = models.main.Hospital.objects.filter(user=request.user)
     aid = models.main.AidRequest.objects.filter(hospital__in=hospitals).get(pk=pk)
@@ -179,6 +170,7 @@ class AidRequestListForDonor(FilterView):
 
     def get_queryset(self):
         return self.model.objects.all().order_by("-updated_at")
+
 
 def home(request):
     if request.user.is_authenticated:

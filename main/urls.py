@@ -15,7 +15,7 @@ urlpatterns = [
         name="aidrequest_close",
     ),
     path(
-        "help-wanted/<int:pk>/status/<value>",
+        "help-wanted/<int:pk>/status/<value>/",
         views.main.aidrequest_status,
         name="aidrequest_status",
     ),

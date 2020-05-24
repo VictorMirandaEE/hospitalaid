@@ -1,7 +1,17 @@
 import os
 import dj_database_url
 import dj_email_url
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
+sentry_sdk.init(
+    dsn="https://4861ae1cb9ed4859bae2c0f0cd1f2f53@o397405.ingest.sentry.io/5251824",
+    integrations=[DjangoIntegration()],
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#(@r9^xj-8cdt&7h-vozzzh-mm18s2k5g500x3q^zy#_@z=a#e'

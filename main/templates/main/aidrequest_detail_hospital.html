@@ -17,6 +17,35 @@
 
 {% block content %}
 <div class="p-8">
+  <div class="flex mb-3">
+    <div class="flex-grow text-gray-600 font-bold uppercase">
+      Choose status
+    </div>
+  </div>
+  <div class="mb-3 flex whitespace-no-wrap mx-auto cursor-pointer">
+    {% if object.status == "unassigned" %}
+      <span class="flex-grow bg-hospitalaid-red text-center font-bold text-white border-2 border-r-0 border-hospitalaid-red rounded-tl-full rounded-bl-full px-2">UNASSIGNED</span>
+    {% else %}
+      <div class="self-center flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-red border-2 border-r-0 border-hospitalaid-gray-dark rounded-tl-full rounded-bl-full px-2">
+        <a href="status/unassigned" class="bg-hospitalaid-grayblue" type="submit">UNASSIGNED</a>
+      </div>
+    {% endif %}
+    {% if object.status == "in_progress" %}
+      <div class="self-center flex-grow bg-hospitalaid-blue-light text-center font-bold text-white border-2 border-hospitalaid-blue-light px-2">IN PROGRESS</div>
+    {% else %}
+      <div class="flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-blue-light border-2 border-l-0 border-r-0 border-hospitalaid-gray-dark px-2">
+        <a href="status/in_progress" type="submit">IN PROGRESS</a>
+      </div>
+    {% endif %}
+    {% if object.status == "closed" %}
+      <span class="flex-grow bg-hospitalaid-gray-dark text-center font-bold text-white border-2 border-l-0 border-hospitalaid-gray-dark rounded-tr-full rounded-br-full px-2">CLOSED</span>
+    {% else %}
+      <div class="flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-gray-dark border-2 border-l-0 border-hospitalaid-gray-dark rounded-tr-full rounded-br-full px-2">
+        <a href="status/closed" type="submit">CLOSED</a>
+      </div>
+    {% endif %}
+  </div>
+  <hr class="mb-3">
   {% include "includes/aidrequest_detail_fields.html" %}
 
   <div class="p-3 mt-6">

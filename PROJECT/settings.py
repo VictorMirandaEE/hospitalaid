@@ -5,6 +5,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
+    release=os.environ.get("GIT_REV"),
     dsn="https://4861ae1cb9ed4859bae2c0f0cd1f2f53@o397405.ingest.sentry.io/5251824",
     integrations=[DjangoIntegration()],
 

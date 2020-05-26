@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load static %}
+{% load i18n %}
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
     <div class="flex-grow">
-      <h1 class="text-3xl text-center font-bold">Your requests</h1>
+      <h1 class="text-3xl text-center font-bold">
+        {% trans "Your requests" %}
+      </h1>
     </div>
 </nav>
 {% endblock %}

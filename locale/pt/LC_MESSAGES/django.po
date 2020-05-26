@@ -1,0 +1,107 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-26 20:47+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: PROJECT/settings.py:109
+msgid "English"
+msgstr "Inglês"
+
+#: PROJECT/settings.py:110
+msgid "Portuguese"
+msgstr "Português"
+
+#: main/models/main.py:44
+msgid "New equipment/supply request"
+msgstr ""
+
+#: main/models/main.py:45
+msgid "Existing equipment repair"
+msgstr ""
+
+#: main/models/main.py:48
+msgid "Unassigned"
+msgstr ""
+
+#: main/models/main.py:49
+msgid "In progress"
+msgstr ""
+
+#: main/models/main.py:50
+msgid "Closed"
+msgstr ""
+
+#: main/models/main.py:52
+msgid "hospital"
+msgstr ""
+
+#: main/models/main.py:53
+msgid "type"
+msgstr ""
+
+#: main/models/main.py:55
+msgid "comments"
+msgstr ""
+
+#: main/models/main.py:57
+msgid "title"
+msgstr ""
+
+#: main/models/main.py:58
+msgid "quantity"
+msgstr ""
+
+#: main/models/main.py:60
+msgid "manufacturer"
+msgstr ""
+
+#: main/models/main.py:61
+msgid "model"
+msgstr ""
+
+#: main/models/main.py:62
+msgid "serial number"
+msgstr ""
+
+#: main/models/main.py:64
+msgid "updated at"
+msgstr ""
+
+#: main/models/main.py:65
+msgid "created at"
+msgstr ""
+
+#: main/templates/home.html:15 main/templates/signup.html:20
+msgid "HELPING THE WORLD"
+msgstr "AJUDANDO O MUNDO"
+
+#: main/templates/home.html:18 main/templates/signup.html:23
+msgid "address the COVID-19 pandemic"
+msgstr "lidar com a pandemia de COVID-19"
+
+#: main/templates/main/aidrequest_list_hospital.html:10
+msgid "Your requests"
+msgstr "Seus pedidos"
+
+#: main/templates/signup.html:27
+msgid "To be able to login, please enter your hospital email address."
+msgstr "Para poder fazer login, digite seu endereço de e-mail do hospital."
+
+#: main/templates/signup.html:34
+msgid "Send me the login link"
+msgstr "Me mande o link"

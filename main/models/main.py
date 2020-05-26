@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Hospital(models.Model):
@@ -40,31 +41,31 @@ class ImportedHospital(models.Model):
 
 class AidRequest(models.Model):
     REQUEST_TYPE = [
-        ("supply", "New equipment/supply request"),
-        ("repair", "Existing equipment repair"),
+        ("supply", _("New equipment/supply request")),
+        ("repair", _("Existing equipment repair")),
     ]
     STATUS = [
-        ("unassigned", "Unassigned"),
-        ("in_progress", "In progress"),
-        ("closed", "Closed"),
+        ("unassigned", _("Unassigned")),
+        ("in_progress", _("In progress")),
+        ("closed", _("Closed")),
     ]
-    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
-    type = models.CharField(max_length=32, choices=REQUEST_TYPE)
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, verbose_name=_("hospital"))
+    type = models.CharField(max_length=32, choices=REQUEST_TYPE, verbose_name=_("type"))
     status = models.CharField(max_length=16, choices=STATUS, default='unassigned')
-    comments = models.CharField(max_length=200, blank=True)
+    comments = models.CharField(max_length=200, blank=True, verbose_name=_("comments"))
 
-    title = models.CharField(max_length=50)
-    quantity = models.PositiveIntegerField(default=1)
+    title = models.CharField(max_length=50, verbose_name=_("title"))
+    quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
 
-    manufacturer = models.CharField(max_length=16, blank=True)
-    model = models.CharField(max_length=16, blank=True)
-    serial_number = models.CharField(max_length=16, blank=True)
+    manufacturer = models.CharField(max_length=16, blank=True, verbose_name=_("manufacturer"))
+    model = models.CharField(max_length=16, blank=True, verbose_name=_("model"))
+    serial_number = models.CharField(max_length=16, blank=True, verbose_name=_("serial number"))
 
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
 
     class Meta:
         ordering = ["-updated_at"]
 
     def __str__(self):
-        return "{}".format(self.comments,)
+        return "{}".format(self.title,)

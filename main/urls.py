@@ -10,11 +10,6 @@ urlpatterns = [
         name="aidrequest_delete",
     ),
     path(
-        "help-wanted/<int:pk>/close/",
-        views.main.aidrequest_close,
-        name="aidrequest_close",
-    ),
-    path(
         "help-wanted/<int:pk>/status/<value>/",
         views.main.aidrequest_status,
         name="aidrequest_status",
@@ -47,7 +42,7 @@ urlpatterns = [
         "help-needed/hospitals/<int:pk>/", views.main.HospitalDetailForDonor.as_view(), name="hospitalfordonor_detail"
     ),
     path(
-        "help-needed/map/", views.main.HospitalListForDonor.as_view(), name="hospitalfordonor_list"
+        "help-needed/map/", views.main.HospitalMap.as_view(), name="hospitalfordonor_list"
     ),
     path(
         "help-needed/list/", views.main.AidRequestListForDonor.as_view(), name="aidrequestfordonor_list"

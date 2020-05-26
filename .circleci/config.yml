@@ -30,10 +30,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: deploy
+          name: Deploy
           command: |
             git remote add deploy dokku@apps.flagzeta.org:hospitalaid
-            git push deploy master
+            git push -f deploy master
+      - run:
+          name: Apply migrations
+          command: ssh dokku@apps.flagzeta.org run hospitalaid python ./manage.py migrate
 
 workflows:
   main:

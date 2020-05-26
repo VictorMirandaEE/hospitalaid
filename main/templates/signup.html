@@ -17,21 +17,22 @@
       <img src="{% static "images/logo-vertical.svg" %}" alt="logo" />
     </div>
     <div class="text-4xl text-center fg-hospitalaid-blue-light font-bold" style="line-height:1; letter-spacing: 1px">
-      HELPING THE WORLD
+      {% trans "HELPING THE WORLD" %}
     </div>
     <div class="text-2xl text-center fg-hospitalaid-blue-light">
-      address the COVID-19 pandemic
+      {% trans "address the COVID-19 pandemic" %}
     </div>
     <div class="text-lg my-8">
         <p class="text-center fnt-rh-reg">
-        To be able to login, please enter your hospital email address.
+        {% trans "To be able to login, please enter your hospital email address." %}
         </p>
     </div>
     <div class="text-lg my-8">
         <form action="{% url "signup" %}" method="post">
           {% csrf_token %}
           {% include "includes/form.html" %}
-          {% include "includes/button.html" with color="red" label="Send me the login link" %}
+          {% trans "Send me the login link" as login_btn_txt %}
+          {% include "includes/button.html" with color="red" label=login_btn_txt %}
         </form>
     </div>
   </div>

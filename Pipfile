@@ -23,6 +23,7 @@ dj-email-url = "*"
 requests = "*"
 livereload = "*"
 honcho = "*"
+sentry-sdk = "*"
 
 [requires]
 python_version = "3.7"

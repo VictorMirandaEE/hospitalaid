@@ -49,4 +49,7 @@ urlpatterns = [
     ),
     path("signup/", views.user.Signup.as_view(), name="signup"),
     path("", views.main.home, name="home"),
+    path("menu/", views.main.hamburger, name="hamburger"),
+    path("about/", views.main.about, name="about"),
+    path("language/", views.main.language, name="language"),
 ]

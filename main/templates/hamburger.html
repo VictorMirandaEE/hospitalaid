@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+  <a class="flex mx-4 my-8" href="{% url "aidrequestforhospital_list" %}">
+  {% else %}
+  <a class="flex mx-4 my-8" href="{% url "aidrequestfordonor_list" %}">
+  {% endif %}
+    <span class="flex-grow fg-hospitalaid-blue-light font-bold text-2xl">Aid requests</span>
+    <img src="{% static "images/forward-arrow.svg" %}" alt="Follow" />
+  </a>
+
+  <hr class="my-4 border-2">
+
+  <a class="flex mx-4 my-8" href="https://github.com/HospitalAid/info" target="_blank">
+    <span class="flex-grow fg-hospitalaid-blue-light font-bold text-2xl">About us</span>
+    <img src="{% static "images/forward-arrow.svg" %}" alt="Follow" />
+  </a>
+
+  <hr class="my-4 border-2">
+
+  <a class="block mx-4 my-8" href="{% url "language" %}">
+    {% get_current_language as LANGUAGE_CODE %}
+    {% if LANGUAGE_CODE == "en" %}
+      <img class="inline h-4" src="{% static "images/gb.svg" %}" alt="flag" />
+      <span class="align-middle fg-hospitalaid-blue-light font-bold ml-2">English (UK)</span>
+    {% endif %}
+    {% if LANGUAGE_CODE == "pt-br" %}
+      <img class="inline h-4" src="{% static "images/br.svg" %}" alt="flag" />
+      <span class="align-middle fg-hospitalaid-blue-light font-bold ml-2">Português (BR)</span>
+    {% endif %}
+  </a>
+
+<div class="block fixed inset-x-0 bottom-0">
+  <p class="fg-hospitalaid-gray-dark mx-4 mb-4">&copy; HospitalAid 2020<p>
+
+  <div class="">
+    <img src="{% static "images/visual.svg" %}" alt="Visual" />
+  </div>
+</div>  
+{% endblock content  %}

@@ -143,3 +143,15 @@ def home(request):
         else:
             return redirect(reverse("aidrequestforhospital_list"))
     return render(request, "home.html")
+
+
+def hamburger(request):
+    return render(request, "hamburger.html")
+
+
+def about(request):
+    return render(request, "about.html")
+
+
+def language(request):
+    return render(request, "language.html")

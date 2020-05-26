@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="static">
+  <div class="flex whitespace-no-wrap mx-4 my-8 fg-hospitalaid-blue-light font-bold text-2xl">
+    <p>About HospitalAid</p>
+  </div>
+    
+  <div class="mx-4 my-8 text-2xl">
+    <p>HospitalAid is an open-source and non-profit project.</p>
+    <br>
+    <a href="https://github.com/HospitalAid/info">Click here</a> for more information.
+  </div>
+
+  <div class="block sticky inset-x-0 bottom-0">
+    <p class="fg-hospitalaid-gray-dark mx-4 mb-4">&copy; HospitalAid 2020<p>
+
+    <div class="">
+      <img src="{% static "images/visual.svg" %}" alt="Visual" />
+    </div>
+  </div>
+</div>
+{% endblock content  %}

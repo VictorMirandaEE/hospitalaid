@@ -1,0 +1,79 @@
+{% load static %}
+{% load i18n %}
+
+<div class="fixed inset-0 z-50 overflow-auto flex">
+  <div class="absolute w-full h-full bg-hospitalaid-blue-light opacity-75"></div>
+  <div class="relative p-8 bg-hospitalaid-grayblue w-full max-w-md m-auto flex-col rounded-lg text-center">
+    {% if image %}
+    <div class="m-3">
+      <img class="mx-auto" src="{{ image }}" alt="icon">
+    </div>
+    {% endif %}
+    <h1 class="text-lg font-bold mb-4">{{ title }}</h1>
+    
+    <hr class="my-4 border-2">
+    
+      {% get_current_language as LANGUAGE_CODE %}
+      
+      {% if LANGUAGE_CODE == "en" %}
+        <div class="flex justify-between">
+          <div class="font-bold">
+              <img class="inline h-4" src="{% static "images/gb.svg" %}" alt="flag" />
+              <span class="align-middle font-bold ml-2">English (UK)</span>
+          </div>
+          <img src="{% static "images/tick.svg" %}" alt="" />
+        </div>
+      {% else %}
+        <a class="flex justify-between" href="javascript:document.form_en.submit()">
+          <div class="font-bold">
+              <img class="inline h-4" src="{% static "images/gb.svg" %}" alt="flag" />
+              <span class="align-middle font-bold ml-2">English (UK)</span>
+          </div>
+        </a>
+      {% endif %}
+
+      <hr class="my-4 border-2">
+
+      {% if LANGUAGE_CODE == "pt-br" %}
+        <div class="flex justify-between">
+          <div class="font-bold">
+              <img class="inline h-4" src="{% static "images/br.svg" %}" alt="flag" />
+              <span class="align-middle font-bold ml-2">Português (PT-BR)</span>
+          </div>
+          <img src="{% static "images/tick.svg" %}" alt="" />
+        </div>
+      {% else %}
+        <a class="flex justify-between" href="javascript:document.form_pt.submit()">
+          <div class="text-gray-600 font-bold">
+              <img class="inline h-4" src="{% static "images/br.svg" %}" alt="flag" />
+              <span class="align-middle fg-hospitalaid-blue-light font-bold ml-2">Português (PT-BR)</span>
+          </div>
+        </a>
+      {% endif %}
+    
+    <hr class="my-4 border-2">
+
+    {% if yes %}
+    <form action="{{ yes_href }}" method="post">
+      {% csrf_token %} 
+      {% include "includes/button.html" with color="red" label=yes %}
+    </form>
+    {% endif %}
+    {% if no %}
+    <a class="text-blue-700 font-bold" href="{{ no_href }}">{{ no }}</a>
+    {% endif %}
+  </div>
+</div>
+
+<form name="form_en" action="{% url 'set_language' %}" method="post">
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ redirect_to }}">
+  <input type="text" id="language" name="language" value="en">
+</form>
+
+<form name="form_pt" action="{% url 'set_language' %}" method="post">
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ redirect_to }}">
+  <input type="text" id="language" name="language" value="pt">
+</form>
+

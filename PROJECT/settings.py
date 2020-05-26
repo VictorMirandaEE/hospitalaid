@@ -46,6 +46,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -107,7 +108,7 @@ USE_TZ = True
 
 LANGUAGES = (
     ('en', _('English')),
-    ('pt', _('Portuguese')),
+    ('pt-br', _('Português (BR)')),
 )
 
 LOCALE_PATHS = (

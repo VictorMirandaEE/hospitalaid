@@ -1,0 +1,9 @@
+{% extends "hamburger.html" %}
+{% load static %}
+
+{% block modal %}
+{% url 'hamburger' as dismiss %}
+{% static "images/globe.svg" as icon %}
+{% include "includes/language-modal.html" with image=icon title="Select language" text="English" no="Dismiss" no_href=dismiss %}
+
+{% endblock %}

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load l10n %}
 
 {% block styles %}
     <link rel="stylesheet" href="{% static "/css/leaflet.css" %}">
@@ -64,8 +65,8 @@
           name: "{{ h.name }}",
           town: "{{ h.city }}",
           country: "{{ h.country }}",
-          latitude: {{ h.latitude|default:0.0 }},
-          longitude: {{ h.longitude|default:0.0 }},
+          latitude: {{ h.latitude|default:0.0|unlocalize }},
+          longitude: {{ h.longitude|default:0.0|unlocalize }},
           text: "{% for aid in h.aidrequest_set.all %}<p>{{ aid }}</p>{% endfor %}",
           link: "{% url 'hospitalfordonor_detail' h.id %}",
         },

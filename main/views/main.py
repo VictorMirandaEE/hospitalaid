@@ -10,7 +10,7 @@ from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 
 from main import models, forms
-
+from geopy.geocoders import Nominatim
 
 logger = logging.getLogger(__name__)
 
@@ -98,9 +98,16 @@ class SignupStep2(LoginRequiredMixin, FormView):
         self.request.user.save()
         h, _ = models.main.Hospital.objects.get_or_create(name=form.cleaned_data['hospital_name'])
         h.address = form.cleaned_data['hospital_address']
+        geolocator = Nominatim()
         h.city = form.cleaned_data['hospital_city']
         h.postal_code = form.cleaned_data['hospital_postcode']
         h.country = form.cleaned_data['hospital_country']
+
+        full_address = h.address + "," + h.city + "," + h.postal_code + "," + h.country
+        location = geolocator.geocode(full_address, timeout=10)
+        h.latitude = location.latitude
+        h.longitude = location.longitude
+
         h.user = self.request.user
         h.save()
         return super().form_valid(form)

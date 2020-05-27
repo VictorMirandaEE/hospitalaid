@@ -68,12 +68,12 @@
 <form name="form_en" action="{% url 'set_language' %}" method="post">
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ redirect_to }}">
-  <input type="text" id="language" name="language" value="en">
+  <input type="hidden" id="language_en" name="language" value="en">
 </form>
 
 <form name="form_pt" action="{% url 'set_language' %}" method="post">
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ redirect_to }}">
-  <input type="text" id="language" name="language" value="pt">
+  <input type="hidden" id="language_pt" name="language" value="pt">
 </form>
 

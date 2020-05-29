@@ -17,6 +17,12 @@ class Hospital(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def aidrequest_supply_count(self):
+        return self.aidrequest_set.filter(type="supply").count()
+
+    def aidrequest_repair_count(self):
+        return self.aidrequest_set.filter(type="repair").count()
+
     class Meta:
         ordering = ["-updated_at"]
 

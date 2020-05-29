@@ -41,8 +41,14 @@
 .fg-hospitalaid-red {
   color: #ff5959;
 }
+.fg-hospitalaid-gray-medium {
+  color: #bfc5cf;
+}
 .fg-hospitalaid-gray-dark {
   color: #808da0;
+}
+.fg-hospitalaid-black {
+  color: #00142d;
 }
 .bg-hospitalaid-grayblue {
   background-color: #f0fbff;
@@ -55,6 +61,9 @@
 }
 .border-hospitalaid-gray-dark {
   border-color: #808da0;
+}
+.border-hospitalaid-gray-light {
+  background-color: #d1e1ea;
 }
 @font-face {
 font-family: "RedHatText-Medium";
@@ -71,21 +80,21 @@ src: url("{% static "/fonts/RedHatText-Regular.ttf" %}");
 
   <body class="bg-hospitalaid-grayblue fnt-rh-med">
     {% block nav %}
-    <nav class="flex bg-hospitalaid-blue-light p-3 text-white">
+    <nav class="flex bg-hospitalaid-blue-light p-4 text-white">
         <div class="flex-grow">
           <a href="/" class="">
             <img src="{% static "images/logo.svg" %}" alt="logo">
           </a>
         </div>
         {% if request.user.is_authenticated %}
-        <div class="p-3">
-          <a href="{% url "signup_step2" %}">
+        <div class="static flex justify-center p-4">
+          <a class="fixed self-center" href="{% url "signup_step2" %}">
             <img src="{% static "images/user.svg" %}" alt="user" />
           </a>
         </div>
         {% endif %}
-        <div class="p-3">
-          <a href="{% url "hamburger" %}">
+        <div class="static flex justify-center p-4">
+          <a class="fixed self-center" href="{% url "hamburger" %}">
             <img src="{% static "images/hamburger.svg" %}" alt="menu" />
           </a>
         </div>

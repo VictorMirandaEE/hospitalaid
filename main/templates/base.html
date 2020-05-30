@@ -81,20 +81,20 @@ src: url("{% static "/fonts/RedHatText-Regular.ttf" %}");
   <body class="bg-hospitalaid-grayblue fnt-rh-med">
     {% block nav %}
     <nav class="flex bg-hospitalaid-blue-light p-4 text-white">
-        <div class="flex-grow">
+        <div class="flex-grow self-center">
           <a href="/" class="">
             <img src="{% static "images/logo.svg" %}" alt="logo">
           </a>
         </div>
         {% if request.user.is_authenticated %}
         <div class="static flex justify-center p-4">
-          <a class="fixed self-center" href="{% url "signup_step2" %}">
+          <a class="self-center" href="{% url "signup_step2" %}">
             <img src="{% static "images/user.svg" %}" alt="user" />
           </a>
         </div>
         {% endif %}
-        <div class="static flex justify-center p-4">
-          <a class="fixed self-center" href="{% url "hamburger" %}">
+        <div class="static flex justify-center">
+          <a class="self-center" href="{% url "hamburger" %}">
             <img src="{% static "images/hamburger.svg" %}" alt="menu" />
           </a>
         </div>

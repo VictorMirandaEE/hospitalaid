@@ -6,62 +6,27 @@
   }
 
   function createPopup(hospital) {
-    var map_popup = document.getElementById("id_map-popup").content.cloneNode(true);
+    var mapPopup = document.getElementById("id_map_popup").content.cloneNode(true);
 
-    hosp = map_popup.getElementById("id_hospital-name");
+    hosp = mapPopup.getElementById("id_hospital_name");
     hosp.textContent = hospital.name;
 
-    link = map_popup.getElementById("id_hospital-link");
+    link = mapPopup.getElementById("id_hospital_link");
     link.href = hospital.link;
 
-    supply = map_popup.getElementById("id_supply");
+    supply = mapPopup.getElementById("id_supply");
     supply.textContent = hospital.supply_count;
 
-    repair = map_popup.getElementById("id_repair");
+    repair = mapPopup.getElementById("id_repair");
     repair.textContent = hospital.repair_count;
 
-    return map_popup;
+    return mapPopup;
   }
 
   // initialize Leaflet
   var map = L.map('id_map').fitWorld();
 
-  map.locate({setView: true, maxZoom: 16});
-
-  function onLocationFound(e) {
-    var radius = e.accuracy;
-
-    L.marker(e.latlng).addTo(map)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-    L.circle(e.latlng, radius).addTo(map);
-  }
-
-  map.on('locationfound', onLocationFound);
-
-  function onLocationError(e) {
-    alert(e.message);
-  }
-
-  map.on('locationerror', onLocationError);
-
-  // add the OpenStreetMap tiles
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-  }).addTo(map);
-
-  // show the scale bar on the lower left corner
-  L.control.scale().addTo(map);
-
-  L.easyButton('<img class="h-5 inline" src="/static/images/hospital-pin-black.svg">', function(btn, map){
-    fitBounds();
-  }, 'Zoom all').addTo(map);
-
-//  L.easyButton('<span class="font-bold text-lg align-middle">&ofcir;</span>', function(btn, map){
-//    fitBounds();
-//  }, 'Show your location').addTo(map);
-
+  var myMarker;
 
   var hospitalIcon = L.icon({
       iconUrl: '/static/images/hospital-pin-black.svg',
@@ -79,21 +44,70 @@
       popupAnchor:  [0, -42]  // point from which the popup should open relative to the iconAnchor
   });
 
-  var hospitals_group = L.featureGroup().addTo(map);
+  var hospitalGroup = L.featureGroup().addTo(map);
+  var hospitalArray = new Array();
+  var nearestGroup  = L.featureGroup().addTo(map);
 
-  function fitBounds () {
-    map.fitBounds(hospitals_group.getBounds());
+  map.locate({setView: true, maxZoom: 16});
+
+  function onLocationFound(e) {
+    if(myMarker == null) {
+      myMarker = L.marker(e.latlng).addTo(map);
+    }
+
+    findNearestMarker();
   }
 
-  // fit hospitals_group after 1 second.
+  map.on('locationfound', onLocationFound);
+
+  function onLocationError(e) {
+    alert(e.message);
+    fitBounds();
+  }
+
+  map.on('locationerror', onLocationError);
+
+  // add the OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+  }).addTo(map);
+
+  // show the scale bar on the lower left corner
+  L.control.scale().addTo(map);
+
+  L.easyButton('<img class="h-5 inline" src="/static/images/hospital-pin-black.svg">', function(btn, map){
+    fitBounds();
+  }, 'Zoom all').addTo(map);
+
+  function locate() {
+    if (!navigator.geolocation){
+        alert("<p>Sorry, your browser does not support Geolocation</p>");
+        return;
+    }
+
+    map.locate({setView: true, maxZoom: 16});
+  };
+
+  L.easyButton('<span class="font-bold text-lg align-middle">&ofcir;</span>', function(btn, map){
+    locate();
+  }, 'Find your location').addTo(map);
+
+
+  function fitBounds () {
+    map.fitBounds(hospitalGroup.getBounds());
+  }
+
+  // fit hospitalGroup after 1 second.
   setTimeout(function () {
     //fitBounds();
   }, 1);
 
-  // add markers to the hospitals_group
+  // add markers to the hospitalGroup
   getPoints()
     .then(function (hospitals) {
       hospitals.map(function (hospital) {
+        var marker =
         L
           .marker({ lat: hospital.latitude, lng: hospital.longitude },
           {icon: hospitalIcon})
@@ -101,7 +115,40 @@
           .on('click', function() {
             this.bindPopup(createPopup(hospital), {closeButton: false});
           })
-          .addTo(hospitals_group);
+          .addTo(hospitalGroup);
+        hospitalArray.push(marker);
       })
     });
+
+  function findNearestMarker() {
+    var minDist;
+    var nearestMarker;
+    var hospitalLatLng;
+    var myLatLng;
+    var distance;
+
+    if (hospitalArray.length != 0) {
+      myLatLng = myMarker.getLatLng();
+      hospitalLatLng = hospitalArray[0].getLatLng();
+      minDist = hospitalLatLng.distanceTo(myLatLng);
+      nearestMarker = hospitalArray[0];
+
+      for(ii=0 ; ii < hospitalArray.length ; ii++) {
+        hospitalLatLng = hospitalArray[ii].getLatLng();
+        distance = hospitalLatLng.distanceTo(myLatLng);
+
+        if (distance < minDist) {
+          minDist = distance;
+          nearestMarker = hospitalArray[ii];
+        }
+      }
+
+      myMarker.addTo(nearestGroup);
+      nearestMarker.addTo(nearestGroup);
+      map.flyToBounds(nearestGroup.getBounds(), {duration : 3, easeLinearity: .1 });
+    } else {
+      fitBounds();
+    }
+  }
+
 })(L, map_data);

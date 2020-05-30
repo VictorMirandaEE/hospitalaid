@@ -16,24 +16,22 @@
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
-  <div class="flex-grow">
-    <h1 class="text-3xl font-bold">Aid requests</h1>
-  </div>
-  <div class="static flex flex-shrink-0 p-4 self-center justify-center rounded-full border-2">
-    <a class="fixed self-center" href="{% url 'aidrequestfordonor_list' %}">
-      <img src="{% static "images/list-white.svg" %}" alt="list">
-    </a>
-  </div>
-  <div class="static flex flex-shrink-0 p-6 ml-1 self-center justify-center rounded-full bg-white">
-    <img class="fixed self-center" src="{% static "images/map-blue.svg"  %}" alt="map">
+  <span class="flex-grow whitespace-no-wrap self-center text-3xl font-bold">Aid requests</span>
+  <a class="flex flex-shrink-0 self-center" href="{% url 'aidrequestfordonor_list' %}">
+    <div class="p-2 rounded-full border-2">
+      <img class="" src="{% static "images/list-white.svg" %}" alt="list">
+    </div>
+  </a>
+  <div class="flex flex-shrink-0 p-4 ml-2 rounded-full bg-white">
+    <img src="{% static "images/map-blue.svg"  %}" alt="map">
   </div>
 </nav>
 {% endblock %}
 
 {% block content %}
-<template id="id_map-popup">
-  <a id="id_hospital-link" class="flex px-3 justify-center items-center border-lg h-10" href="#">
-    <span class="flex-grow font-bold text-white" id="id_hospital-name"></span>
+<template id="id_map_popup">
+  <a id="id_hospital_link" class="flex px-3 justify-center items-center border-lg h-10" href="#">
+    <span class="flex-grow font-bold text-white" id="id_hospital_name"></span>
     <img src="{% static "images/forward-arrow-white.svg" %}" alt="" />
   </a>
   <div class="flex text-center font-bold bg-white py-3 rounded-b-lg h-16">

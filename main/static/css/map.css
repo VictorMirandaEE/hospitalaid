@@ -1,0 +1,21 @@
+#id_map {
+  /* configure the size of the map */
+  height: 600px;
+}
+
+.leaflet-popup-content-wrapper{
+  border-radius: 0.5rem;
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.leaflet-popup-content{
+  background-color: #0f3476;
+  border-radius: 0.5rem;
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+  width: 200px;
+  line-height: 0.83;
+}

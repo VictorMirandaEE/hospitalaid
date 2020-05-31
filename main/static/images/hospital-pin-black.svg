@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="39" viewBox="0 0 32 39">
+    <defs>
+        <filter id="prefix__a" width="123.1%" height="250%" x="-11.5%" y="-75%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <ellipse cx="16" cy="34" fill="#1A1A1A" fill-opacity=".2" filter="url(#prefix__a)" rx="13" ry="2"/>
+        <path fill="#00142D" d="M16 0c7.75 0 14 6.235 14 13.966 0 6.9-5 10.723-9.333 15.212L16 34l-4.667-4.822C7 24.69 2 20.866 2 13.966 2 6.235 8.25 0 16 0z"/>
+        <text fill="#FFF" font-family="LeagueSpartan-Bold, League Spartan" font-size="15" font-weight="bold">
+            <tspan x="10" y="20">H</tspan>
+        </text>
+    </g>
+</svg>

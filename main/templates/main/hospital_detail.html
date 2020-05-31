@@ -21,7 +21,14 @@
   <div class="card-deck">
     {% for aid in object.aidrequest_set.all %}
     <a href="{% url 'aidrequestfordonor_detail' aid.id %}">
-      <div class="flex mb-3 bg-white-light rounded-lg shadow-lg border-l-8 border-blue-300 p-4">
+      <div class="flex mb-3 bg-white-light rounded-lg shadow-lg border-l-8 hover:bg-gray-200
+        {% if aid.type == "supply" %}
+        border-blue-900
+        {% endif %}
+        {% if aid.type == "repair" %}
+        border-red-500
+        {% endif %}
+        p-4">
         <div class="flex-grow">
           <p class="pb-2 font-bold">{{ aid.title|truncatechars:80 }}</p>
           <p class="text-gray-500 fnt-rh-reg">{{ aid.updated_at|naturaltime }}</p>

@@ -1,6 +1,51 @@
+#id_map_account {
+  width:100%;
+  height: 260px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 #id_map {
   /* configure the size of the map */
   height: 600px;
+}
+
+#addr_selection {
+  z-index: 100;
+  display: none;
+  background-color: #ffffff;
+  top: 130px;
+  left: 20px;
+  height: 180px;
+  width: 100%;
+  border: 1px solid #ccc;
+  overflow: scroll;
+  margin-left: 0;
+  padding-left: 20px;
+  text-indent: -15px;
+  list-style-type: none;
+}
+
+#addr_selection a:hover {
+      color:#ff9900;
+}
+
+#addr_selection li:hover,
+#addr_selection li:hover a {
+      /*background-position:0% -150px;*/
+      color:#ff9900;
+}
+
+#addr_selection li.active {
+      background-position:0 -150px;
+      border-width:0;
+}
+
+#addr_selection li.active a {
+      background-position:100% -150px;
+      padding-bottom:4px;
+      color:#ff9900;
 }
 
 .leaflet-popup-content-wrapper{

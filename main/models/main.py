@@ -12,8 +12,8 @@ class Hospital(models.Model):
     postal_code = models.CharField(max_length=32)
     state = models.CharField(max_length=32)
     country = models.CharField(max_length=32)
-    latitude = models.FloatField(null=True)
-    longitude = models.FloatField(null=True)
+    latitude = models.FloatField(default=0)
+    longitude = models.FloatField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -48,13 +48,12 @@
   var hospitalArray = new Array();
   var nearestGroup  = L.featureGroup().addTo(map);
 
-  map.locate({setView: true, maxZoom: 16});
+  map.locate({setView: true, maxZoom: 19});
 
   function onLocationFound(e) {
-    if(myMarker == null) {
+    if(!myMarker) {
       myMarker = L.marker(e.latlng).addTo(map);
     }
-
     findNearestMarker();
   }
 
@@ -82,26 +81,21 @@
 
   function locate() {
     if (!navigator.geolocation){
-        alert("<p>Sorry, your browser does not support Geolocation</p>");
-        return;
+      alert("<p>Sorry, your browser does not support Geolocation</p>");
+      return;
     }
 
-    map.locate({setView: true, maxZoom: 16});
+    map.locate({setView: true, maxZoom: 19});
+    findNearestMarker();
   };
 
   L.easyButton('<span class="font-bold text-lg align-middle">&ofcir;</span>', function(btn, map){
-    locate();
+    findNearestMarker();
   }, 'Find your location').addTo(map);
-
 
   function fitBounds () {
     map.fitBounds(hospitalGroup.getBounds());
   }
-
-  // fit hospitalGroup after 1 second.
-  setTimeout(function () {
-    //fitBounds();
-  }, 1);
 
   // add markers to the hospitalGroup
   getPoints()
@@ -145,7 +139,7 @@
 
       myMarker.addTo(nearestGroup);
       nearestMarker.addTo(nearestGroup);
-      map.flyToBounds(nearestGroup.getBounds(), {duration : 3, easeLinearity: .1 });
+      map.flyToBounds(nearestGroup.getBounds());
     } else {
       fitBounds();
     }

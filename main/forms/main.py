@@ -42,5 +42,6 @@ class SignupStep2Form(forms.Form):
     hospital_city = forms.CharField(max_length=32)
     hospital_postcode = forms.CharField(max_length=32)
     hospital_country = forms.CharField(max_length=32)
-    
+    hospital_latitude = forms.CharField(max_length=32, widget=forms.HiddenInput())
+    hospital_longitude = forms.CharField(max_length=32, widget=forms.HiddenInput())
 

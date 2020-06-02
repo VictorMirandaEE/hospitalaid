@@ -9,8 +9,8 @@ var marker;
 var addrSelector = $('#addr_selection');
 
 function load_map() {
-  var lat = $('#map_latitude').val();
-  var lon = $('#map_longitude').val();
+  var lat = map_latitude;
+  var lon = map_longitude;
   var zoomLevel = 19;
   var location;
 

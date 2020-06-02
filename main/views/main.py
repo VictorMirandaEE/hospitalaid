@@ -83,7 +83,7 @@ class SignupStep2(LoginRequiredMixin, FormView):
         initial = super().get_initial()
         initial['name'] = self.request.user.first_name
         initial['phone'] = self.request.user.phone
-        h = models.main.Hospital.objects.filter(user=self.request.user).first()
+        h = models.main.Hospital.objects.filter(user=self.request.user).last()
         if h:
             initial['hospital_name'] = h.name
             initial['hospital_address'] = h.address
@@ -98,7 +98,10 @@ class SignupStep2(LoginRequiredMixin, FormView):
         self.request.user.first_name = form.cleaned_data['name']
         self.request.user.phone = form.cleaned_data['phone']
         self.request.user.save()
-        h, _ = models.main.Hospital.objects.get_or_create(name=form.cleaned_data['hospital_name'])
+        try:
+            h = models.main.Hospital.objects.get(name=form.cleaned_data['hospital_name'])
+        except models.main.Hospital.DoesNotExist:
+            h = models.main.Hospital(name=form.cleaned_data['hospital_name'])
         h.address = form.cleaned_data['hospital_address']
         h.city = form.cleaned_data['hospital_city']
         h.postal_code = form.cleaned_data['hospital_postcode']

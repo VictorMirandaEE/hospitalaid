@@ -1,10 +1,12 @@
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
 class Hospital(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+    )
     name = models.CharField(max_length=32)
     phone = models.CharField(max_length=32, blank=True)
     address = models.CharField(max_length=32)

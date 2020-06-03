@@ -7,7 +7,6 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, FormView, UpdateView
 from django_filters.views import FilterView
-from geopy.geocoders import Nominatim
 
 from main import forms, models
 

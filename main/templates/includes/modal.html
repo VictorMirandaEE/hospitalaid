@@ -12,7 +12,7 @@
     </p>
     {% if yes %}
     <form action="{{ yes_href }}" method="post">
-      {% csrf_token %} 
+      {% csrf_token %}
       {% include "includes/button.html" with color="red" label=yes %}
     </form>
     {% endif %}
@@ -21,4 +21,3 @@
     {% endif %}
   </div>
 </div>
-

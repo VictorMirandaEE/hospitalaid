@@ -6,19 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0020_auto_20200602_1507'),
+        ("main", "0020_auto_20200602_1507"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='hospital',
-            name='latitude',
+            model_name="hospital",
+            name="latitude",
             field=models.FloatField(default=0),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='hospital',
-            name='longitude',
+            model_name="hospital",
+            name="longitude",
             field=models.FloatField(default=0),
             preserve_default=False,
         ),

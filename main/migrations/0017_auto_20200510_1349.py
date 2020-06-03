@@ -6,18 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0016_auto_20200507_0855'),
+        ("main", "0016_auto_20200507_0855"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='aidrequest',
-            name='closed',
-        ),
+        migrations.RemoveField(model_name="aidrequest", name="closed",),
         migrations.AddField(
-            model_name='aidrequest',
-            name='status',
-            field=models.CharField(choices=[('unassigned', 'Unassigned'), ('in_progress', 'In progress'), ('closed', 'Closed')], default='unassigned', max_length=16),
+            model_name="aidrequest",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("unassigned", "Unassigned"),
+                    ("in_progress", "In progress"),
+                    ("closed", "Closed"),
+                ],
+                default="unassigned",
+                max_length=16,
+            ),
             preserve_default=False,
         ),
     ]

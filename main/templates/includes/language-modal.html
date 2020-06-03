@@ -10,11 +10,11 @@
     </div>
     {% endif %}
     <h1 class="text-lg font-bold mb-4">{{ title }}</h1>
-    
+
     <hr class="my-4 border-2">
-    
+
       {% get_current_language as LANGUAGE_CODE %}
-      
+
       {% if LANGUAGE_CODE == "en" %}
         <div class="flex justify-between">
           <div class="font-bold">
@@ -50,12 +50,12 @@
           </div>
         </a>
       {% endif %}
-    
+
     <hr class="my-4 border-2">
 
     {% if yes %}
     <form action="{{ yes_href }}" method="post">
-      {% csrf_token %} 
+      {% csrf_token %}
       {% include "includes/button.html" with color="red" label=yes %}
     </form>
     {% endif %}
@@ -76,4 +76,3 @@
   <input name="next" type="hidden" value="{{ redirect_to }}">
   <input type="hidden" id="language_pt" name="language" value="pt">
 </form>
-

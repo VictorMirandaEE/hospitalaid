@@ -92,7 +92,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AlterModelManagers(
-            name="user", managers=[("objects", main.models.user.UserManager()),],
+            name="user", managers=[("objects", main.models.user.UserManager()),]
         ),
         migrations.DeleteModel(name="Todo",),
         migrations.AddField(

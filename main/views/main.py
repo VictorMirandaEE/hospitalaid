@@ -1,16 +1,15 @@
 import logging
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import (CreateView, DeleteView, FormView,
-                                       UpdateView)
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView, FormView, UpdateView
 from django_filters.views import FilterView
-
-from main import models, forms
 from geopy.geocoders import Nominatim
+
+from main import forms, models
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +55,7 @@ def aidrequest_status(request, pk, value):
     aid = models.main.AidRequest.objects.filter(hospital__in=hospitals).get(pk=pk)
     aid.status = value
     aid.save()
-    return redirect('aidrequestforhospital_detail', pk=pk)
+    return redirect("aidrequestforhospital_detail", pk=pk)
 
 
 class AidRequestDetailForHospital(DetailView):
@@ -81,33 +80,35 @@ class SignupStep2(LoginRequiredMixin, FormView):
 
     def get_initial(self):
         initial = super().get_initial()
-        initial['name'] = self.request.user.first_name
-        initial['phone'] = self.request.user.phone
+        initial["name"] = self.request.user.first_name
+        initial["phone"] = self.request.user.phone
         h = models.main.Hospital.objects.filter(user=self.request.user).last()
         if h:
-            initial['hospital_name'] = h.name
-            initial['hospital_address'] = h.address
-            initial['hospital_city'] = h.city
-            initial['hospital_postcode'] = h.postal_code
-            initial['hospital_country'] = h.country
-            initial['hospital_latitude'] = h.latitude
-            initial['hospital_longitude'] = h.longitude
+            initial["hospital_name"] = h.name
+            initial["hospital_address"] = h.address
+            initial["hospital_city"] = h.city
+            initial["hospital_postcode"] = h.postal_code
+            initial["hospital_country"] = h.country
+            initial["hospital_latitude"] = h.latitude
+            initial["hospital_longitude"] = h.longitude
         return initial
 
     def form_valid(self, form):
-        self.request.user.first_name = form.cleaned_data['name']
-        self.request.user.phone = form.cleaned_data['phone']
+        self.request.user.first_name = form.cleaned_data["name"]
+        self.request.user.phone = form.cleaned_data["phone"]
         self.request.user.save()
         try:
-            h = models.main.Hospital.objects.get(name=form.cleaned_data['hospital_name'])
+            h = models.main.Hospital.objects.get(
+                name=form.cleaned_data["hospital_name"]
+            )
         except models.main.Hospital.DoesNotExist:
-            h = models.main.Hospital(name=form.cleaned_data['hospital_name'])
-        h.address = form.cleaned_data['hospital_address']
-        h.city = form.cleaned_data['hospital_city']
-        h.postal_code = form.cleaned_data['hospital_postcode']
-        h.country = form.cleaned_data['hospital_country']
-        h.latitude = form.cleaned_data['hospital_latitude']
-        h.longitude = form.cleaned_data['hospital_longitude']
+            h = models.main.Hospital(name=form.cleaned_data["hospital_name"])
+        h.address = form.cleaned_data["hospital_address"]
+        h.city = form.cleaned_data["hospital_city"]
+        h.postal_code = form.cleaned_data["hospital_postcode"]
+        h.country = form.cleaned_data["hospital_country"]
+        h.latitude = form.cleaned_data["hospital_latitude"]
+        h.longitude = form.cleaned_data["hospital_longitude"]
         h.user = self.request.user
         h.save()
         return super().form_valid(form)

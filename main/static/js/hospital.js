@@ -1,4 +1,4 @@
-/* 
+/*
   REFERENCES:
   https://derickrethans.nl/leaflet-and-nominatim.html
   https://github.com/joindin
@@ -68,7 +68,7 @@ function addrSearch(type) {
                             hospitalCountry.value;
 
   if(type == 'address') {
-    searchText = hospitalFullAddress;   
+    searchText = hospitalFullAddress;
   } else {
     searchText = hospitalName.value;
   }

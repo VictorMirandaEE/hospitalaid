@@ -1,4 +1,5 @@
 from django import forms
+
 from main import models
 
 
@@ -14,8 +15,10 @@ class AidRequestCreateForm(forms.ModelForm):
             "serial_number",
             "comments",
         ]
-        widgets = {'type': forms.HiddenInput,
-                   'comments': forms.Textarea(attrs={'rows': 4}),}
+        widgets = {
+            "type": forms.HiddenInput,
+            "comments": forms.Textarea(attrs={"rows": 4}),
+        }
 
 
 class AidRequestUpdateForm(forms.ModelForm):
@@ -30,8 +33,10 @@ class AidRequestUpdateForm(forms.ModelForm):
             "serial_number",
             "comments",
         ]
-        widgets = {'type': forms.HiddenInput,
-                   'comments': forms.Textarea(attrs={'rows': 4}),}
+        widgets = {
+            "type": forms.HiddenInput,
+            "comments": forms.Textarea(attrs={"rows": 4}),
+        }
 
 
 class SignupStep2Form(forms.Form):
@@ -44,4 +49,3 @@ class SignupStep2Form(forms.Form):
     hospital_country = forms.CharField(max_length=32)
     hospital_latitude = forms.CharField(max_length=32, widget=forms.HiddenInput())
     hospital_longitude = forms.CharField(max_length=32, widget=forms.HiddenInput())
-

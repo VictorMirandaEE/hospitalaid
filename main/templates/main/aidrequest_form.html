@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-      
+
     {% include "includes/form.html" %}
     {% if object %}
       {% include "includes/button.html" with color="red" label="Save changes" %}
@@ -68,7 +68,7 @@
   {% if not object %}
     setSupplyOnClick();
   {% endif %}
-  
+
   function setSupplyOnClick() {
     document.getElementById('id_type').value = "supply";
     document.getElementById('id_supply_box').style.borderWidth  = "2px";

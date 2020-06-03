@@ -6,21 +6,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0013_auto_20200410_2054'),
+        ("main", "0013_auto_20200410_2054"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ImportedHospital',
+            name="ImportedHospital",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=512)),
-                ('addr_postcode', models.CharField(max_length=32)),
-                ('addr_housenumber', models.CharField(max_length=32)),
-                ('addr_street', models.CharField(max_length=64)),
-                ('addr_city', models.CharField(max_length=64)),
-                ('location_latitude', models.DecimalField(decimal_places=6, max_digits=9)),
-                ('location_longitude', models.DecimalField(decimal_places=6, max_digits=9)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=512)),
+                ("addr_postcode", models.CharField(max_length=32)),
+                ("addr_housenumber", models.CharField(max_length=32)),
+                ("addr_street", models.CharField(max_length=64)),
+                ("addr_city", models.CharField(max_length=64)),
+                (
+                    "location_latitude",
+                    models.DecimalField(decimal_places=6, max_digits=9),
+                ),
+                (
+                    "location_longitude",
+                    models.DecimalField(decimal_places=6, max_digits=9),
+                ),
             ],
         ),
     ]

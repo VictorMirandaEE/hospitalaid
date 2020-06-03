@@ -12,11 +12,21 @@ Install
 - Install Git and clone this project locally.
 - Run `cp .env.template .env`
 - Run `pipenv shell`
-- Run `pipenv sync` to update dependencies
+- Run `pipenv sync --dev` to update dependencies
+- Run `pre-commit install` to install precommit hooks
 - Run `honcho -f Procfile.dev start`
 - Open the browser at `http://localhost:8000/`
 
-You need to do the first 4 steps only once.
+After having done this once, you can follow the abbreviated steps below
+
+
+Run when installed
+---
+
+- Run `pipenv shell`
+- Run `pipenv sync --dev` to update dependencies
+- Run `honcho -f Procfile.dev start`
+- Open the browser at `http://localhost:8000/`
 
 
 Contributing

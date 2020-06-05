@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Hospital(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
     )
     name = models.CharField(max_length=32)

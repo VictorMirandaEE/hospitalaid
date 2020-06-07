@@ -1,10 +1,12 @@
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
 class Hospital(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+    )
     name = models.CharField(max_length=32)
     phone = models.CharField(max_length=32, blank=True)
     address = models.CharField(max_length=32)
@@ -55,17 +57,23 @@ class AidRequest(models.Model):
         ("in_progress", _("In progress")),
         ("closed", _("Closed")),
     ]
-    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, verbose_name=_("hospital"))
+    hospital = models.ForeignKey(
+        Hospital, on_delete=models.CASCADE, verbose_name=_("hospital")
+    )
     type = models.CharField(max_length=32, choices=REQUEST_TYPE, verbose_name=_("type"))
-    status = models.CharField(max_length=16, choices=STATUS, default='unassigned')
+    status = models.CharField(max_length=16, choices=STATUS, default="unassigned")
     comments = models.CharField(max_length=200, blank=True, verbose_name=_("comments"))
 
     title = models.CharField(max_length=50, verbose_name=_("title"))
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
 
-    manufacturer = models.CharField(max_length=16, blank=True, verbose_name=_("manufacturer"))
+    manufacturer = models.CharField(
+        max_length=16, blank=True, verbose_name=_("manufacturer")
+    )
     model = models.CharField(max_length=16, blank=True, verbose_name=_("model"))
-    serial_number = models.CharField(max_length=16, blank=True, verbose_name=_("serial number"))
+    serial_number = models.CharField(
+        max_length=16, blank=True, verbose_name=_("serial number")
+    )
 
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))

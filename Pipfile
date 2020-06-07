@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+pre-commit = "*"
 
 [packages]
 Django = "*"
@@ -11,11 +12,9 @@ django-extensions = "*"
 factory-boy = "*"
 django-debug-toolbar = "*"
 psycopg2-binary = "*"
-django-tables2 = "*"
 whitenoise = "*"
 gunicorn = "*"
 django-filter = "*"
-django-material = "*"
 django-sesame = "*"
 ua-parser = "*"
 dj-database-url = "*"
@@ -24,7 +23,8 @@ requests = "*"
 livereload = "*"
 honcho = "*"
 sentry-sdk = "*"
-geopy = "*"
+structlog = "*"
+colorama = "*"
 
 [requires]
 python_version = "3.7"

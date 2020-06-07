@@ -1,15 +1,14 @@
-import logging
-
+import structlog
 from django import forms
 from django.core.mail import send_mail
-from django.views.generic.edit import FormView
-from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import FormView
 from sesame import utils
 
 from main.models.user import User
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 class EmailForm(forms.Form):
@@ -24,7 +23,7 @@ class Signup(FormView):
         return reverse("signup") + "?sent=1"
 
     def form_valid(self, form):
-        email = form.cleaned_data['email']
+        email = form.cleaned_data["email"]
         user, created = User.objects.get_or_create(email=email)
         login_token = utils.get_query_string(user)
 
@@ -32,16 +31,19 @@ class Signup(FormView):
         logo_src = "http://{}{}".format(self.request.get_host(), logo_url)
         login_link = "http://{}/{}".format(self.request.get_host(), login_token)
 
-        html_message = render_to_string('email/magiclink_login_message.html',
-                {'login_link': login_link, 'logo_src': logo_src})
+        html_message = render_to_string(
+            "email/magiclink_login_message.html",
+            {"login_link": login_link, "logo_src": logo_src},
+        )
 
         send_mail(
-            'Hospital Aid Login Link',
+            "Hospital Aid Login Link",
             html_message,
-            'admin@domain.com',
+            "admin@domain.com",
             [email],
             fail_silently=False,
-            html_message=html_message
+            html_message=html_message,
         )
-        return super().form_valid(form)
 
+        logger.info("Signup requested. Sent email.", email=email)
+        return super().form_valid(form)

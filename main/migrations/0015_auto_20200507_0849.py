@@ -6,56 +6,49 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0014_importedhospital'),
+        ("main", "0014_importedhospital"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='aidrequest',
-            old_name='details',
-            new_name='comments',
+            model_name="aidrequest", old_name="details", new_name="comments",
         ),
         migrations.RenameField(
-            model_name='aidrequest',
-            old_name='equipment_brand',
-            new_name='manufacturer',
+            model_name="aidrequest",
+            old_name="equipment_brand",
+            new_name="manufacturer",
         ),
         migrations.RenameField(
-            model_name='aidrequest',
-            old_name='equipment_model',
-            new_name='model',
+            model_name="aidrequest", old_name="equipment_model", new_name="model",
         ),
         migrations.RenameField(
-            model_name='aidrequest',
-            old_name='equipment_serialno',
-            new_name='serial_number',
+            model_name="aidrequest",
+            old_name="equipment_serialno",
+            new_name="serial_number",
         ),
-        migrations.RemoveField(
-            model_name='aidrequest',
-            name='supply_quantity',
-        ),
-        migrations.RemoveField(
-            model_name='aidrequest',
-            name='equipment_quantity',
-        ),
+        migrations.RemoveField(model_name="aidrequest", name="supply_quantity",),
+        migrations.RemoveField(model_name="aidrequest", name="equipment_quantity",),
         migrations.AddField(
-            model_name='aidrequest',
-            name='quantity',
+            model_name="aidrequest",
+            name="quantity",
             field=models.PositiveIntegerField(default=1),
             preserve_default=False,
         ),
-        migrations.RemoveField(
-            model_name='aidrequest',
-            name='supply_type',
-        ),
+        migrations.RemoveField(model_name="aidrequest", name="supply_type",),
         migrations.AlterField(
-            model_name='aidrequest',
-            name='equipment_type',
+            model_name="aidrequest",
+            name="equipment_type",
             field=models.CharField(max_length=50),
         ),
         migrations.AlterField(
-            model_name='aidrequest',
-            name='type',
-            field=models.CharField(choices=[('supply', 'New equipment/supply request'), ('repair', 'Existing equipment repair')], max_length=32),
+            model_name="aidrequest",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("supply", "New equipment/supply request"),
+                    ("repair", "Existing equipment repair"),
+                ],
+                max_length=32,
+            ),
         ),
     ]

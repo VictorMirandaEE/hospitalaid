@@ -30,7 +30,9 @@ urlpatterns = [
         name="aidrequestforhospital_detail",
     ),
     path(
-        "help-wanted/list/", views.main.AidRequestListForHospital.as_view(), name="aidrequestforhospital_list"
+        "help-wanted/list/",
+        views.main.AidRequestListForHospital.as_view(),
+        name="aidrequestforhospital_list",
     ),
     path("signup/step2/", views.main.SignupStep2.as_view(), name="signup_step2"),
     path(
@@ -39,13 +41,19 @@ urlpatterns = [
         name="aidrequestfordonor_detail",
     ),
     path(
-        "help-needed/hospitals/<int:pk>/", views.main.HospitalDetailForDonor.as_view(), name="hospitalfordonor_detail"
+        "help-needed/hospitals/<int:pk>/",
+        views.main.HospitalDetailForDonor.as_view(),
+        name="hospitalfordonor_detail",
     ),
     path(
-        "help-needed/map/", views.main.HospitalMap.as_view(), name="hospitalfordonor_list"
+        "help-needed/map/",
+        views.main.HospitalMap.as_view(),
+        name="hospitalfordonor_list",
     ),
     path(
-        "help-needed/list/", views.main.AidRequestListForDonor.as_view(), name="aidrequestfordonor_list"
+        "help-needed/list/",
+        views.main.AidRequestListForDonor.as_view(),
+        name="aidrequestfordonor_list",
     ),
     path("signup/", views.user.Signup.as_view(), name="signup"),
     path("", views.main.home, name="home"),

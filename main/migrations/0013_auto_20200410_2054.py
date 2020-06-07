@@ -6,24 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0012_auto_20200402_1411'),
+        ("main", "0012_auto_20200402_1411"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='aidrequest',
-            name='assigned_to',
-        ),
-        migrations.RemoveField(
-            model_name='aidrequest',
-            name='status',
-        ),
+        migrations.RemoveField(model_name="aidrequest", name="assigned_to",),
+        migrations.RemoveField(model_name="aidrequest", name="status",),
         migrations.AddField(
-            model_name='aidrequest',
-            name='closed',
+            model_name="aidrequest",
+            name="closed",
             field=models.BooleanField(default=False),
         ),
-        migrations.DeleteModel(
-            name='AidResponse',
-        ),
+        migrations.DeleteModel(name="AidResponse",),
     ]

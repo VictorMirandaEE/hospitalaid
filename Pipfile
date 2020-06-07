@@ -23,6 +23,8 @@ requests = "*"
 livereload = "*"
 honcho = "*"
 sentry-sdk = "*"
+structlog = "*"
+colorama = "*"
 
 [requires]
 python_version = "3.7"

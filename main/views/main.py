@@ -1,5 +1,4 @@
-import logging
-
+import structlog
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
@@ -10,7 +9,7 @@ from django_filters.views import FilterView
 
 from main import forms, models
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 ### Hospital views
@@ -25,6 +24,9 @@ class AidRequestCreateView(LoginRequiredMixin, CreateView):
         obj = form.save(commit=False)
         obj.hospital = self.request.user.hospital
         obj.save()
+        logger.info(
+            "AidRequest created", email=self.request.user.email, hospital=obj.hospital
+        )
         return super().form_valid(form)
 
 
@@ -47,11 +49,17 @@ class AidRequestDeleteView(LoginRequiredMixin, DeleteView):
 
 @login_required
 def aidrequest_status(request, pk, value):
-    aid = models.main.AidRequest.objects.filter(
-        hospital=self.request.user.hospital
-    ).get(pk=pk)
+    aid = models.main.AidRequest.objects.filter(hospital=request.user.hospital).get(
+        pk=pk
+    )
     aid.status = value
     aid.save()
+    logger.info(
+        "AidRequest status change",
+        new_status=value,
+        email=request.user.email,
+        aidrequest=aid,
+    )
     return redirect("aidrequestforhospital_detail", pk=pk)
 
 
@@ -107,6 +115,7 @@ class SignupStep2(LoginRequiredMixin, FormView):
         h.latitude = form.cleaned_data["hospital_latitude"]
         h.longitude = form.cleaned_data["hospital_longitude"]
         h.save()
+        logger.info("User completed step 2.", email=self.request.user.email, hospital=h)
         return super().form_valid(form)
 
 

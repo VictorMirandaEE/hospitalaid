@@ -1,5 +1,4 @@
-import logging
-
+import structlog
 from django import forms
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -9,7 +8,7 @@ from sesame import utils
 
 from main.models.user import User
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 class EmailForm(forms.Form):
@@ -45,4 +44,6 @@ class Signup(FormView):
             fail_silently=False,
             html_message=html_message,
         )
+
+        logger.info("Signup requested. Sent email.", email=email)
         return super().form_valid(form)

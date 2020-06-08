@@ -8,7 +8,9 @@
 
 #id_map {
   /* configure the size of the map */
-  height: 600px;
+  height: calc(100% - 133px); /* discount height of navigation bars */
+  width: 100%;
+  position: absolute !important;
 }
 
 #addr_selection {

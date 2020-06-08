@@ -1,9 +1,14 @@
 {% extends "main/aidrequest_detail_hospital.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block modal %}
 {% url 'aidrequest_delete' object.id as delete %}
 {% url 'aidrequestforhospital_detail' object.id as dismiss %}
 {% static "images/bin.svg" as icon %}
-{% include "includes/modal.html" with image=icon title="Delete request" text="Are you sure you want to delete this request?" yes="Yes, please" yes_href=delete no="No, thanks" no_href=dismiss %}
+{% trans "Delete request" as title %}
+{% trans "Are you sure you want to delete this request?" as text %}
+{% trans "Yes, please" as yes %}
+{% trans "No, thanks" as no %}
+{% include "includes/modal.html" with image=icon title=title text=text yes=yes yes_href=delete no=no no_href=dismiss %}
 {% endblock %}

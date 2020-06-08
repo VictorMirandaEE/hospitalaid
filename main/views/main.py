@@ -168,3 +168,7 @@ def about(request):
 
 def language(request):
     return render(request, "language.html")
+
+
+def language_home(request):
+    return render(request, "language_home.html")

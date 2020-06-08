@@ -8,6 +8,14 @@ var map;
 var marker;
 var addrSelector = $('#addr_selection');
 
+var hospitalIcon = L.icon({
+  iconUrl: '/static/images/hospital-pin-black.svg',
+
+  iconSize:     [32, 39], // size of the icon
+  iconAnchor:   [16, 39], // point of the icon which will correspond to marker's location
+  popupAnchor:  [0, -42]  // point from which the popup should open relative to the iconAnchor
+});
+
 function load_map() {
   var lat = map_latitude;
   var lon = map_longitude;
@@ -28,24 +36,20 @@ function load_map() {
   map.setView(new L.LatLng(lat, lon), zoomLevel).addLayer(osm);
 
   location = new L.LatLng(lat, lon);
-  marker = L.marker(location, { draggable: true }).addTo(map);
+  marker = L.marker(location, { icon: hospitalIcon, draggable: true }).addTo(map);
   marker.on('dragend', function () { location = marker.getLatLng(); placeMarker(location) });
 }
 
 function placeMarker(location) {
   if (!marker) {
-    marker = L.marker(location, { draggable: true }).addTo(map);
+    marker = L.marker(location, { icon: hospitalIcon, draggable: true }).addTo(map);
     marker.on('dragend', function () { location = marker.getLatLng(); placeMarker(location) });
   } else {
     marker.setLatLng(location);
   }
 
-  console.log("location.lat1="+location.lat);
-  console.log("location.lng1="+location.lng);
-
   $('#id_hospital_latitude').val(location.lat);
   $('#id_hospital_longitude').val(location.lng);
-  //$('#id_hospital_country').val("Country");
 }
 
 function chooseAddr(lat, lng) {
@@ -73,15 +77,10 @@ function addrSearch(type) {
     searchText = hospitalName.value;
   }
 
-  console.log("searchText = "+searchText);
-
   $.getJSON('https://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + searchText, function(data) {
     var items = [];
 
     $.each(data, function (key, val) {
-      console.log("display_name="+val.display_name);
-      console.log("lat="+val.lat);
-      console.log("lon="+val.lon);
       items.push("<li><a href='#' onclick='chooseAddr(" + val.lat + ", " + val.lon + ");return false;'>" + val.display_name + '</a></li>');
     });
 

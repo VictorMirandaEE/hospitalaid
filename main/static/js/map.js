@@ -1,4 +1,4 @@
-(function(L, map_data) {
+(function (L, map_data) {
   function getPoints() {
     return new Promise(function (resolve) {
       resolve(map_data)
@@ -29,29 +29,29 @@
   var myMarker;
 
   var hospitalIcon = L.icon({
-      iconUrl: '/static/images/hospital-pin-black.svg',
+    iconUrl: '/static/images/hospital-pin-black.svg',
 
-      iconSize:     [32, 39], // size of the icon
-      iconAnchor:   [16, 39], // point of the icon which will correspond to marker's location
-      popupAnchor:  [0, -42]  // point from which the popup should open relative to the iconAnchor
+    iconSize: [32, 39], // size of the icon
+    iconAnchor: [16, 39], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, -42]  // point from which the popup should open relative to the iconAnchor
   });
 
   var hospitalBlueIcon = L.icon({
-      iconUrl: '/static/images/hospital-pin-blue.png',
+    iconUrl: '/static/images/hospital-pin-blue.svg',
 
-      iconSize:     [32, 39], // size of the icon
-      iconAnchor:   [16, 39], // point of the icon which will correspond to marker's location
-      popupAnchor:  [0, -42]  // point from which the popup should open relative to the iconAnchor
+    iconSize: [32, 39], // size of the icon
+    iconAnchor: [16, 39], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, -42]  // point from which the popup should open relative to the iconAnchor
   });
 
   var hospitalGroup = L.featureGroup().addTo(map);
   var hospitalArray = new Array();
-  var nearestGroup  = L.featureGroup().addTo(map);
+  var nearestGroup = L.featureGroup().addTo(map);
 
-  map.locate({setView: true, maxZoom: 19});
+  map.locate({ setView: true, maxZoom: 19 });
 
   function onLocationFound(e) {
-    if(!myMarker) {
+    if (!myMarker) {
       myMarker = L.marker(e.latlng).addTo(map);
     }
     findNearestMarker();
@@ -60,7 +60,6 @@
   map.on('locationfound', onLocationFound);
 
   function onLocationError(e) {
-    alert(e.message);
     fitBounds();
   }
 
@@ -73,28 +72,39 @@
   }).addTo(map);
 
   // show the scale bar on the lower left corner
-  L.control.scale().addTo(map);
+  info = L.control.scale().addTo(map);
 
-  L.easyButton('<img class="h-5 inline" src="/static/images/hospital-pin-black.svg">', function(btn, map){
+  L.easyButton('<img class="h-5 inline" src="/static/images/hospital-pin-black.svg">', function (btn, map) {
     fitBounds();
   }, 'Zoom all').addTo(map);
 
   function locate() {
-    if (!navigator.geolocation){
+    if (!navigator.geolocation) {
       alert("<p>Sorry, your browser does not support Geolocation</p>");
       return;
     }
 
-    map.locate({setView: true, maxZoom: 19});
+    map.locate({ setView: true, maxZoom: 19 });
     findNearestMarker();
   };
 
-  L.easyButton('<span class="font-bold text-lg align-middle">&ofcir;</span>', function(btn, map){
+  L.easyButton('<span class="font-bold text-lg align-middle">&ofcir;</span>', function (btn, map) {
     findNearestMarker();
   }, 'Find your location').addTo(map);
 
-  function fitBounds () {
-    map.fitBounds(hospitalGroup.getBounds());
+  function fitBounds() {
+    map.fitBounds(hospitalGroup.getBounds().pad(0.2));
+  }
+
+  var clickedMarker;
+
+  function clickFeature(e) {
+    if (clickedMarker) {
+      clickedMarker.setIcon(hospitalIcon);
+    }
+    var layer = e.target;
+    e.target.setIcon(hospitalBlueIcon);
+    clickedMarker = e.target;
   }
 
   // add markers to the hospitalGroup
@@ -102,14 +112,16 @@
     .then(function (hospitals) {
       hospitals.map(function (hospital) {
         var marker =
-        L
-          .marker({ lat: hospital.latitude, lng: hospital.longitude },
-          {icon: hospitalIcon})
-          //.on('click', function(e) { e.target.setIcon(hospitalBlueIcon); })
-          .on('click', function() {
-            this.bindPopup(createPopup(hospital), {closeButton: false});
-          })
-          .addTo(hospitalGroup);
+          L
+            .marker({ lat: hospital.latitude, lng: hospital.longitude },
+              { icon: hospitalIcon })
+            //.on('click', function(e) { e.target.setIcon(hospitalBlueIcon); })
+            .on('click', function (e) {
+              this.bindPopup(createPopup(hospital), { closeButton: false });
+              clickFeature(e);
+            })
+            .addTo(hospitalGroup);
+        marker.bindPopup(createPopup(hospital), { closeButton: false });
         hospitalArray.push(marker);
       })
     });
@@ -127,7 +139,7 @@
       minDist = hospitalLatLng.distanceTo(myLatLng);
       nearestMarker = hospitalArray[0];
 
-      for(ii=0 ; ii < hospitalArray.length ; ii++) {
+      for (ii = 0; ii < hospitalArray.length; ii++) {
         hospitalLatLng = hospitalArray[ii].getLatLng();
         distance = hospitalLatLng.distanceTo(myLatLng);
 
@@ -139,7 +151,7 @@
 
       myMarker.addTo(nearestGroup);
       nearestMarker.addTo(nearestGroup);
-      map.flyToBounds(nearestGroup.getBounds());
+      map.flyToBounds(nearestGroup.getBounds().pad(0.2));
     } else {
       fitBounds();
     }

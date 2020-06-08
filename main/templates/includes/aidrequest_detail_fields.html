@@ -1,14 +1,16 @@
 {% load humanize %}
+{% load i18n %}
+
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
-      Type
+      {% trans "Type" %}
     </div>
     <div class="flex-grow text-right font-bold">
       {% if object.type == "supply" %}
-      <span class="bg-hospitalaid-blue-light font-bold text-white rounded-full p-1 px-2 mx-1">SUPPLY</span>
+      <span class="bg-hospitalaid-blue-light font-bold text-white rounded-full p-1 px-2 mx-1">{% trans "SUPPLY" %}</span>
       {% endif %}
       {% if object.type == "repair" %}
-      <span class="bg-hospitalaid-red font-bold text-white rounded-full p-1 px-2 mx-1">REPAIR</span>
+      <span class="bg-hospitalaid-red font-bold text-white rounded-full p-1 px-2 mx-1">{% trans "REPAIR" %}</span>
       {% endif %}
     </div>
   </div>
@@ -29,13 +31,13 @@
     </div>
     <div class="flex-grow text-right font-bold">
       {% if object.status == "unassigned" %}
-      <span class="flex-grow text-right font-bold">UNASSIGNED</span>
+      <span class="flex-grow text-right font-bold">{% trans "UNASSIGNED" %}</span>
       {% endif %}
       {% if object.status == "in_progress" %}
-      <span class="flex-grow text-right font-bold">IN PROGRESS</span>
+      <span class="flex-grow text-right font-bold">{% trans "IN PROGRESS" %}</span>
       {% endif %}
       {% if object.status == "closed" %}
-      <span class="flex-grow text-right font-bold">CLOSED</span>
+      <span class="flex-grow text-right font-bold">{% trans "CLOSED" %}</span>
       {% endif %}
     </div>
   </div>
@@ -43,7 +45,7 @@
 {% endif %}
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
-      Quantity
+      {% trans "Quantity" %}
     </div>
     <div class="p-2">
       <span class="flex-grow text-right font-bold text-white rounded p-1 bg-hospitalaid-gray-dark">
@@ -53,7 +55,7 @@
   </div>
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
-      Time added
+      {% trans "Time added" %}
     </div>
     <div class="flex-grow text-right font-bold">
       {{ object.created_at }}
@@ -62,7 +64,7 @@
   <hr class="mb-3">
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
-      Manufacturer
+      {% trans "Manufacturer" %}
     </div>
     <div class="flex-grow text-right font-bold">
       {{ object.manufacturer|default:"-" }}
@@ -70,7 +72,7 @@
   </div>
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
-      Model
+      {% trans "Model" %}
     </div>
     <div class="flex-grow text-right font-bold">
       {{ object.model|default:"-" }}
@@ -78,7 +80,7 @@
   </div>
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
-      Serial Number
+      {% trans "Serial Number" %}
     </div>
     <div class="flex-grow text-right font-bold">
       {{ object.serial_number|default:"-" }}
@@ -86,7 +88,7 @@
   </div>
   <hr class="mb-3">
   <div class="mb-3 text-gray-600 font-bold uppercase">
-      Comments
+    {% trans "Comments" %}
   </div>
   <div class="mb-3">
     {{ object.comments }}

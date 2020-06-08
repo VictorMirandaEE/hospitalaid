@@ -1,9 +1,9 @@
-{% extends "hamburger.html" %}
+{% extends "home.html" %}
 {% load static %}
 {% load i18n %}
 
 {% block modal %}
-{% url 'hamburger' as dismiss %}
+{% url 'home' as dismiss %}
 {% static "images/globe.svg" as icon %}
 {% trans "Select language" as title %}
 {% trans "Dismiss" as dismiss_btn %}

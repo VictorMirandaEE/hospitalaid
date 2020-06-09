@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-09 15:03-0300\n"
+"POT-Creation-Date: 2020-06-09 21:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,36 @@ msgstr ""
 
 #: PROJECT/settings.py:101
 msgid "Português (BR)"
+msgstr ""
+
+#: main/forms/main.py:44
+msgid "name"
+msgstr ""
+
+#: main/forms/main.py:45
+msgid "phone"
+msgstr ""
+
+#: main/forms/main.py:46
+#, fuzzy
+#| msgid "serial number"
+msgid "hospital name"
+msgstr "número de série"
+
+#: main/forms/main.py:47
+msgid "hospital address"
+msgstr ""
+
+#: main/forms/main.py:48
+msgid "hospital city"
+msgstr ""
+
+#: main/forms/main.py:49
+msgid "hospital postcode"
+msgstr ""
+
+#: main/forms/main.py:50
+msgid "hospital country"
 msgstr ""
 
 #: main/models/main.py:52

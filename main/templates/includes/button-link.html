@@ -1,11 +1,11 @@
-<a class="block
+<a class="block whitespace-no-wrap
 {% if color == "blue" %}
-    bg-hospitalaid-blue-light
+  bg-hospitalaid-blue-light
 {% endif %}
 {% if color == "red" %}
-    bg-hospitalaid-red
+  bg-hospitalaid-red
 {% endif %}
-   text-white text-center rounded-full py-2 px-4 mx-4 my-4" role="button"
+  text-lg text-white text-center rounded-full py-2 px-2 my-2" role="button"
 {% if href %}
   href="{{ href }}"
 {% endif %}
@@ -14,7 +14,7 @@
 {% endif %}
 >
 {% if image %}
-<img class="inline px-1" src="{{ image }}" alt="">
+<img class="md:ml-12 lg:ml-12 xl:ml-12 inline pr-2" src="{{ image }}" alt="">
 {% endif %}
-<span class="align-middle">{{ label }}</span>
+<span class="align-middle md:mr-12 lg:mr-12 xl:mr-12">{{ label }}</span>
 </a>

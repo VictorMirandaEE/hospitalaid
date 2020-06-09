@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load l10n %}
+{% load i18n %}
 
 {% block styles %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -16,7 +17,7 @@
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
-  <span class="flex-grow whitespace-no-wrap self-center text-3xl font-bold">Aid requests</span>
+  <span class="flex-grow whitespace-no-wrap self-center text-3xl font-bold">{% trans "Aid requests" %}</span>
   <a class="flex flex-shrink-0 self-center" href="{% url 'aidrequestfordonor_list' %}">
     <div class="p-2 rounded-full border-2">
       <img class="" src="{% static "images/list-white.svg" %}" alt="list">
@@ -62,11 +63,8 @@
       {% for hospital in object_list %}
       {
           name: "{{ hospital.name }}",
-          town: "{{ hospital.city }}",
-          country: "{{ hospital.country }}",
           latitude: {{ hospital.latitude|default:0.0|unlocalize }},
           longitude: {{ hospital.longitude|default:0.0|unlocalize }},
-          text: "{% for aid in hospital.aidrequest_set.all %}{{ aid }}{% endfor %}",
           link: "{% url 'hospitalfordonor_detail' hospital.id %}",
           supply_count: "{{ hospital.aidrequest_supply_count }}",
           repair_count: "{{ hospital.aidrequest_repair_count }}",

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load l10n %}
+{% load i18n %}
 
 {% block styles %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -24,12 +25,12 @@
     </div>
     <div class="flex-grow">
       <h1 class="text-3xl text-center font-bold">
-        Edit account
+        {% trans "Edit account" %}
       </h1>
     </div>
   {% else %}
     <div class="flex-grow">
-      <h1 class="text-3xl font-bold">Welcome</h1>
+      <h1 class="text-3xl font-bold">{% trans "Welcome" %}</h1>
     </div>
   {% endif %}
 </nav>
@@ -42,20 +43,22 @@
       {% include "includes/form.html" %}
 
       <td colspan="2">
-        <label class="block text-sm uppercase font-bold mb-2">Search or move pin on map</label>
+        <label class="block text-sm uppercase font-bold mb-2">{% trans "Search or move pin on map" %}</label>
         <button type="button" onclick="addrSearch('name')" class="bg-hospitalaid-blue-light text-white text-center rounded-full py-2 px-4 mb-4">
-          Name
+          {% trans "Name" %}
         </button>
         <button type="button" onclick="addrSearch('address')" class="bg-hospitalaid-red text-white text-center rounded-full py-2 px-4 mb-4">
-          Address
+          {% trans "Address" %}
         </button>
       </td>
       <ul id="addr_selection"></ul>
       <div id="id_map_account"></div>
         {% if request.user.first_name %}
-          {% include "includes/button.html" with color="red" label="Save changes" %}
+          {% trans "Save changes" as label %}
+          {% include "includes/button.html" with color="red" label=label %}
         {% else %}
-          {% include "includes/button.html" with color="red" label="Save details" %}
+          {% trans "Save details" as label %}
+          {% include "includes/button.html" with color="red" label=label %}
         {% endif %}
   </form>
 </div>

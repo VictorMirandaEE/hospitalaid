@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load static %}
+{% load i18n %}
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
@@ -10,7 +11,7 @@
       </a>
     </div>
     <div class="flex-grow">
-      <h1 class="text-3xl text-center font-bold">{{ object.title }}</h1>
+      <h1 class="text-2xl md:text-3xl text-center font-bold">{{ object.title }}</h1>
     </div>
 </nav>
 {% endblock %}
@@ -19,29 +20,29 @@
 <div class="p-8">
   <div class="flex mb-3">
     <div class="flex-grow text-gray-600 font-bold uppercase">
-      Choose status
+      {% trans "Choose status" %}
     </div>
   </div>
   <div class="mb-3 flex whitespace-no-wrap mx-auto cursor-pointer">
     {% if object.status == "unassigned" %}
-      <span class="flex-grow bg-hospitalaid-red text-center font-bold text-white border-2 border-r-0 border-hospitalaid-red rounded-tl-full rounded-bl-full px-2">UNASSIGNED</span>
+      <span class="flex-grow bg-hospitalaid-red text-center font-bold text-white border-2 border-r-0 border-hospitalaid-red rounded-tl-full rounded-bl-full px-2">{% trans "UNASSIGNED" %}</span>
     {% else %}
       <div class="self-center flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-red border-2 border-r-0 border-hospitalaid-gray-dark rounded-tl-full rounded-bl-full px-2">
-        <a href="{% url "aidrequest_status" pk=object.id value="unassigned" %}" class="bg-hospitalaid-grayblue">UNASSIGNED</a>
+        <a href="{% url "aidrequest_status" pk=object.id value="unassigned" %}" class="bg-hospitalaid-grayblue">{% trans "UNASSIGNED" %}</a>
       </div>
     {% endif %}
     {% if object.status == "in_progress" %}
-      <div class="self-center flex-grow bg-hospitalaid-blue-light text-center font-bold text-white border-2 border-hospitalaid-blue-light px-2">IN PROGRESS</div>
+      <div class="self-center flex-grow bg-hospitalaid-blue-light text-center font-bold text-white border-2 border-hospitalaid-blue-light px-2">{% trans "IN PROGRESS" %}</div>
     {% else %}
       <div class="flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-blue-light border-2 border-l-0 border-r-0 border-hospitalaid-gray-dark px-2">
-        <a href="{% url "aidrequest_status" pk=object.id value="in_progress" %}">IN PROGRESS</a>
+        <a href="{% url "aidrequest_status" pk=object.id value="in_progress" %}">{% trans "IN PROGRESS" %}</a>
       </div>
     {% endif %}
     {% if object.status == "closed" %}
-      <span class="flex-grow bg-hospitalaid-gray-dark text-center font-bold text-white border-2 border-l-0 border-hospitalaid-gray-dark rounded-tr-full rounded-br-full px-2">CLOSED</span>
+      <span class="flex-grow bg-hospitalaid-gray-dark text-center font-bold text-white border-2 border-l-0 border-hospitalaid-gray-dark rounded-tr-full rounded-br-full px-2">{% trans "CLOSED" %}</span>
     {% else %}
       <div class="flex-grow bg-hospitalaid-grayblue text-center font-bold fg-hospitalaid-gray-dark border-2 border-l-0 border-hospitalaid-gray-dark rounded-tr-full rounded-br-full px-2">
-        <a href="{% url "aidrequest_status" pk=object.id value="closed" %}">CLOSED</a>
+        <a href="{% url "aidrequest_status" pk=object.id value="closed" %}">{% trans "CLOSED" %}</a>
       </div>
     {% endif %}
   </div>
@@ -50,9 +51,11 @@
 
   <div class="p-3 mt-6">
     {% url 'aidrequest_update' object.id as update %}
-    {% include "includes/button-link.html" with color="blue" href=update label="Edit" %}
+    {% trans "Edit" as label1 %}
+    {% include "includes/button-link.html" with color="blue" href=update label=label1 %}
     {% url 'aidrequest_delete' object.id as delete %}
-    {% include "includes/button-link.html" with color="red" href=delete label="Delete" %}
+    {% trans "Delete" as label2 %}
+    {% include "includes/button-link.html" with color="red" href=delete label=label2 %}
   </div>
 </div>
 {% endblock content %}

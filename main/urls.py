@@ -60,4 +60,5 @@ urlpatterns = [
     path("menu/", views.main.hamburger, name="hamburger"),
     path("about/", views.main.about, name="about"),
     path("language/", views.main.language, name="language"),
+    path("language-home/", views.main.language_home, name="language-home"),
 ]

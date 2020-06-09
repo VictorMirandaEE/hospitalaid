@@ -4,14 +4,14 @@
 
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
-    <div class="p-3">
-      <a href="javascript:history.back()">
-        <img src="{% static "images/back-arrow.svg" %}" alt="Back" />
-      </a>
-    </div>
-    <div class="flex-grow">
-      <h1 class="text-3xl text-center font-bold">{{ object.title }}</h1>
-    </div>
+  <div class="p-3">
+    <a href="javascript:history.back()">
+      <img src="{% static "images/back-arrow.svg" %}" alt="Back" />
+    </a>
+  </div>
+  <div class="flex-grow">
+    <h1 class="text-2xl md:text-3xl text-center font-bold">{{ object.title }}</h1>
+  </div>
 </nav>
 {% endblock %}
 
@@ -20,28 +20,30 @@
   {% include "includes/aidrequest_detail_fields.html" %}
 </div>
 
-  <div class="bg-hospitalaid-blue-light p-6 px-12 text-white">
-    <div class="flex font-bold">
-      <div class="flex-grow">
-        <div>
-          MANAGER
-        </div>
-        <div>
-          {{ object.hospital.user.get_full_name}}
-        </div>
+<div class="bg-hospitalaid-blue-light p-6 px-12 text-white">
+  <div class="flex font-bold">
+    <div class="flex-grow">
+      <div class="text-xs">
+        MANAGER
       </div>
-      <div class="flex-grow text-right">
-        <div>
-          PHONE
-        </div>
-        <div>
-          {{ object.hospital.user.phone }}
-        </div>
+      <div>
+        {{ object.hospital.user.get_full_name}}
       </div>
     </div>
+    <div class="flex-grow text-right">
+      <div class="text-xs">
+        PHONE
+      </div>
+      <div>
+        {{ object.hospital.user.phone }}
+      </div>
+    </div>
+  </div>
+  <div class="flex-grow flex-col justify-center w-full">
     {% static "images/heart.svg" as heart_icon %}
     {% with "tel:"|add:object.hospital.user.phone as tel_url %}
-      {% include "includes/button-link.html" with image=heart_icon color="red" href=tel_url label="Call to help" %}
+    {% include "includes/button-link.html" with image=heart_icon color="red" href=tel_url label="Call to help" %}
     {% endwith %}
   </div>
+</div>
 {% endblock content %}

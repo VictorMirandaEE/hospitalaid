@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load static %}
+{% load i18n %}
 
 {% block nav2 %}
 <nav class="flex flex-shrink-0 bg-hospitalaid-blue-dark p-3 text-white">
-  <span class="flex-grow whitespace-no-wrap self-center text-3xl font-bold mr-2">Aid requests</span>
+  <span class="flex-grow whitespace-no-wrap self-center text-2xl md:text-3xl font-bold mr-2">{% trans "Aid requests" %}</span>
   <div class="flex flex-shrink-0 p-4 rounded-full bg-white">
     <img class="flex flex-shrink-0" src="{% static "images/list-blue.svg" %}" alt="list">
   </div>
@@ -44,7 +45,7 @@
       </div>
     </a>
     {% empty %}
-    <p>No requests yet</p>
+    <p>{% trans "No requests yet" %}</p>
     {% endfor %}
   </div>
 </div>

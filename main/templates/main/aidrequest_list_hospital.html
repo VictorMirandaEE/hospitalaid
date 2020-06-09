@@ -6,7 +6,7 @@
 {% block nav2 %}
 <nav class="flex bg-hospitalaid-blue-dark p-3 text-white">
     <div class="flex-grow">
-      <h1 class="text-3xl text-center font-bold">
+      <h1 class="text-2xl md:text-3xl text-center font-bold">
         {% trans "Your requests" %}
       </h1>
     </div>
@@ -42,13 +42,10 @@
     </a>
     {% empty %}
     <div class="text-lg text-center font-bold">
-      You currently have no
-    </div>
-    <div class="text-lg text-center font-bold">
-      created requests
+      {% trans "You currently have no<br/>created requests" %}
     </div>
     <div class="my-8 text-center fnt-rh-reg">
-        Click the button below to add a new request.
+      {% trans "Click the button below to add a new request." %}
     </div>
     <div class="my-8 flex justify-center mx-auto">
       <img src="{% static "images/ill-placeholder.svg" %}" alt="logo" />
@@ -57,6 +54,7 @@
   </div>
 
   {% url 'aidrequest_create' as create %}
-  {% include "includes/button-link.html" with color="red" href=create label="Add a new request" %}
+  {% trans "Add a new request" as label %}
+  {% include "includes/button-link.html" with color="red" href=create label=label %}
 </div>
 {% endblock content %}

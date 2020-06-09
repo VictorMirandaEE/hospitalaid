@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-08 19:23-0300\n"
+"POT-Creation-Date: 2020-06-09 15:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgstr ""
 #: main/templates/main/aidrequest_filter.html:8
 #: main/templates/main/hospital_filter.html:20
 msgid "Aid requests"
-msgstr "Solicitações de ajuda"
+msgstr "Pedidos de ajuda"
 
 #: main/templates/hamburger.html:23
 msgid "About us"
@@ -121,20 +121,20 @@ msgstr "Tipo"
 #: main/templates/includes/aidrequest_filtertypes.html:19
 #: main/templates/main/aidrequest_form.html:33
 msgid "SUPPLY"
-msgstr "FORNECER"
+msgstr "SUPRIMENTO"
 
 #: main/templates/includes/aidrequest_detail_fields.html:13
 #: main/templates/includes/aidrequest_filtertypes.html:24
 #: main/templates/includes/aidrequest_filtertypes.html:28
 #: main/templates/main/aidrequest_form.html:41
 msgid "REPAIR"
-msgstr "CONSERTAR"
+msgstr "REPARO"
 
 #: main/templates/includes/aidrequest_detail_fields.html:34
 #: main/templates/main/aidrequest_detail_hospital.html:28
 #: main/templates/main/aidrequest_detail_hospital.html:31
 msgid "UNASSIGNED"
-msgstr "NÃO ATRIBUÍDA"
+msgstr "NÃO ATRIBUÍDO"
 
 #: main/templates/includes/aidrequest_detail_fields.html:37
 #: main/templates/main/aidrequest_detail_hospital.html:35
@@ -146,7 +146,7 @@ msgstr "EM ANDAMENTO"
 #: main/templates/main/aidrequest_detail_hospital.html:42
 #: main/templates/main/aidrequest_detail_hospital.html:45
 msgid "CLOSED"
-msgstr "FECHADA"
+msgstr "FECHADO"
 
 #: main/templates/includes/aidrequest_detail_fields.html:48
 msgid "Quantity"
@@ -175,7 +175,7 @@ msgstr "Comentários"
 #: main/templates/includes/aidrequest_filtertypes.html:6
 #: main/templates/includes/aidrequest_filtertypes.html:10
 msgid "ALL"
-msgstr "TODAS"
+msgstr "TODOS"
 
 #: main/templates/language.html:8 main/templates/language_home.html:8
 msgid "Select language"
@@ -188,11 +188,11 @@ msgstr "Fechar"
 
 #: main/templates/main/aidrequest_confirm_delete.html:9
 msgid "Delete request"
-msgstr "Apagar solicitação"
+msgstr "Apagar pedido"
 
 #: main/templates/main/aidrequest_confirm_delete.html:10
 msgid "Are you sure you want to delete this request?"
-msgstr "Tem certeza que deseja apagar esta solicitação?"
+msgstr "Tem certeza que deseja apagar este pedido?"
 
 #: main/templates/main/aidrequest_confirm_delete.html:11
 msgid "Yes, please"
@@ -216,16 +216,16 @@ msgstr "Apagar"
 
 #: main/templates/main/aidrequest_filter.html:48
 msgid "No requests yet"
-msgstr "Sem solicitações"
+msgstr "Sem pedidos"
 
 #: main/templates/main/aidrequest_form.html:15
 msgid "Edit request"
-msgstr "Editar solicitação"
+msgstr "Editar pedido"
 
 #: main/templates/main/aidrequest_form.html:17
 #: main/templates/main/aidrequest_list_hospital.html:57
 msgid "Add a new request"
-msgstr "Adicionar uma nova solicitação"
+msgstr "Adicionar um novo pedido"
 
 #: main/templates/main/aidrequest_form.html:51
 #: main/templates/main/step2_form.html:57
@@ -234,19 +234,19 @@ msgstr "Gravar alterações"
 
 #: main/templates/main/aidrequest_form.html:54
 msgid "Add request"
-msgstr "Adicionar solicitação"
+msgstr "Adicionar pedido"
 
 #: main/templates/main/aidrequest_list_hospital.html:10
 msgid "Your requests"
-msgstr "Suas solicitações"
+msgstr "Seus pedidos"
 
 #: main/templates/main/aidrequest_list_hospital.html:45
 msgid "You currently have no<br/>created requests"
-msgstr "Você não tem solicitações"
+msgstr "Você não tem pedidos criados"
 
 #: main/templates/main/aidrequest_list_hospital.html:48
 msgid "Click the button below to add a new request."
-msgstr "Clique no botão abaixo para adicionar uma nova solicitação."
+msgstr "Clique no botão abaixo para adicionar um novo pedido."
 
 #: main/templates/main/step2_form.html:28
 msgid "Edit account"
@@ -270,7 +270,7 @@ msgstr "Endereço"
 
 #: main/templates/main/step2_form.html:60
 msgid "Save details"
-msgstr "Gravar detalhes"
+msgstr "Gravar dados"
 
 #: main/templates/signup.html:12
 msgid "Email was sent!"

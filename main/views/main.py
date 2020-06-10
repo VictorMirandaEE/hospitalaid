@@ -63,12 +63,12 @@ def aidrequest_status(request, pk, value):
     return redirect("aidrequestforhospital_detail", pk=pk)
 
 
-class AidRequestDetailForHospital(DetailView):
+class AidRequestDetailForHospital(LoginRequiredMixin, DetailView):
     model = models.main.AidRequest
     template_name = "main/aidrequest_detail_hospital.html"
 
 
-class AidRequestListForHospital(FilterView):
+class AidRequestListForHospital(LoginRequiredMixin, FilterView):
     model = models.main.AidRequest
     template_name = "main/aidrequest_list_hospital.html"
     filterset_fields = ["type"]
